@@ -1,0 +1,264 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+.forms_container {
+  width: 50vw;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  position: absolute;
+  left: 20%;
+  top: 10%;
+  overflow: scroll;
+  padding: 0.2rem 1rem;
+  transition: all 0.5s linear;
+  // box-shadow: 0px 4px 5px rgba(0,0,0,0.5);
+
+
+
+  // //Form6 upload Video Details::after
+  // .Form6_container {
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 0%;
+  //   min-width: 80%;
+  //   width: 80%;
+  //   min-height: 90%;
+  //   margin: 10px;
+  //   // background-color: aqua;
+  //   padding: 1rem 0.2rem;
+
+  //   .Form_title {
+  //     font-weight: bold;
+
+  //     display: flex;
+  //     align-items: flex-start;
+  //     justify-content: flex-start;
+  //     gap: 10px;
+
+  //     h4 {
+  //       letter-spacing: 1px;
+  //       font-size: 0.9rem;
+  //     }
+  //     img {
+  //       width: 25px;
+  //     }
+  //   }
+  //   form {
+  //     width: 90%;
+  //     height: 70%;
+  //     background-color: #414eff;
+  //     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.5);
+  //     padding: 1rem 0.5rem;
+  //     margin: 1rem auto;
+  //     display: grid;
+  //     overflow: hidden;
+  //     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  //     //   grid-template-columns: 1fr 1fr 1fr;
+  //     grid-row-gap: 10px;
+  //     grid-column-gap: 15px;
+  //     .edit_form {
+  //       position: absolute;
+  //       right: 10%;
+  //       top: 8%;
+  //       z-index: 600;
+
+  //       img {
+  //         cursor: pointer !important;
+  //         width: 40px;
+  //         height: 40px;
+  //         border-radius: 50%;
+  //         padding: 5px;
+  //         transition: all 0.4s ease-in-out;
+
+  //         &:hover {
+  //           box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
+  //           transition: all 0.4s ease-in-out;
+  //         }
+  //       }
+  //     }
+  //     .form_group {
+  //       width: 98%;
+  //       // margin: auto;
+  //       display: flex;
+  //       align-items: flex-start;
+  //       flex-direction: column;
+  //       justify-content: flex-start;
+  //       gap: 10px;
+  //       padding: 10px;
+  //       position: relative;
+
+  //       label {
+  //         width: 80%;
+  //         font-size: 0.7rem;
+  //         color: gray;
+  //         display: flex;
+  //         align-items: flex-start;
+  //         justify-content: flex-start;
+  //         flex-direction: column;
+  //         position: relative;
+  //         //   margin: auto;
+  //         gap: 10px;
+  //         .galleryImage {
+  //           margin: 10px;
+  //           min-width: 300px;
+  //           height: 150px;
+  //           object-fit: cover;
+  //           object-position: center;
+  //           border-radius: 10px;
+  //           cursor: pointer;
+  //         }
+  //         .upload {
+  //           position: absolute;
+  //           top: 15%;
+  //           cursor: pointer;
+  //           right: -6%;
+  //           width: 40px;
+  //           height: 40px;
+  //           padding: 10px;
+  //           border-radius: 50%;
+  //           // mix-blend-mode: multiply;
+  //         }
+  //       }
+
+  //       input[type="file"] {
+  //         display: none;
+  //       }
+
+  //       input,
+  //       textarea {
+  //         min-width: 90%;
+  //         width: 90%;
+  //         padding: 8px 1rem;
+  //         outline: none;
+  //         background-color: #1a6496;
+  //         margin: 0.2rem auto;
+  //         border-radius: 5px;
+  //         border: 1px solid rgb(255, 255, 255);
+  //         caret-color: rgb(105, 88, 255);
+  //         &::placeholder {
+  //           font-size: 0.5rem;
+  //           font-weight: 600;
+  //           color: rgb(114, 112, 112);
+  //         }
+  //         &:focus {
+  //           border: 1px solid royalblue;
+  //         }
+  //       }
+  //     }
+
+  //     .form_submit {
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+
+  //       input[type="submit"] {
+  //         width: 60%;
+  //         outline: none;
+  //         background-color: royalblue;
+  //         padding: 10px 1rem;
+  //         font-weight: 600;
+  //         color: white;
+  //         cursor: pointer;
+  //         transition: all 0.3s ease-in-out;
+
+  //         &:hover {
+  //           background-color: tomato;
+  //           transition: all 0.3s ease-in-out;
+  //         }
+  //       }
+  //     }
+  //     @media screen and (max-width: 900px) {
+  //       padding: 0.6rem 0.4rem;
+  //       margin: auto;
+  //       width: 98%;
+  //     }
+  //   }
+
+  //   @media screen and (max-width: 900px) {
+  //     width: 100%;
+  //     padding: 1rem 0.2rem;
+  //   }
+  // }
+
+
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .final_digiCard{
+    position: absolute;
+    bottom: 14%;
+
+    a{
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 0.7rem;
+
+    }
+    @media screen and (max-width:900px){
+      position: absolute;
+      top: 0%;
+      right: 2%;
+    }
+  }
+  @media screen and (max-width: 900px) {
+    // background-color: aqua;
+    min-height: 90vh;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    overflow: auto;
+    padding: 0.1rem 0.2rem;
+    // box-shadow: 0px 4px 5px rgba(0,0,0,0.5);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #Formclose {
+    width: 50vw;
+    height: 90vh;
+    position: absolute;
+    left: 0%;
+    top: 10%;
+    transition: all 0.5s linear;
+    // margin: auto;
+  }
+}
+
+#Form1close {
+  width: 60%;
+  height: 90%;
+  min-width: 60%;
+  // width: 65%;
+  transition: all 0.5s linear;
+}
+#Form7close {
+  min-width: 50%;
+  width: 50%;
+  transition: all 0.5s linear;
+}
+
+// //Loader style
+.loader3 {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #ffffff;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

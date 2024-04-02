@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+.forms_container {
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+
+  //Form2 contact Details::after
+  .Form2_container {
+    position: absolute;
+    left: 0%;
+    min-width: 60%;
+    width: 60%;
+    min-height: auto;
+    height: 100%;
+    margin: 10px;
+    // background-color: aqua;
+    padding: 0rem 0.2rem;
+
+    .Form_title {
+      font-weight: bold;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
+      h4 {
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+      }
+      img {
+        width: 25px;
+      }
+    }
+    form {
+      width: 90%;
+      height: auto;
+      background-color: #7edcf396;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+      padding: 1rem 0.5rem;
+      margin: 1rem auto;
+      display: grid;
+      overflow: scroll;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      //   grid-template-columns: 1fr 1fr 1fr;
+      grid-row-gap: 0.4rem;
+      grid-column-gap: 15px;
+      .edit_form {
+        position: absolute;
+        right: 10%;
+        top: 5%;
+        z-index: 600;
+
+        img {
+          cursor: pointer !important;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          padding: 5px;
+          transition: all 0.4s ease-in-out;
+
+          &:hover {
+            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease-in-out;
+          }
+        }
+      }
+      .form_group {
+        width: 98%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 5px;
+        width: 100%;
+        margin: auto;
+        padding: 10px;
+        position: relative;
+
+        label {
+          width: 80%;
+          font-size: 0.7rem;
+          font-weight: 600;
+          color: rgb(31, 30, 30);
+
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          flex-direction: column;
+          position: relative;
+          //   margin: auto;
+          gap: 10px;
+        }
+        input {
+          min-width: 100%;
+          width: 100%;
+          padding: 15px 1rem;
+          outline: none;
+          border: transparent;
+          background-color: rgb(255, 255, 255);
+          box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
+          margin: 0.2rem auto;
+          border-radius: 5px;
+          // border: 1px solid rgb(255, 255, 255);
+          caret-color: rgb(105, 88, 255);
+          &::placeholder {
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: rgb(114, 112, 112);
+          }
+          &:focus {
+            border: 1px solid royalblue;
+          }
+        }
+        .textarea {
+          min-width: 100%;
+          width: 100%;
+          padding: 8px 1rem;
+          outline: none;
+          border: transparent;
+          background-color: rgb(255, 255, 255);
+          margin-top: 1rem auto;
+          border-radius: 5px;
+          // border: 1px solid rgb(255, 255, 255);
+          caret-color: rgb(105, 88, 255);
+          &::placeholder {
+            font-size: 0.7rem;
+            color: #222429;
+          }
+          &:focus {
+            border: 1px solid royalblue;
+          }
+        }
+        &:nth-child(5){
+          grid-column: 1/-1; 
+        }
+        &:nth-child(6){
+          grid-column: 1/-1; 
+        }
+      }
+
+      .form_submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          width: 75%;
+          border: transparent;
+
+          outline: none;
+          background-color: #79be3f;
+          padding: 8px 1rem;
+          border-radius: 1rem;
+          font-weight: 600;
+          color: white;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            background-color: tomato;
+            transition: all 0.3s ease-in-out;
+          }
+        }
+      }
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      @media screen and (max-width: 900px) {
+        padding: 0.6rem 0.4rem;
+        padding: 0.6rem 0.4rem;
+        margin: auto;
+        width: 98%;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+      height: 110vh;
+      margin: auto;
+      overflow: scroll;
+      padding: 1rem 0.2rem;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .final_digiCard {
+    position: absolute;
+    bottom: 14%;
+
+    a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 0.7rem;
+    }
+    @media screen and (max-width: 900px) {
+      position: absolute;
+      top: 0%;
+      right: 2%;
+    }
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @media screen and (max-width: 900px) {
+    // background-color: aqua;
+    min-height: 90vh;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    overflow: auto;
+    padding: 0.1rem 0.2rem;
+    // box-shadow: 0px 4px 5px rgba(0,0,0,0.5);
+  }
+}
