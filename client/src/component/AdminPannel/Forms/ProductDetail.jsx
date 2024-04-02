@@ -178,7 +178,7 @@ const ProductDetail = () => {
           // formData2.append("productSummary", productSummary);
           // Make authenticated request with bearer token
           await axios
-            .post("http://localhost:3001/productDetail", Productdata, {
+            .post("https://aristostech-digitalcard-application.onrender.com/productDetail", Productdata, {
               headers: {
                 Authorization: `Bearer ${id.token}`,
               },
@@ -229,7 +229,7 @@ const ProductDetail = () => {
           // Make authenticated request with bearer token
           await axios
             .put(
-              `http://localhost:3001/productDetail/specific/${ProductId}`,
+              `https://aristostech-digitalcard-application.onrender.com/productDetail/specific/${ProductId}`,
               data,
               {
                 headers: {

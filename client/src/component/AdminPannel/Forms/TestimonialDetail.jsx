@@ -39,7 +39,7 @@ const TestimonialDetail = () => {
   useEffect(() => {
     let fetchTestimonial = async () => {
       await axios
-        .get(`http://localhost:3001/testimonialDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -76,7 +76,7 @@ const TestimonialDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post(`http://localhost:3001/testimonialDetail`, SocialMediadata, {
+        .post(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail`, SocialMediadata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -128,7 +128,7 @@ const TestimonialDetail = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `http://localhost:3001/testimonialDetail/update/${TestimonialID}`,
+          `https://aristostech-digitalcard-application.onrender.com/testimonialDetail/update/${TestimonialID}`,
           data,
           {
             headers: {

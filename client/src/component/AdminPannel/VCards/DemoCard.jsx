@@ -176,7 +176,7 @@ const DemoCard = () => {
   useEffect(() => {
     let fetch = async () => {
       await axios
-        .get(`http://localhost:3001/basicDetail/`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -195,7 +195,7 @@ const DemoCard = () => {
     };
     let socialmedia = async () => {
       await axios
-        .get("http://localhost:3001/socialMedia_detail", {
+        .get("https://aristostech-digitalcard-application.onrender.com/socialMedia_detail", {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -213,7 +213,7 @@ const DemoCard = () => {
     };
     let contactDetail = async () => {
       await axios
-        .get("http://localhost:3001/contact_detail", {
+        .get("https://aristostech-digitalcard-application.onrender.com/contact_detail", {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -231,7 +231,7 @@ const DemoCard = () => {
     };
     let fetchService = async () => {
       await axios
-        .get(`http://localhost:3001/service_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/service_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -246,7 +246,7 @@ const DemoCard = () => {
     };
     let fetchQRCode = async () => {
       await axios
-        .get(`http://localhost:3001/qrcode_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -260,7 +260,7 @@ const DemoCard = () => {
     };
     let fetchProduct = async () => {
       await axios
-        .get(`http://localhost:3001/product_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/product_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -275,7 +275,7 @@ const DemoCard = () => {
     };
     let fetchGallery = async () => {
       await axios
-        .get(`http://localhost:3001/gallery_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/gallery_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -290,7 +290,7 @@ const DemoCard = () => {
     };
     let fetchSocialMedia = async () => {
       await axios
-        .get(`http://localhost:3001/socialMedia_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -305,7 +305,7 @@ const DemoCard = () => {
     };
     let fetchTestimonial = async () => {
       await axios
-        .get(`http://localhost:3001/testimonial_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonial_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -436,7 +436,7 @@ const DemoCard = () => {
     let id = JSON.parse(localStorage.getItem("datas"));
     setLoader3(true);
     await axios
-      .get(`http://localhost:3001/basicDetail/specific/${BasicID}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${BasicID}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -474,7 +474,7 @@ const DemoCard = () => {
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
 
-      .get(`http://localhost:3001/contactDetail/specific/${Data}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${Data}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -514,7 +514,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .get(`http://localhost:3001/serviceDetail/specificId/${Data}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specificId/${Data}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -550,7 +550,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .get(`http://localhost:3001/product_detail/specific/${ProductId}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/product_detail/specific/${ProductId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -586,7 +586,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .get(`http://localhost:3001/gallery_detail/specific/${GallId}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/gallery_detail/specific/${GallId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -620,7 +620,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .delete(`http://localhost:3001/gallery_detail/specific/${GallId}`, {
+      .delete(`https://aristostech-digitalcard-application.onrender.com/gallery_detail/specific/${GallId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -650,7 +650,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .get(`http://localhost:3001/socialMedia_detail`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -696,7 +696,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .get(`http://localhost:3001/qrcode_detail/specific/${QRCodeId}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail/specific/${QRCodeId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -737,7 +737,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .delete(`http://localhost:3001/service_detail/specific/${Data}`, {
+      .delete(`https://aristostech-digitalcard-application.onrender.com/service_detail/specific/${Data}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -768,7 +768,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .delete(`http://localhost:3001/product_detail/specific/${ProductId}`, {
+      .delete(`https://aristostech-digitalcard-application.onrender.com/product_detail/specific/${ProductId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -801,7 +801,7 @@ const DemoCard = () => {
     axios
 
       .get(
-        `http://localhost:3001/testimonial_detail/specific/${TestimonialID}`,
+        `https://aristostech-digitalcard-application.onrender.com/testimonial_detail/specific/${TestimonialID}`,
         {
           headers: {
             Authorization: `Bearer ${id.token}`,
@@ -850,7 +850,7 @@ const DemoCard = () => {
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
       .delete(
-        `http://localhost:3001/testimonial_detail/specific/${TestimonialID}`,
+        `https://aristostech-digitalcard-application.onrender.com/testimonial_detail/specific/${TestimonialID}`,
         {
           headers: {
             Authorization: `Bearer ${id.token}`,
@@ -882,7 +882,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .delete(`http://localhost:3001/qrcode_detail/specific/${QRCodeId}`, {
+      .delete(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail/specific/${QRCodeId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },

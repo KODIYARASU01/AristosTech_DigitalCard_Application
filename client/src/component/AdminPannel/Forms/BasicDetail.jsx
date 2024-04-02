@@ -68,7 +68,7 @@ const BasicDetail = () => {
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("http://localhost:3001/basicDetail", data, {
+        .post("https://aristostech-digitalcard-application.onrender.com/basicDetail", data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -118,7 +118,7 @@ const BasicDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`http://localhost:3001/basicDetail/update/${BasicID}`, data, {
+        .put(`https://aristostech-digitalcard-application.onrender.com/basicDetail/update/${BasicID}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

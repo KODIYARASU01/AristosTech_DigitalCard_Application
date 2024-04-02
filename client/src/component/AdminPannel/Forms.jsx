@@ -181,7 +181,7 @@ let Forms = () => {
     let fetch = async () => {
       setLoader3(true);
       await axios
-        .get(`http://localhost:3001/basicDetail/`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -202,7 +202,7 @@ let Forms = () => {
     };
     let socialmedia = async () => {
       await axios
-        .get("http://localhost:3001/socialMediaDetail", {
+        .get("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -222,7 +222,7 @@ let Forms = () => {
 
     let fetchService = async () => {
       await axios
-        .get(`http://localhost:3001/serviceDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -237,7 +237,7 @@ let Forms = () => {
     };
     let fetchQRCode = async () => {
       await axios
-        .get(`http://localhost:3001/qrcode_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -251,7 +251,7 @@ let Forms = () => {
     };
     let fetchProduct = async () => {
       await axios
-        .get(`http://localhost:3001/product_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/product_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -266,7 +266,7 @@ let Forms = () => {
     };
     let fetchGallery = async () => {
       await axios
-        .get(`http://localhost:3001/gallery_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/gallery_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -281,7 +281,7 @@ let Forms = () => {
     };
     let fetchSocialMedia = async () => {
       await axios
-        .get(`http://localhost:3001/socialMedia_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -296,7 +296,7 @@ let Forms = () => {
     };
     let fetchTestimonial = async () => {
       await axios
-        .get(`http://localhost:3001/testimonial_detail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonial_detail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

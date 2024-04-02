@@ -179,7 +179,7 @@ const GalleryDetail = () => {
 
       // Make authenticated request with bearer token
       await axios
-        .post("http://localhost:3001/gallery_detail", Gallerydata, {
+        .post("https://aristostech-digitalcard-application.onrender.com/gallery_detail", Gallerydata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -228,7 +228,7 @@ const GalleryDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`http://localhost:3001/gallery_detail/specific/${GallId}`, data, {
+        .put(`https://aristostech-digitalcard-application.onrender.com/gallery_detail/specific/${GallId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

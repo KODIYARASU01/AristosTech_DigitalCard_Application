@@ -159,7 +159,7 @@ const ContactDetail = () => {
     let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
     let contactDetail = async () => {
       await axios
-        .get(`http://localhost:3001/contactDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -197,7 +197,7 @@ const ContactDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post("http://localhost:3001/contactDetail", Contactdata, {
+        .post("https://aristostech-digitalcard-application.onrender.com/contactDetail", Contactdata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -243,7 +243,7 @@ const ContactDetail = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `http://localhost:3001/contactDetail/update/${ContactData[0]._id}`,
+          `https://aristostech-digitalcard-application.onrender.com/contactDetail/update/${ContactData[0]._id}`,
           data,
           {
             headers: {
