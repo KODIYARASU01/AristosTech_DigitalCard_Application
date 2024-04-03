@@ -2,32 +2,15 @@ import './Styles/QRCodeDetail.scss';
 import React, { useEffect, useRef, useState, useContext } from "react";
 import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
-import upload from "../../../assets/Social Medias/addImage.gif";
-import f from "../../../assets/Social Medias/f.gif";
-import linkedin from "../../../assets/Social Medias/linkedin.gif";
-import whatsup from "../../../assets/Social Medias/whatsup.gif";
-import twiter from "../../../assets/Social Medias/twiter.gif";
-import insta from "../../../assets/Social Medias/insta.gif";
-import clientProfile from "../../../assets/logo2.jpg";
-import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
-
 import formContext from "../../Context/FormContext.jsx";
 import {
-  convertToBase64Basic,
-  convertTestimonialImageToBase64,
-  convertServiceImageToBase64,
-  convertProductImageToBase64,
-  convertGalleryImageToBase64,
-  convertBannerImageToBase64,
   convertQRCodeImageToBase64,
 } from "../../Helper/Convert.js";
 import axios from "axios";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Editor } from "primereact/editor";
-
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-
 const QRCodeDetail = () => {
     let {
         userToken,
@@ -172,7 +155,8 @@ const QRCodeDetail = () => {
               },
             })
             .then((res) => {
-              setQRCodeData(res.data.getQRCodeDetails);
+          
+              setQRCodeData(res.data.result);
             })
             .catch((err) => {
               console.log(err);
@@ -209,6 +193,7 @@ const QRCodeDetail = () => {
           },
         })
         .then((res) => {
+          setQRCodeData(res.data.result);
           toast.success(res.data.message, {
             position: "top-center",
             autoClose: 2000,
@@ -238,8 +223,8 @@ const QRCodeDetail = () => {
       setLoader3(false);
     }
   }
-  //QRCODE form Edit:
-  async function handleQRCodeEdit(e) {
+  //QRCODE form Update:
+  async function handleQRCodeUpdate(e) {
     e.preventDefault();
     try {
       setLoader3(true);
@@ -250,7 +235,7 @@ const QRCodeDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specific/${QRCodeId}`, data, {
+        .put(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/update/${QRCodeId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -263,7 +248,7 @@ const QRCodeDetail = () => {
           });
 
           setLoader3(false);
-          setGalleryEdit(false);
+          setQRCodeEdit(false);
         })
         .catch((err) => {
           toast.error(err.response.data.message, {
@@ -272,7 +257,7 @@ const QRCodeDetail = () => {
             transition: Flip,
           });
           setLoader3(false);
-          setGalleryEdit(false);
+          setQRCodeEdit(false);
         });
       setLoader3(false);
     } catch (error) {
@@ -283,8 +268,76 @@ const QRCodeDetail = () => {
         transition: Flip,
       });
       setLoader3(false);
+      setQRCodeEdit(false)
     }
   }
+
+    //service form edit:
+
+    async function handleQRCodeEdit(e) {
+      setLoader3(true);
+      // Retrieve token from local storage or wherever it's stored
+      let id = JSON.parse(localStorage.getItem("datas"));
+      await axios
+        .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specificId/${e.target.id}`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setQRCodeImage(res.data.data.QRCodeImage);
+         
+          setQRCodeId(res.data.data._id)
+          setQRCodeEdit(true);
+          setLoader3(false);
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+        })
+        .catch((err) => {
+          toast.error(err, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+          setLoader3(false);
+          setQRCodeEdit(false);
+        });
+    }
+  
+    //Service Form Delete:
+    async function handleQRCodeDelete(e) {
+      setLoader3(true);
+      // Retrieve token from local storage or wherever it's stored
+      let id = JSON.parse(localStorage.getItem("datas"));
+      await axios
+        .delete(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/delete/${e.target.id}`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
+        .then((res) => {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+          setQRCodeEdit(false);
+          setLoader3(false);
+        })
+        .catch((err) => {
+          toast.error(err, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+          setLoader3(false);
+          setQRCodeEdit(false);
+        });
+    }
 
   return (
     <div>
@@ -316,11 +369,11 @@ const QRCodeDetail = () => {
                   id="QRCodeImage"
                 />
               </div>
-              {QRCodeData && QRCodeData.length === 1 ? (
+              {QRCodeData.length > 0  ? (
                 <div className="form_submit">
-                  <button onClick={handleQRCodeEdit}>
+                  {/* <button onClick={handleQRCodeUpdate}>
                     Update{loader3 ? <span className="loader3"></span> : ""}
-                  </button>
+                  </button> */}
                 </div>
               ) : (
                 <div className="form_submit">
@@ -329,7 +382,55 @@ const QRCodeDetail = () => {
                   </button>
                 </div>
               )}
+                 {QRCodeEdit === true  ? (
+                <div className="form_submit">
+                  <button onClick={handleQRCodeUpdate}>
+                    Update{loader3 ? <span className="loader3"></span> : ""}
+                  </button>
+                </div>
+              ) : (
+                <div className="form_submit">
+                  {/* <button type="submit">
+                    Upload{loader3 ? <span className="loader3"></span> : ""}
+                  </button> */}
+                </div>
+              )}
             </form>
+
+            {QRCodeData.length > 0 ? (
+          <div>
+            {QRCodeData.map((data, index) => {
+              return (
+                <div className="qrcode_list" key={index}>
+                  <div className="ser_length">
+                    <h6>{index + 1}</h6>
+                  </div>
+                  <div className="ser_image">
+                    <img
+                      src={data.QRCodeImage ? data.QRCodeImage : background}
+                      alt="productImage"
+                    />
+                  </div>
+                 
+                  <div className="actions">
+                    <i
+                      class="bx bxs-edit edit"
+                      id={data._id}
+                      onClick={handleQRCodeEdit}
+                    ></i>
+                    <i
+                      class="bx bxs-message-square-x delete"
+                      id={data._id}
+                      onClick={handleQRCodeDelete}
+                    ></i>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
           </div>
     </div>
   )

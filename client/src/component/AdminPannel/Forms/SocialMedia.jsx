@@ -336,7 +336,7 @@ const SocialMedia = () => {
                   onChange={(e) => setTwiter(e.target.value)}
                 />
               </div>
-              {SocialMediaData != undefined ? (
+              {SocialMediaData.length >0 ? (
                 <div className="form_submit">
                   <button onClick={handleSocialMediaFormEdit}>
                     Update{loader3 ? <span className="loader3"></span> : ""}

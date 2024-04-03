@@ -1,5 +1,5 @@
 import "./Styles/ServiceDetail.scss";
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
 import formContext from "../../Context/FormContext.jsx";
@@ -12,6 +12,8 @@ import { Editor } from "primereact/editor";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const ServiceDetail = () => {
   let {
+    ServiceId,
+    setServiceId,
     loader3,
     setLoader3,
     Data,
@@ -22,6 +24,7 @@ const ServiceDetail = () => {
     serviceSummary,
     setServiceSummary,
     setServiceData,
+    ServiceData,
     ServiceEdit,
     setServiceEdit,
   } = useContext(formContext);
@@ -37,7 +40,6 @@ const ServiceDetail = () => {
           },
         })
         .then((res) => {
-          console.log(res);
           setServiceData(res.data.result);
         })
         .catch((err) => {
@@ -75,6 +77,7 @@ const ServiceDetail = () => {
           },
         })
         .then((res) => {
+          setServiceData(res.data.result);
           toast.success(res.data.message, {
             position: "top-center",
             autoClose: 2000,
@@ -104,10 +107,10 @@ const ServiceDetail = () => {
       setLoader3(false);
     }
   }
-  //Service form Edit:
-  async function handleServiceFormEdit(e) {
+  //Service form Update:
+  async function handleServiceFormUpdate(e) {
     e.preventDefault();
-
+console.log(ServiceId)
     try {
       setLoader3(true);
       // Retrieve token from local storage or wherever it's stored
@@ -119,7 +122,7 @@ const ServiceDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/update/${Data}`, data, {
+        .put(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/update/${ServiceId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -134,7 +137,7 @@ const ServiceDetail = () => {
           setLoader3(false);
           setServiceSummary("");
           setServiceTitle("");
-          setServiceImage("");
+          setServiceImage(undefined);
           setServiceEdit(false);
         })
         .catch((err) => {
@@ -156,6 +159,73 @@ const ServiceDetail = () => {
       });
       setLoader3(false);
     }
+  }
+
+  //service form edit:
+
+  async function handleServiceEdit(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specificId/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        setServiceImage(res.data.data.serviceImage);
+        setServiceTitle(res.data.data.serviceTitle);
+        setServiceSummary(res.data.data.serviceSummary);
+        setServiceId(res.data.data._id);
+        setServiceEdit(true);
+        setLoader3(false);
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setServiceEdit(false);
+      });
+  }
+
+  //Service Form Delete:
+  async function handleServiceDelete(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .delete(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/delete/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setServiceEdit(true);
+        setLoader3(false);
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setServiceEdit(false);
+      });
   }
   return (
     <div>
@@ -237,7 +307,7 @@ const ServiceDetail = () => {
 
           {ServiceEdit === true ? (
             <div className="form_submit">
-              <button onClick={handleServiceFormEdit}>
+              <button onClick={handleServiceFormUpdate}>
                 Update{loader3 ? <span className="loader3"></span> : ""}
               </button>
             </div>
@@ -249,6 +319,56 @@ const ServiceDetail = () => {
             </div>
           )}
         </form>
+
+        {ServiceData.length > 0 ? (
+          <div>
+            {ServiceData.map((data, index) => {
+              return (
+                <div className="service_list" key={index}>
+                  <div className="ser_length">
+                    <h6>{index + 1}</h6>
+                  </div>
+                  <div className="ser_image">
+                    <img
+                      src={data.serviceImage ? data.serviceImage : background}
+                      alt="serviceImage"
+                    />
+                  </div>
+                  <div className="service_title">
+                    <h3>
+                      {data.serviceTitle ? data.serviceTitle : "Title Empty"}
+                    </h3>
+                  </div>
+
+                  <div className="service_summary">
+                    <p>
+                      {data.serviceSummary
+                        ? data.serviceSummary
+                        : "Summary Empty"}
+                    </p>
+                  </div>
+                  <div className="service_price">
+                    <small>Rs : 5000</small>
+                  </div>
+                  <div className="actions">
+                    <i
+                      class="bx bxs-edit edit"
+                      id={data._id}
+                      onClick={handleServiceEdit}
+                    ></i>
+                    <i
+                      class="bx bxs-message-square-x delete"
+                      id={data._id}
+                      onClick={handleServiceDelete}
+                    ></i>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

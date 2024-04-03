@@ -30,24 +30,24 @@ export const createData = async (req, res) => {
 
 //Read or get all user basicDetail data  from database:
 
-// export const readAllData = async (req, res) => {
-//   try {
-//     let datas = await BasicDetail.find({});
-//     if (!datas) {
-//       res.status(400).json({ message: "Data not found" });
-//     } else {
-//       res
-//         .status(201)
-//         .json({
-//           message: "Data Fetched Sucessfully",
-//           count: datas.length,
-//           result: datas,
-//         });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+export const readAllData = async (req, res) => {
+  try {
+    let datas = await GalleryDetails.find({});
+    if (!datas) {
+      res.status(400).json({ message: "Data not found" });
+    } else {
+      res
+        .status(201)
+        .json({
+          message: "Data Fetched Sucessfully",
+          count: datas.length,
+          result: datas,
+        });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // //Read or get Specific User all Data  :
 export const readSpecificUserData = async (req, res) => {
@@ -65,6 +65,23 @@ export const readSpecificUserData = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+// //Read or get Specific User all Data  :
+export const getSpecificIdData = async (req, res) => {
+  try {
+    let {id}=req.params;
+    let getSpecificData = await GalleryDetails.findById(id );
+
+    if (!getSpecificData) {
+      res.status(400).json({ message: "Gallery Data Not Found" });
+    } else {
+      res
+        .status(201)
+        .json({ message: "Gallery Data Fetched", data: getSpecificData });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //Update Specific document user data:
 
@@ -75,11 +92,11 @@ export const updateSpecificUserData = async (req, res) => {
     let updateSpecificData = await GalleryDetails.findByIdAndUpdate(id, data);
 
     if (!updateSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Gallery Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Updated", data: updateSpecificData });
+        .json({ message: "Gallery Data Updated", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -94,11 +111,11 @@ export const deleteSpecificUserAllData = async (req, res) => {
     });
 
     if (!deleteSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Gallery Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Deleted", data: deleteSpecificData });
+        .json({ message: "Gallery Data Deleted", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -114,11 +131,11 @@ export const deleteSpecificUserData = async (req, res) => {
     let deleteSpecificData = await GalleryDetails.findByIdAndDelete(id);
 
     if (!deleteSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Gallery Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Deleted", data: deleteSpecificData });
+        .json({ message: "Gallery Data Deleted", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

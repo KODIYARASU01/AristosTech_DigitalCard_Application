@@ -179,7 +179,88 @@
         width: 98%;
       }
     }
+    .qrcode_list {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 10px 2rem;
 
+      width: 100%;
+      background-color: rgb(158, 240, 185);
+      position: relative;
+      margin: 10px auto;
+  
+      .ser_length {
+        position: absolute;
+  
+        left: -1%;
+        top: -2%;
+  
+        h6 {
+          color: royalblue;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          // padding: 5px;
+          border-radius: 50%;
+          background-color: #fff;
+        }
+      }
+      .ser_image {
+        flex: 1;
+        img {
+          width: 80px;
+          height: 30px;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+      .service_title {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h3 {
+          font-size: 0.6rem;
+        }
+      }
+      .service_summary {
+        flex: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+      }
+      .service_price {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+      .actions {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap:1rem;
+  
+        .edit {
+          color: gray;
+          font-size: 1rem;
+          cursor: pointer;
+        }
+        .delete {
+          color: red;
+          font-size: 1rem;
+          cursor: pointer;
+        }
+      }
+    }
     @media screen and (max-width: 900px) {
       width: 100%;
       height: 110vh;

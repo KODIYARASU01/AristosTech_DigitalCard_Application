@@ -1,8 +1,10 @@
 import express from "express";
 import {
   createData,
+  readAllData,
   readSpecificUserData,
   updateSpecificUserData,
+  getSpecificIdData,
   deleteSpecificUserAllData,
   deleteSpecificUserData,
 } from "../Controllers/ProductDetail.controller.js";
@@ -12,8 +14,12 @@ let router = express.Router();
 
 // Create Data
 router.post("/", verifyToken, createData);
+// Read All  Data
+router.get("/", verifyToken, readAllData);
 //Read Specific user all Data:
 router.get("/specific/:id", verifyToken, readSpecificUserData);
+ //Read Specific ID Data:
+ router.get("/specificId/:id", verifyToken, getSpecificIdData);
 //Update Specific user Single Data:
 router.put("/update/:id", verifyToken, updateSpecificUserData);
 //Delete Specific user all Data in Basic Detail:

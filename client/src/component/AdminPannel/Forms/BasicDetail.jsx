@@ -37,6 +37,7 @@ const BasicDetail = () => {
 
   } = useContext(formContext);
 
+  console.log(BasicData)
   //Formik does not support file upload so we could create handler :
   const onUpload = async (e) => {
     let base64 = await convertToBase64Basic(e.target.files[0]);

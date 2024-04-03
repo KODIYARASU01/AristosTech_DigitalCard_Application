@@ -1,21 +1,13 @@
-import React,{useContext} from "react";
+import React,{useContext,useEffect} from "react";
 import "./Styles/ProductDetail.scss";
 import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
-import upload from "../../../assets/Social Medias/addImage.gif";
-import f from "../../../assets/Social Medias/f.gif";
-import linkedin from "../../../assets/Social Medias/linkedin.gif";
-import whatsup from "../../../assets/Social Medias/whatsup.gif";
-import twiter from "../../../assets/Social Medias/twiter.gif";
-import insta from "../../../assets/Social Medias/insta.gif";
-import clientProfile from "../../../assets/logo2.jpg";
-import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
 import formContext from "../../Context/FormContext.jsx";
 import axios from "axios";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Editor } from "primereact/editor";
-
+import { convertProductImageToBase64 } from "../../Helper/Convert.js";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const ProductDetail = () => {
     let {
@@ -151,7 +143,28 @@ const ProductDetail = () => {
         setQRCodeEdit,
       } = useContext(formContext);
       let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  // Fetching all data:
+  useEffect(() => {
+    let fetchProduct = async () => {
+      await axios
+        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail`, {
+          headers: {
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setProductData(res.data.result);
+          // setServiceData(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
+
+    fetchProduct();
+
+  }, []);
         // //Formik does not support file upload so we could create handler :
   const onUploadProductImage = async (e) => {
     let base64 = await convertProductImageToBase64(e.target.files[0]);
@@ -171,12 +184,7 @@ const ProductDetail = () => {
             productReleaseDate,
             productSummary,
           };
-          // const formData2 = new FormData();
-          // formData2.append("productImage", productImage);
-          // formData2.append("productTitle", productTitle);
-          // formData2.append("productReleaseDate", productReleaseDate);
-          // formData2.append("productSummary", productSummary);
-          // Make authenticated request with bearer token
+
           await axios
             .post("https://aristostech-digitalcard-application.onrender.com/productDetail", Productdata, {
               headers: {
@@ -214,7 +222,7 @@ const ProductDetail = () => {
         }
       }
       //Product form Edit:
-      async function handleProductEdit(e) {
+      async function handleProductUpdate(e) {
         e.preventDefault();
         try {
           setLoader3(true);
@@ -229,7 +237,7 @@ const ProductDetail = () => {
           // Make authenticated request with bearer token
           await axios
             .put(
-              `https://aristostech-digitalcard-application.onrender.com/productDetail/specific/${ProductId}`,
+              `https://aristostech-digitalcard-application.onrender.com/productDetail/update/${ProductId}`,
               data,
               {
                 headers: {
@@ -244,9 +252,8 @@ const ProductDetail = () => {
                 transition: Flip,
               });
               setLoader3(false);
-    
               setProductTitle("");
-              setProductImage("");
+              setProductImage(undefined);
               setProductSummary("");
               setProductReleaseDate("");
               setProductEdit(false);
@@ -272,6 +279,75 @@ const ProductDetail = () => {
           setLoader3(false);
         }
       }
+
+      
+      
+  //service form edit:
+
+  async function handleProductEdit(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .get(`https://aristostech-digitalcard-application.onrender.com/productDetail/specificId/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        setProductImage(res.data.data.productImage);
+        setProductTitle(res.data.data.productTitle);
+        setProductSummary(res.data.data.productSummary);
+        setProdictId(res.data.data._id)
+        setProductEdit(true);
+        setLoader3(false);
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setProductEdit(false);
+      });
+  }
+
+  //Service Form Delete:
+  async function handleProductDelete(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .delete(`https://aristostech-digitalcard-application.onrender.com/productDetail/delete/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setProductEdit(false);
+        setLoader3(false);
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setProductEdit(false);
+      });
+  }
   return (
     <div>
       <div
@@ -287,11 +363,11 @@ const ProductDetail = () => {
           {/* //product image */}
           <div className="form_group">
             <label htmlFor="productImage">
-            <p> Upload Product Image<span>{serviceImage !=undefined ? <i className='bx bx-check' style={{color:'green'}}></i> :<i className='bx bxs-chevrons-down bx-flashing' ></i>}</span></p>
+            <p> Upload Product Image<span>{productImage !=undefined ? <i className='bx bx-check' style={{color:'green'}}></i> :<i className='bx bxs-chevrons-down bx-flashing' ></i>}</span></p>
               <img
                 className="productImage"
-                src={productImage !== undefined ? productImage : background}
-                alt=""
+                src={productImage != undefined ? productImage : background}
+                alt="productImage"
                 name="productImage"
               />
       
@@ -348,9 +424,9 @@ const ProductDetail = () => {
             />
           </div>
 
-          {ProductEdit === true ? (
+          {ProductEdit ===  true? (
             <div className="form_submit">
-              <button onClick={handleProductEdit}>
+              <button onClick={handleProductUpdate}>
                 Update{loader3 ? <span className="loader3"></span> : ""}
               </button>
             </div>
@@ -362,6 +438,55 @@ const ProductDetail = () => {
             </div>
           )}
         </form>
+        {ProductData.length > 0 ? (
+          <div>
+            {ProductData.map((data, index) => {
+              return (
+                <div className="product_list" key={index}>
+                  <div className="ser_length">
+                    <h6>{index + 1}</h6>
+                  </div>
+                  <div className="ser_image">
+                    <img
+                      src={data.productImage ? data.productImage : background}
+                      alt="productImage"
+                    />
+                  </div>
+                  <div className="service_title">
+                    <h3>
+                      {data.productTitle ? data.productTitle : "Title Empty"}
+                    </h3>
+                  </div>
+
+                  <div className="service_summary">
+                    <p>
+                      {data.productSummary
+                        ? data.productSummary
+                        : "Summary Empty"}
+                    </p>
+                  </div>
+                  <div className="service_price">
+                    <small>Rs : 5000</small>
+                  </div>
+                  <div className="actions">
+                    <i
+                      class="bx bxs-edit edit"
+                      id={data._id}
+                      onClick={handleProductEdit}
+                    ></i>
+                    <i
+                      class="bx bxs-message-square-x delete"
+                      id={data._id}
+                      onClick={handleProductDelete}
+                    ></i>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

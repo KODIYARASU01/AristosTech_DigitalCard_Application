@@ -376,7 +376,7 @@ const ContactDetail = () => {
             />
           </div>
 
-          {ContactData && ContactData != undefined ? (
+          {ContactData.length>0 ? (
             <div className="form_submit">
               <button onClick={handleContactFormEdit}>
                 Update{loader3 ? <span className="loader3"></span> : ""}

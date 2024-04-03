@@ -31,6 +31,7 @@ const TestimonialDetail = () => {
     TestimonialData,
     setTestimonialData,
     TestimonialEdit,
+    setTestimonialEdit,
   } = useContext(formContext);
 
   console.log(TestimonialData)
@@ -113,7 +114,7 @@ const TestimonialDetail = () => {
     }
   }
   //Testimonial form Edit:
-  async function handleTestimonialEdit(e) {
+  async function handleTestimonialUpdate(e) {
     e.preventDefault();
     try {
       setLoader3(true);
@@ -168,7 +169,73 @@ const TestimonialDetail = () => {
       setLoader3(false);
     }
   }
+  //service form edit:
 
+  async function handleTestimonialEdit(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specificId/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        setClientImage(res.data.data.clientImage);
+        setClientName(res.data.data.clientName);
+        setClientFeedback(res.data.data.clientFeedback);
+        setClientFeedbackDate(res.data.data.clientFeedbackDate)
+        setTestimonialID(res.data.data._id)
+         setTestimonialEdit(true);
+        setLoader3(false);
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setTestimonialEdit(false);
+      });
+  }
+
+  //Service Form Delete:
+  async function handleTestimonialDelete(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .delete(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/delete/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+         setTestimonialEdit(false);
+        setLoader3(false);
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+         setTestimonialEdit(false);
+      });
+  }
   return (
     <div>
       <div
@@ -246,7 +313,7 @@ const TestimonialDetail = () => {
 
           {TestimonialEdit === true ? (
             <div className="form_submit">
-              <button onClick={handleTestimonialEdit}>
+              <button onClick={handleTestimonialUpdate}>
                 Update{loader3 ? <span className="loader3"></span> : ""}
               </button>
             </div>
@@ -258,6 +325,55 @@ const TestimonialDetail = () => {
             </div>
           )}
         </form>
+        {TestimonialData.length > 0 ? (
+          <div>
+            {TestimonialData.map((data, index) => {
+              return (
+                <div className="testimonial_list" key={index}>
+                  <div className="ser_length">
+                    <h6>{index + 1}</h6>
+                  </div>
+                  <div className="ser_image">
+                    <img
+                      src={data.clientImage ? data.clientImage : background}
+                      alt="clientImage"
+                    />
+                  </div>
+                  <div className="service_title">
+                    <h3>
+                      {data.clientName ? data.clientName : "Client Name Empty"}
+                    </h3>
+                  </div>
+
+                  <div className="service_summary">
+                    <p>
+                      {data.clientFeedback
+                        ? data.clientFeedback
+                        : "Feedback Empty"}
+                    </p>
+                  </div>
+                  <div className="service_price">
+                    <small>{data.clientFeedbackDate ? data.clientFeedbackDate : 'Date Empty'}</small>
+                  </div>
+                  <div className="actions">
+                    <i
+                      class="bx bxs-edit edit"
+                      id={data._id}
+                      onClick={handleTestimonialEdit}
+                    ></i>
+                    <i
+                      class="bx bxs-message-square-x delete"
+                      id={data._id}
+                      onClick={handleTestimonialDelete}
+                    ></i>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

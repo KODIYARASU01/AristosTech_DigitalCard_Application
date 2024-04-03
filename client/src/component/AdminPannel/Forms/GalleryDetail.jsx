@@ -13,13 +13,9 @@ import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
 
 import formContext from "../../Context/FormContext.jsx";
 import {
-  convertToBase64Basic,
-  convertTestimonialImageToBase64,
-  convertServiceImageToBase64,
-  convertProductImageToBase64,
+
   convertGalleryImageToBase64,
-  convertBannerImageToBase64,
-  convertQRCodeImageToBase64,
+
 } from "../../Helper/Convert.js";
 import axios from "axios";
 import { Flip, toast, ToastContainer } from "react-toastify";
@@ -160,6 +156,28 @@ const GalleryDetail = () => {
     QRCodeEdit,
     setQRCodeEdit,
   } = useContext(formContext);
+
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  // Fetching all data:
+  useEffect(() => {
+    let fetchGallery = async () => {
+      await axios
+        .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail`, {
+          headers: {
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setGalleryData(res.data.result);
+          // setServiceData(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    fetchGallery();
+  }, []);
   //Formik does not support file upload so we could create handler :
   const onUploadGalleryImage = async (e) => {
     let base64 = await convertGalleryImageToBase64(e.target.files[0]);
@@ -171,7 +189,7 @@ const GalleryDetail = () => {
     try {
       setLoader3(true);
       // Retrieve token from local storage or wherever it's stored
-      let id = JSON.parse(localStorage.getItem("token"));
+      let id = JSON.parse(localStorage.getItem("datas"));
       let Gallerydata = {
         galleryImage,
         videoURL,
@@ -179,12 +197,13 @@ const GalleryDetail = () => {
 
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/gallery_detail", Gallerydata, {
+        .post("https://aristostech-digitalcard-application.onrender.com/galleryDetail", Gallerydata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
+          setGalleryData(res.data.result);
           toast.success(res.data.message, {
             position: "top-center",
             autoClose: 2000,
@@ -216,19 +235,19 @@ const GalleryDetail = () => {
     }
   }
   //Gallery form Edit:
-  async function handleGalleryEdit(e) {
+  async function handleGalleryUpdate(e) {
     e.preventDefault();
     try {
       setLoader3(true);
       // Retrieve token from local storage or wherever it's stored
-      let id = JSON.parse(localStorage.getItem("token"));
+      let id = JSON.parse(localStorage.getItem("datas"));
       let data = {
         galleryImage,
         videoURL,
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/gallery_detail/specific/${GallId}`, data, {
+        .put(`https://aristostech-digitalcard-application.onrender.com/galleryDetail/update/${GallId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -264,6 +283,72 @@ const GalleryDetail = () => {
       });
       setLoader3(false);
     }
+  }
+
+  //gallery form edit:
+
+  async function handleGalleryEdit(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail/specificId/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setGalleryImage(res.data.data.galleryImage);
+        setGallId(res.data.data._id);
+        setGalleryEdit(true);
+        setLoader3(false);
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setGalleryEdit(false);
+      });
+  }
+
+  //Service Form Delete:
+  async function handleGalleryDelete(e) {
+    setLoader3(true);
+    // Retrieve token from local storage or wherever it's stored
+    let id = JSON.parse(localStorage.getItem("datas"));
+    await axios
+      .delete(`https://aristostech-digitalcard-application.onrender.com/galleryDetail/delete/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${id.token}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setGalleryEdit(false);
+        setLoader3(false);
+      })
+      .catch((err) => {
+        toast.error(err, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+        setLoader3(false);
+        setGalleryEdit(false);
+      });
   }
   return (
     <div>
@@ -317,7 +402,7 @@ const GalleryDetail = () => {
 
           {GalleryEdit === true ? (
             <div className="form_submit">
-              <button onClick={handleGalleryEdit}>
+              <button onClick={handleGalleryUpdate}>
                 Update{loader3 ? <span className="loader3"></span> : ""}
               </button>
             </div>
@@ -329,6 +414,40 @@ const GalleryDetail = () => {
             </div>
           )}
         </form>
+        {GalleryData.length > 0 ? (
+          <div>
+            {GalleryData.map((data, index) => {
+              return (
+                <div className="gallery_list" key={index}>
+                  <div className="ser_length">
+                    <h6>{index + 1}</h6>
+                  </div>
+                  <div className="ser_image">
+                    <img
+                      src={data.galleryImage ? data.galleryImage : background}
+                      alt="galleryImage"
+                    />
+                  </div>
+
+                  <div className="actions">
+                    <i
+                      class="bx bxs-edit edit"
+                      id={data._id}
+                      onClick={handleGalleryEdit}
+                    ></i>
+                    <i
+                      class="bx bxs-message-square-x delete"
+                      id={data._id}
+                      onClick={handleGalleryDelete}
+                    ></i>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

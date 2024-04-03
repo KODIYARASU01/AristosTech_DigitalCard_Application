@@ -68,7 +68,7 @@ export const readSpecificUserData = async (req, res) => {
 export const getSpecificIdData = async (req, res) => {
   try {
     let {id}=req.params;
-    let getSpecificData = await ServiceDetails.find(id );
+    let getSpecificData = await ServiceDetails.findById(id );
 
     if (!getSpecificData) {
       res.status(400).json({ message: "Specific Data Not Found" });

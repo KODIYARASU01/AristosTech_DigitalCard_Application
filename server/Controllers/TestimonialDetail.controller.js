@@ -57,17 +57,33 @@ export const readSpecificUserData = async (req, res) => {
     let getSpecificData = await TestimonialDetails.find({ user: req.user.id });
 
     if (!getSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Testimonial Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Fetched", data: getSpecificData });
+        .json({ message: "Testimonial Data Fetched", data: getSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+// //Read or get Specific User all Data  :
+export const getSpecificIdData = async (req, res) => {
+  try {
+    let {id}=req.params;
+    let getSpecificData = await TestimonialDetails.findById(id );
 
+    if (!getSpecificData) {
+      res.status(400).json({ message: "Testimonial Data Not Found" });
+    } else {
+      res
+        .status(201)
+        .json({ message: "Testimonial Data Fetched", data: getSpecificData });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 //Update Specific document user data:
 
 export const updateSpecificUserData = async (req, res) => {
@@ -77,11 +93,11 @@ export const updateSpecificUserData = async (req, res) => {
     let updateSpecificData = await TestimonialDetails.findByIdAndUpdate(id, data);
 
     if (!updateSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Testimonial Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Updated", data: updateSpecificData });
+        .json({ message: "Testimonial Data Updated", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -96,11 +112,11 @@ export const deleteSpecificUserAllData = async (req, res) => {
     });
 
     if (!deleteSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Testimonial Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Deleted", data: deleteSpecificData });
+        .json({ message: "Testimonial Data Deleted", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -116,11 +132,11 @@ export const deleteSpecificUserData = async (req, res) => {
     let deleteSpecificData = await TestimonialDetails.findByIdAndDelete(id);
 
     if (!deleteSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Testimonial Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Deleted", data: deleteSpecificData });
+        .json({ message: "Testimonial Data Deleted", data: deleteSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

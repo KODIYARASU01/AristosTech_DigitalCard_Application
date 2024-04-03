@@ -34,6 +34,8 @@ import formContext from "../../Context/FormContext";
 
 const DemoCard = () => {
   let {
+    ServiceId,
+    setServiceId,
     user,
     setUser,
     userToken,
@@ -507,77 +509,8 @@ const DemoCard = () => {
         setLoader3(false);
       });
   };
-  //Fetch while cliking Service Button:
-  const handleEdit3 = async (e) => {
-    setData(e.target.id);
-    setLoader3(true);
-    // Retrieve token from local storage or wherever it's stored
-    let id = JSON.parse(localStorage.getItem("datas"));
-    await axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specificId/${Data}`, {
-        headers: {
-          Authorization: `Bearer ${id.token}`,
-        },
-      })
-      .then((res) => {
-        toast.success(res.data.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        console.log(res);
-        setServiceImage(res.data.result.serviceImage);
-        setServiceTitle(res.data.result.serviceTitle);
-        setServiceSummary(res.data.result.serviceSummary);
-        setServiceEdit(true);
-        setLoader3(false);
-      })
-      .catch((err) => {
-        toast.error(err.responce.data.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setLoader3(false);
-        setServiceEdit(false);
-      });
-  };
 
-  //Fetch while cliking Product Button:
-  const handleEdit4 = async (e) => {
-    setProdictId(e.target.id);
-    setLoader3(true);
-    // Retrieve token from local storage or wherever it's stored
-    let id = JSON.parse(localStorage.getItem("datas"));
-    await axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/product_detail/specific/${ProductId}`, {
-        headers: {
-          Authorization: `Bearer ${id.token}`,
-        },
-      })
-      .then((res) => {
-        toast.success(res.data.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setProductImage(res.data.getProductDetail.productImage);
-        setProductTitle(res.data.getProductDetail.productTitle);
-        setProductSummary(res.data.getProductDetail.productSummary);
-        setProductReleaseDate(res.data.getProductDetail.productReleaseDate);
-        setProductEdit(true);
-        setLoader3(false);
-      })
-      .catch((err) => {
-        toast.error(err.responce.dat.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setLoader3(false);
-        setProductEdit(false);
-      });
-  };
+
 
   //Fetch while cliking Gallery Button:
   const handleEdit5 = async (e) => {
@@ -689,109 +622,7 @@ const DemoCard = () => {
         setLoader3(false);
       });
   };
-  //Fetch while cliking QRCode Button:
-  const handleEdit8 = async (e) => {
-    setQRCodeId(e.target.id);
-    setLoader3(true);
-    // Retrieve token from local storage or wherever it's stored
-    let id = JSON.parse(localStorage.getItem("datas"));
-    axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail/specific/${QRCodeId}`, {
-        headers: {
-          Authorization: `Bearer ${id.token}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.getGalleryDetail.length > 0) {
-          toast.success(res.data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            transition: Flip,
-          });
-        }
-        if (res.data.getGalleryDetail.length <= 0) {
-          toast.error("Data not found", {
-            position: "top-center",
-            autoClose: 2000,
-            transition: Flip,
-          });
-        }
-        setQRCodeImage(res.data.getQRCodeDetails.QRCodeImage);
-        setGalleryEdit(true);
-        setLoader3(false);
-      })
-      .catch((err) => {
-        toast.error(err, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setLoader3(false);
-        setGalleryEdit(false);
-      });
-  };
-  //Fetch while cliking Service Button:
-  async function handleDelete3(e) {
-    setData(e.target.id);
-    setLoader3(true);
-    // Retrieve token from local storage or wherever it's stored
-    let id = JSON.parse(localStorage.getItem("datas"));
-    await axios
-      .delete(`https://aristostech-digitalcard-application.onrender.com/service_detail/specific/${Data}`, {
-        headers: {
-          Authorization: `Bearer ${id.token}`,
-        },
-      })
-      .then((res) => {
-        toast.success(res.data.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setServiceEdit(true);
-        setLoader3(false);
-      })
-      .catch((err) => {
-        toast.error(err, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setLoader3(false);
-        setServiceEdit(false);
-      });
-  }
-  //Fetch while cliking Service Button:
-  async function handleDelete4(e) {
-    setProdictId(e.target.id);
-    setLoader3(true);
-    // Retrieve token from local storage or wherever it's stored
-    let id = JSON.parse(localStorage.getItem("datas"));
-    await axios
-      .delete(`https://aristostech-digitalcard-application.onrender.com/product_detail/specific/${ProductId}`, {
-        headers: {
-          Authorization: `Bearer ${id.token}`,
-        },
-      })
-      .then((res) => {
-        toast.success(res.data.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setProductEdit(true);
-        setLoader3(false);
-      })
-      .catch((err) => {
-        toast.error(err.responce.message, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setLoader3(false);
-        setProductEdit(false);
-      });
-  }
+
   //Fetch while cliking testimonial Button:
   function handleEdit7(e) {
     setTestimonialID(e.target.id);
@@ -875,49 +706,7 @@ const DemoCard = () => {
         setLoader3(false);
       });
   }
-  //Fetch while cliking QRCode Button:
-  function handleDelete8(e) {
-    setQRCodeId(e.target.id);
-    setLoader3(true);
-    // Retrieve token from local storage or wherever it's stored
-    let id = JSON.parse(localStorage.getItem("datas"));
-    axios
-      .delete(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail/specific/${QRCodeId}`, {
-        headers: {
-          Authorization: `Bearer ${id.token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.getQRCodeDetails.length > 0) {
-          toast.success(res.data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            transition: Flip,
-          });
-        }
-        console.log(res.data.getQRCodeDetails);
-        if (res.data.getQRCodeDetails.length <= 0) {
-          toast.error("Data not found", {
-            position: "top-center",
-            autoClose: 2000,
-            transition: Flip,
-          });
-        }
-        setQRCodeImage(res.data.getQRCodeDetails.QRCodeImage);
-        setGalleryEdit(true);
-        setLoader3(false);
-      })
-      .catch((err) => {
-        toast.error(err, {
-          position: "top-center",
-          autoClose: 2000,
-          transition: Flip,
-        });
-        setLoader3(false);
-        setGalleryEdit(false);
-      });
-  }
+
 
   return (
     <>
@@ -1034,7 +823,7 @@ const DemoCard = () => {
                   )}
 
                   {/* //Contact */}
-                  {ContactData != undefined ? (
+                  {ContactData.length > 0 ? (
                     <div>
                       <div className="contact_container">
                         <div
@@ -1166,33 +955,6 @@ const DemoCard = () => {
                       ? ServiceData.map((data, index) => {
                           return (
                             <div className="list" key={index}>
-                              <div
-                                className="box_2_edit"
-                                onClick={() => {
-                                  setBasicForm(false),
-                                    setContactForm(false),
-                                    setGalleryForm(false),
-                                    setProductForm(false),
-                                    setServiceForm(true),
-                                    setSocialMediaForm(false),
-                                    setTestimonialForm(false);
-                                  setQRCodeForm(false);
-                                }}
-                              >
-                                <i
-                                  onClick={handleEdit3}
-                                  className="uil uil-edit"
-                                  ref={serviceRef}
-                                  id={data._id}
-                                ></i>
-                              </div>
-                              <div className="box_2_delete">
-                                <i
-                                  onClick={handleDelete3}
-                                  class="uil uil-trash-alt"
-                                  id={data._id}
-                                ></i>
-                              </div>
                               <div className="service_image">
                                 <img src={data.serviceImage} alt="frontEnd" />
                               </div>
@@ -1242,33 +1004,7 @@ const DemoCard = () => {
                         ></path>
                       </svg>
                       <div className="qrCode_container">
-                        <div
-                          className="box_2_edit"
-                          onClick={() => {
-                            setBasicForm(false),
-                              setContactForm(false),
-                              setGalleryForm(false),
-                              setProductForm(false),
-                              setServiceForm(false),
-                              setSocialMediaForm(false),
-                              setTestimonialForm(false);
-                            setQRCodeForm(true);
-                          }}
-                        >
-                          <i
-                            onClick={handleEdit8}
-                            className="uil uil-edit"
-                            id={data._id}
-                          ></i>
-                        </div>
-                        <div className="box_2_delete">
-                          <i
-                            // onClick={handleDelete3}
-                            onClick={handleDelete8}
-                            class="uil uil-trash-alt"
-                            id={data._id}
-                          ></i>
-                        </div>
+                     
                         <div className="qrcode_title">
                           <h4>
                             QR Code <img src={qr3} alt="img" />
@@ -1324,33 +1060,7 @@ const DemoCard = () => {
                     {ProductData.map((data, index) => {
                       return (
                         <div className="box" key={index}>
-                          <div
-                            className="box_2_edit"
-                            onClick={() => {
-                              setBasicForm(false),
-                                setContactForm(false),
-                                setGalleryForm(false),
-                                setProductForm(true),
-                                setServiceForm(false),
-                                setSocialMediaForm(false),
-                                setTestimonialForm(false);
-                              setQRCodeForm(false);
-                            }}
-                          >
-                            <i
-                              onClick={handleEdit4}
-                              className="uil uil-edit"
-                              id={data._id}
-                            ></i>
-                          </div>
-                          <div className="box_2_delete">
-                            <i
-                              onClick={handleDelete4}
-                              class="uil uil-trash-alt"
-                              id={data._id}
-                            ></i>
-                          </div>
-
+                     
                           <img src={data.productImage} alt="taxi" />
 
                           <div className="title">

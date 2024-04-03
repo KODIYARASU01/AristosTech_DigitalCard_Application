@@ -5,7 +5,8 @@ import {
   readSpecificUserData,
   updateSpecificUserData,
   deleteSpecificUserAllData,
-  deleteSpecificUserData
+  deleteSpecificUserData,
+  getSpecificIdData
 } from "../Controllers/TestimonialDetail.controller.js";
 import { verifyToken } from "../Middleware/verifyToken.js";
 
@@ -18,6 +19,8 @@ router.post("/", verifyToken, createData);
 router.get("/", verifyToken, readAllData);
  //Read Specific user all Data:
 router.get("/specific/:id", verifyToken, readSpecificUserData);
+ //Read Specific  ID Data:
+ router.get("/specificId/:id", verifyToken, getSpecificIdData);
 //Update Specific user Single Data:
 router.put("/update/:id", verifyToken, updateSpecificUserData);
 //Delete Specific user all Data in Basic Detail:
