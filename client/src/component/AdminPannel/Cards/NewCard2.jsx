@@ -178,7 +178,7 @@ const NewCard2 = () => {
   useEffect(() => {
     let fetch = async () => {
       await axios
-        .get(`http://localhost:3001/basicDetail/`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -192,7 +192,7 @@ const NewCard2 = () => {
     };
     let socialmedia = async () => {
       await axios
-        .get("http://localhost:3001/socialMediaDetail", {
+        .get("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -206,7 +206,7 @@ const NewCard2 = () => {
     };
     let contactDetail = async () => {
       await axios
-        .get("http://localhost:3001/contactDetail", {
+        .get("https://aristostech-digitalcard-application.onrender.com/contactDetail", {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -220,7 +220,7 @@ const NewCard2 = () => {
     };
     let fetchService = async () => {
       await axios
-        .get(`http://localhost:3001/serviceDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -235,7 +235,7 @@ const NewCard2 = () => {
     };
     let fetchQRCode = async () => {
       await axios
-        .get(`http://localhost:3001/QRCodeDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -249,7 +249,7 @@ const NewCard2 = () => {
     };
     let fetchProduct = async () => {
       await axios
-        .get(`http://localhost:3001/productDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -263,7 +263,7 @@ const NewCard2 = () => {
     };
     let fetchGallery = async () => {
       await axios
-        .get(`http://localhost:3001/galleryDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -277,7 +277,7 @@ const NewCard2 = () => {
     };
     let fetchSocialMedia = async () => {
       await axios
-        .get(`http://localhost:3001/socialMediaDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/socialMediaDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -291,7 +291,7 @@ const NewCard2 = () => {
     };
     let fetchTestimonial = async () => {
       await axios
-        .get(`http://localhost:3001/testimonialDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

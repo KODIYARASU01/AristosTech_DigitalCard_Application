@@ -149,7 +149,7 @@ const QRCodeDetail = () => {
       useEffect(() => {
         let fetchQRCode = async () => {
           await axios
-            .get(`http://localhost:3001/QRCodeDetail`, {
+            .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail`, {
               headers: {
                 Authorization: `Bearer ${localStorageDatas.token}`,
               },
@@ -188,7 +188,7 @@ const QRCodeDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post("http://localhost:3001/QRCodeDetail", data, {
+        .post("https://aristostech-digitalcard-application.onrender.com/QRCodeDetail", data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -236,7 +236,7 @@ const QRCodeDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`http://localhost:3001/QRCodeDetail/update/${QRCodeId}`, data, {
+        .put(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/update/${QRCodeId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -280,7 +280,7 @@ const QRCodeDetail = () => {
       // Retrieve token from local storage or wherever it's stored
       let id = JSON.parse(localStorage.getItem("datas"));
       await axios
-        .get(`http://localhost:3001/QRCodeDetail/specificId/${e.target.id}`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specificId/${e.target.id}`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -315,7 +315,7 @@ const QRCodeDetail = () => {
       // Retrieve token from local storage or wherever it's stored
       let id = JSON.parse(localStorage.getItem("datas"));
       await axios
-        .delete(`http://localhost:3001/QRCodeDetail/delete/${e.target.id}`, {
+        .delete(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/delete/${e.target.id}`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

@@ -149,7 +149,7 @@ const ProductDetail = () => {
   useEffect(() => {
     let fetchProduct = async () => {
       await axios
-        .get(`http://localhost:3001/productDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -188,7 +188,7 @@ const ProductDetail = () => {
           };
 
           await axios
-            .post("http://localhost:3001/productDetail", Productdata, {
+            .post("https://aristostech-digitalcard-application.onrender.com/productDetail", Productdata, {
               headers: {
                 Authorization: `Bearer ${id.token}`,
               },
@@ -240,7 +240,7 @@ const ProductDetail = () => {
           // Make authenticated request with bearer token
           await axios
             .put(
-              `http://localhost:3001/productDetail/update/${ProductId}`,
+              `https://aristostech-digitalcard-application.onrender.com/productDetail/update/${ProductId}`,
               data,
               {
                 headers: {
@@ -292,7 +292,7 @@ const ProductDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .get(`http://localhost:3001/productDetail/specificId/${e.target.id}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/productDetail/specificId/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -327,7 +327,7 @@ const ProductDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .delete(`http://localhost:3001/productDetail/delete/${e.target.id}`, {
+      .delete(`https://aristostech-digitalcard-application.onrender.com/productDetail/delete/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
