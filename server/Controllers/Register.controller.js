@@ -129,7 +129,7 @@ export const LoginUser = async (req, res) => {
         } else {
           //Create token for specific user:
           let token = jwt.sign(
-            { id: checkUser.id, email: checkUser.email }, //Token payload stored our  data
+            { id: checkUser.id, email: checkUser.email,name:checkUser.firstName }, //Token payload stored our  data
             process.env.SECRET_KEY,
             { expiresIn: "30d" }
           );
@@ -144,6 +144,7 @@ export const LoginUser = async (req, res) => {
             .json({
               token: token,
               id: checkUser.id,
+              name:checkUser.firstName,
               message: "User Login Sucessfully ",
             });
         }

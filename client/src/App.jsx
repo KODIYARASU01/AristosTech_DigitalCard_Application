@@ -3,6 +3,7 @@ import "./App.css";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import formContext from "./component/Context/FormContext";
 import BasicDetail from "./component/AdminPannel/Forms/BasicDetail";
+import NewCard2 from "./component/AdminPannel/Cards/NewCard2";
 
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
@@ -133,6 +134,8 @@ const App = () => {
 
   let [TestimonialEdit, setTestimonialEdit] = useState(false);
   let [QRCodeEdit, setQRCodeEdit] = useState(false);
+
+console.log(user)
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -350,7 +353,10 @@ const App = () => {
             />
             {/* You can use your authRoutes with useAuthRoutes hook here if needed */}
 
-            <Route path="/basicdetail" element={<BasicDetail />} />
+            <Route
+              path='/aristostech'
+              element={user ? <NewCard2 /> : <SignIn />}
+            />
           </Routes>
         </Suspense>
       </formContext.Provider>

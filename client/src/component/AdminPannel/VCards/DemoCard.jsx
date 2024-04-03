@@ -21,11 +21,7 @@ import crm from "../../../assets/products/sassCRM.jpg";
 import cloud from "../../../assets/products/cloudBilling1.jpg";
 import jobPortal from "../../../assets/products/jobPortal.jpg";
 import axios from "axios";
-//Gallery
-// import gallery from "../../../assets/Background/23.jpg";
-// import gallery1 from "../../../assets/Background/24.jpg";
-// import gallery2 from "../../../assets/Background/25.jpg";
-// import gallery3 from "../../../assets/Background/23.jpg";
+
 //Testimonial
 import { Flip, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -172,24 +168,18 @@ const DemoCard = () => {
   } = useContext(formContext);
 
   let serviceRef = useRef(null);
-
   // Retrieve token from local storage or wherever it's stored
   let id = JSON.parse(localStorage.getItem("datas"));
   useEffect(() => {
     let fetch = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
+        .get(`http://localhost:3001/basicDetail/`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          console.log(res.data.result.length);
-          if (res.data.result.length > 0) {
-            setBasicData(res.data.result);
-          } else {
-            setBasicData();
-          }
+          setBasicData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -197,17 +187,13 @@ const DemoCard = () => {
     };
     let socialmedia = async () => {
       await axios
-        .get("https://aristostech-digitalcard-application.onrender.com/socialMedia_detail", {
+        .get("http://localhost:3001/socialMediaDetail", {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          if (res.data.getSocialMediaDetail.length > 0) {
-            setSocialMediaData(res.data.getSocialMediaDetail[0]);
-          } else {
-            setSocialMediaData();
-          }
+          setSocialMediaData(res.data.result[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -215,17 +201,13 @@ const DemoCard = () => {
     };
     let contactDetail = async () => {
       await axios
-        .get("https://aristostech-digitalcard-application.onrender.com/contact_detail", {
+        .get("http://localhost:3001/contactDetail", {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          if (res.data.getContactDetail.length > 0) {
-            setContactData(res.data.getContactDetail[0]);
-          } else {
-            setContactData();
-          }
+          setContactData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -233,14 +215,14 @@ const DemoCard = () => {
     };
     let fetchService = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/service_detail`, {
+        .get(`http://localhost:3001/serviceDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          setServiceData(res.data.getServiceDetail);
-          // setServiceData(res);
+          setServiceData(res.data.result);
+
         })
         .catch((err) => {
           console.log(err);
@@ -248,13 +230,13 @@ const DemoCard = () => {
     };
     let fetchQRCode = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail`, {
+        .get(`http://localhost:3001/QRCodeDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          setQRCodeData(res.data.getQRCodeDetails);
+          setQRCodeData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -262,14 +244,13 @@ const DemoCard = () => {
     };
     let fetchProduct = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/product_detail`, {
+        .get(`http://localhost:3001/productDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          setProductData(res.data.getProductDetail);
-          // setServiceData(res);
+          setProductData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -277,14 +258,13 @@ const DemoCard = () => {
     };
     let fetchGallery = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/gallery_detail`, {
+        .get(`http://localhost:3001/galleryDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          setGalleryData(res.data.getGalleryDetail);
-          // setServiceData(res);
+          setGalleryImage(res.data.data.galleryImage);
         })
         .catch((err) => {
           console.log(err);
@@ -292,14 +272,13 @@ const DemoCard = () => {
     };
     let fetchSocialMedia = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`, {
+        .get(`http://localhost:3001/socialMediaDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          setSocialMediaData(res.data.getSocialMediaDetail);
-          // setServiceData(res);
+          setSocialMediaData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -307,14 +286,13 @@ const DemoCard = () => {
     };
     let fetchTestimonial = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/testimonial_detail`, {
+        .get(`http://localhost:3001/testimonialDetail`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
-          setTestimonialData(res.data.getTestimonialDetail);
-          // setServiceData(res);
+          setTestimonialData(res.data.result)
         })
         .catch((err) => {
           console.log(err);
@@ -324,12 +302,13 @@ const DemoCard = () => {
     socialmedia();
     contactDetail();
     fetchService();
-    // fetchQRCode();
-    // fetchProduct();
-    // fetchGallery();
-    // fetchSocialMedia();
-    // fetchTestimonial();
+    fetchQRCode();
+    fetchProduct();
+    fetchGallery();
+    fetchSocialMedia();
+    fetchTestimonial();
   }, []);
+
 
   const buttonStyle = {
     width: "0px",
@@ -364,8 +343,8 @@ const DemoCard = () => {
   };
   //Testimonial
   const buttonStyle2 = {
-    width: "20px",
-    height: "20px",
+    width: "50px",
+    height: "50px",
     borderRadius: "50%",
     background: "none",
     border: "0px",
@@ -373,29 +352,21 @@ const DemoCard = () => {
   const properties2 = {
     prevArrow: (
       <button style={{ ...buttonStyle2 }}>
-        <img
-          width="48"
-          height="48"
-          src="https://img.icons8.com/fluency/48/back.png"
-          alt="back"
-        />
+     
+       <i className='bx bx-chevron-left bx-fade-right' style={{fontSize:'2.3rem',color:'skyblue'}}  ></i>
+      {/* <img width="18" height="18" src="https://img.icons8.com/fluency/48/back.png" alt="back"/> */}
       </button>
     ),
     nextArrow: (
       <button style={{ ...buttonStyle2 }}>
-        <img
-          width="48"
-          height="48"
-          src="https://img.icons8.com/fluency/48/forward--v2.png"
-          alt="forward--v2"
-        />
+    <i class='bx bx-chevron-right bx-fade-right'style={{fontSize:'2.3rem',color:'skyblue'}}  ></i>
       </button>
     ),
   };
   const buttonStyle1 = {
     width: "0px",
     background: "none",
-    opacity: 0,
+    opacity:0,
     border: "0px",
     padding: "0px",
   };
@@ -424,13 +395,13 @@ const DemoCard = () => {
     ),
   };
   // // Function to strip HTML tags from a string
-  // const stripHtmlTags = (html) => {
-  //   if (html === null) {
-  //     return ''; // Return an empty string if html is null
-  //   }
-  //   const strippedHtml = html.replace(/(<([^>]+)>)/gi, '');
-  //   return strippedHtml;
-  // };
+  const stripHtmlTags = (html) => {
+    if (html === null) {
+      return ''; // Return an empty string if html is null
+    }
+    const strippedHtml = html.replace(/(<([^>]+)>)/gi, '');
+    return strippedHtml;
+  };
   //Fetch while cliking edit button:
   const handleEdit1 = async (e) => {
     setBasicID(e.target.id);
@@ -438,7 +409,7 @@ const DemoCard = () => {
     let id = JSON.parse(localStorage.getItem("datas"));
     setLoader3(true);
     await axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${BasicID}`, {
+      .get(`http://localhost:3001/basicDetail/specific/${BasicID}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -476,7 +447,7 @@ const DemoCard = () => {
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
 
-      .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${Data}`, {
+      .get(`http://localhost:3001/contactDetail/specific/${Data}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -510,8 +481,6 @@ const DemoCard = () => {
       });
   };
 
-
-
   //Fetch while cliking Gallery Button:
   const handleEdit5 = async (e) => {
     setGallId(e.target.id);
@@ -519,7 +488,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/gallery_detail/specific/${GallId}`, {
+      .get(`http://localhost:3001/gallery_detail/specific/${GallId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -553,7 +522,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .delete(`https://aristostech-digitalcard-application.onrender.com/gallery_detail/specific/${GallId}`, {
+      .delete(`http://localhost:3001/gallery_detail/specific/${GallId}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -583,7 +552,7 @@ const DemoCard = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`, {
+      .get(`http://localhost:3001/socialMedia_detail`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -632,7 +601,7 @@ const DemoCard = () => {
     axios
 
       .get(
-        `https://aristostech-digitalcard-application.onrender.com/testimonial_detail/specific/${TestimonialID}`,
+        `http://localhost:3001/testimonial_detail/specific/${TestimonialID}`,
         {
           headers: {
             Authorization: `Bearer ${id.token}`,
@@ -681,7 +650,7 @@ const DemoCard = () => {
     let id = JSON.parse(localStorage.getItem("datas"));
     axios
       .delete(
-        `https://aristostech-digitalcard-application.onrender.com/testimonial_detail/specific/${TestimonialID}`,
+        `http://localhost:3001/testimonial_detail/specific/${TestimonialID}`,
         {
           headers: {
             Authorization: `Bearer ${id.token}`,
@@ -707,15 +676,13 @@ const DemoCard = () => {
       });
   }
 
-
   return (
     <>
-      <div className="demoCard_container">
+   <div className="demoCard_container">
         <div className="Demo_card_title">
           <h4>Live Preview Digital Card Update</h4>
         </div>
-
-        {BasicData != undefined ? (
+    {BasicData != undefined ? (
           <div className="card_box">
             {BasicData.map((data, index) => {
               return (
@@ -772,7 +739,7 @@ const DemoCard = () => {
                     </div>
                     <div className="summary">
                       <p>
-                        {data.summary ||
+                        {stripHtmlTags(data.summary) ||
                           `We're designers, developers, engineers, marketers, and pretty
     much everything else for your business need. However, it is not
     how we choose to introduce ourselves.`}
@@ -914,7 +881,7 @@ const DemoCard = () => {
                             </div>
                             <div className="details">
                               <h4>
-                                {ContactData[0].Address ||
+                                {stripHtmlTags(ContactData[0].Address) ||
                                   `Chennai , T-Nagar,Tamilnadu`}
                               </h4>
                               <h5>Address</h5>
@@ -965,7 +932,7 @@ const DemoCard = () => {
                               </div>
                               <div className="service_detail">
                                 <p>
-                                  {data.serviceSummary ||
+                                  {stripHtmlTags(data.serviceSummary) ||
                                     `   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                       Voluptas maxime sapiente dolorum nemo nobis eveniet quaerat
                       provident rem ut enim esse, necessitatibus praesentium
@@ -1004,7 +971,6 @@ const DemoCard = () => {
                         ></path>
                       </svg>
                       <div className="qrCode_container">
-                     
                         <div className="qrcode_title">
                           <h4>
                             QR Code <img src={qr3} alt="img" />
@@ -1060,7 +1026,6 @@ const DemoCard = () => {
                     {ProductData.map((data, index) => {
                       return (
                         <div className="box" key={index}>
-                     
                           <img src={data.productImage} alt="taxi" />
 
                           <div className="title">
@@ -1071,7 +1036,7 @@ const DemoCard = () => {
                           </div>
                           <div className="product_summary">
                             <p>
-                              {data.productSummary ||
+                              {stripHtmlTags(data.productSummary) ||
                                 `  Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Recusandae expedita illo totam, corrupti est impedit!`}
                             </p>
@@ -1216,7 +1181,7 @@ const DemoCard = () => {
                                   {data.clientName || "Marry"}
                                 </p>
                                 <small>
-                                  {data.clientFeedback ||
+                                  {stripHtmlTags(data.clientFeedback) ||
                                     ` Lorem, ipsum dolor sit amet consectetur adipisicing
                           elit. Sunt dolores maiores nam quisquam magni
                           provident labore laboriosam asperiores culpa
@@ -1385,7 +1350,9 @@ const DemoCard = () => {
         ) : (
           ""
         )}
-      </div>
+        
+        </div> 
+     
     </>
   );
 };

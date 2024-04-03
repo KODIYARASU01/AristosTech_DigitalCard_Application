@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useEffect} from 'react';
 import './Styles/SocialMedia.scss'
 import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
@@ -151,6 +151,30 @@ const SocialMedia = () => {
         setQRCodeEdit,
       } = useContext(formContext);
       let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+      // Fetching all data:
+      useEffect(() => {
+
+        let socialmedia = async () => {
+          await axios
+            .get("http://localhost:3001/socialMediaDetail", {
+              headers: {
+                Authorization: `Bearer ${localStorageDatas.token}`,
+              },
+            })
+            .then((res) => {
+              setSocialMediaData(res.data.result);
+              setFacebook(res.data.result[0].Facebook);
+              setInstagram(res.data.result[0].Instagram);
+              setTwiter(res.data.result[0].Twiter);
+              setWhatsUp(res.data.result[0].WhatsUp);
+              setLinkedIn(res.data.result[0].LinkedIn);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+        socialmedia();
+      }, []);
       //SocialMedia form submit:
   async function handleSocialMediaFormSubmit(e) {
     e.preventDefault();
@@ -168,7 +192,7 @@ const SocialMedia = () => {
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", SocialMediadata, {
+        .post("http://localhost:3001/socialMediaDetail", SocialMediadata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -183,7 +207,6 @@ const SocialMedia = () => {
           setLoader3(false);
         })
         .catch((error) => {
-          console.log(error.message);
           setLoader3(false);
           toast.error(error.response.data.message, {
             position: "top-center",
@@ -219,7 +242,7 @@ const SocialMedia = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/update/${SocialMediaData[0]._id}`,
+          `http://localhost:3001/socialMediaDetail/update/${SocialMediaData[0]._id}`,
           data,
           {
             headers: {

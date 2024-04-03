@@ -142,19 +142,21 @@ const ProductDetail = () => {
         QRCodeEdit,
         setQRCodeEdit,
       } = useContext(formContext);
+
+      console.log(ProductData)
       let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
   // Fetching all data:
   useEffect(() => {
     let fetchProduct = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail`, {
+        .get(`http://localhost:3001/productDetail`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
           setProductData(res.data.result);
-          // setServiceData(res);
+
         })
         .catch((err) => {
           console.log(err);
@@ -186,12 +188,13 @@ const ProductDetail = () => {
           };
 
           await axios
-            .post("https://aristostech-digitalcard-application.onrender.com/productDetail", Productdata, {
+            .post("http://localhost:3001/productDetail", Productdata, {
               headers: {
                 Authorization: `Bearer ${id.token}`,
               },
             })
             .then((res) => {
+              setProductData(res.data)
               toast.success(res.data.message, {
                 position: "top-center",
                 autoClose: 2000,
@@ -237,7 +240,7 @@ const ProductDetail = () => {
           // Make authenticated request with bearer token
           await axios
             .put(
-              `https://aristostech-digitalcard-application.onrender.com/productDetail/update/${ProductId}`,
+              `http://localhost:3001/productDetail/update/${ProductId}`,
               data,
               {
                 headers: {
@@ -289,7 +292,7 @@ const ProductDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/productDetail/specificId/${e.target.id}`, {
+      .get(`http://localhost:3001/productDetail/specificId/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -324,7 +327,7 @@ const ProductDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .delete(`https://aristostech-digitalcard-application.onrender.com/productDetail/delete/${e.target.id}`, {
+      .delete(`http://localhost:3001/productDetail/delete/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },

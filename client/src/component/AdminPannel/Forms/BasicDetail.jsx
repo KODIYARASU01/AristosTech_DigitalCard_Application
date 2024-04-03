@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext ,useEffect} from "react";
 import formContext from "../../Context/FormContext";
 import user from "../../../assets/Social Medias/user1.gif";
 import "./Styles/BasiDetails.scss";
@@ -34,10 +34,40 @@ const BasicDetail = () => {
     summary,
     setSummary,
     BasicData,
+    setBasicData
 
   } = useContext(formContext);
+console.log(BasicData)
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  // Fetching all data:
+  useEffect(() => {
+    let fetch = async () => {
+      setLoader3(true);
+      await axios
+        .get(`http://localhost:3001/basicDetail/`, {
+          headers: {
+            Authorization: `Bearer ${localStorageDatas.token}`,
+          },
+        })
+        .then((res) => {
+          setBasicData(res.data.result)
+          setBanner(res.data.result[0].banner);
+          setLogo(res.data.result[0].logo);
+          setFullName(res.data.result[0].fullName);
+          setProfession(res.data.result[0].profession);
+          setSummary(res.data.result[0].summary);
+          setBasicID(res.data.result[0]._id);
+          setLoader3(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoader3(false);
+        });
+    };
+  
+    fetch();
 
-  console.log(BasicData)
+  }, []);
   //Formik does not support file upload so we could create handler :
   const onUpload = async (e) => {
     let base64 = await convertToBase64Basic(e.target.files[0]);
@@ -69,12 +99,13 @@ const BasicDetail = () => {
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/basicDetail", data, {
+        .post("http://localhost:3001/basicDetail", data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((responce) => {
+          
           toast.success(responce.data.message, {
             position: "top-center",
             autoClose: 2000,
@@ -119,7 +150,7 @@ const BasicDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/basicDetail/update/${BasicID}`, data, {
+        .put(`http://localhost:3001/basicDetail/update/${BasicID}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

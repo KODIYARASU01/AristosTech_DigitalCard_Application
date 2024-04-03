@@ -181,7 +181,7 @@ const AdminPannel = () => {
   useEffect(() => {
     setLoader(true);
     axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`)
+      .get(`http://localhost:3001/auth/register/${UserData.id}`)
       .then((responce) => {
         setProfile(responce.data.data.profile);
         setFirstName(responce.data.data.firstName);
@@ -247,7 +247,7 @@ const AdminPannel = () => {
         mobileNumber,
       };
       axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`, data)
+        .put(`http://localhost:3001/auth/register/${UserData.id}`, data)
         .then((res) => {
           toast.success(res.data.message, {
             position: "top-right",

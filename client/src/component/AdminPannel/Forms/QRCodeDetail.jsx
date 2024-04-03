@@ -149,7 +149,7 @@ const QRCodeDetail = () => {
       useEffect(() => {
         let fetchQRCode = async () => {
           await axios
-            .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail`, {
+            .get(`http://localhost:3001/QRCodeDetail`, {
               headers: {
                 Authorization: `Bearer ${localStorageDatas.token}`,
               },
@@ -157,6 +157,7 @@ const QRCodeDetail = () => {
             .then((res) => {
           
               setQRCodeData(res.data.result);
+              setQRCodeImage(res.data.result[0].QRCodeImage)
             })
             .catch((err) => {
               console.log(err);
@@ -187,7 +188,7 @@ const QRCodeDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/QRCodeDetail", data, {
+        .post("http://localhost:3001/QRCodeDetail", data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -235,7 +236,7 @@ const QRCodeDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/update/${QRCodeId}`, data, {
+        .put(`http://localhost:3001/QRCodeDetail/update/${QRCodeId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -279,7 +280,7 @@ const QRCodeDetail = () => {
       // Retrieve token from local storage or wherever it's stored
       let id = JSON.parse(localStorage.getItem("datas"));
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specificId/${e.target.id}`, {
+        .get(`http://localhost:3001/QRCodeDetail/specificId/${e.target.id}`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -314,7 +315,7 @@ const QRCodeDetail = () => {
       // Retrieve token from local storage or wherever it's stored
       let id = JSON.parse(localStorage.getItem("datas"));
       await axios
-        .delete(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/delete/${e.target.id}`, {
+        .delete(`http://localhost:3001/QRCodeDetail/delete/${e.target.id}`, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -369,7 +370,7 @@ const QRCodeDetail = () => {
                   id="QRCodeImage"
                 />
               </div>
-              {QRCodeData.length > 0  ? (
+              {QRCodeData!=undefined  ? (
                 <div className="form_submit">
                   {/* <button onClick={handleQRCodeUpdate}>
                     Update{loader3 ? <span className="loader3"></span> : ""}
@@ -397,7 +398,7 @@ const QRCodeDetail = () => {
               )}
             </form>
 
-            {QRCodeData.length > 0 ? (
+            { QRCodeData !== undefined ? (
           <div>
             {QRCodeData.map((data, index) => {
               return (

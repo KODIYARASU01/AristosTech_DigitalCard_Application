@@ -1,4 +1,4 @@
-import React,{useRef,useEffect} from "react";
+import React, { useRef, useEffect } from "react";
 import "./NewCard2.scss";
 import banner from "../../../assets/Background/12.jpg";
 import avatar from "../../../assets/avatar_2.png";
@@ -165,33 +165,26 @@ const NewCard2 = () => {
     setQRCodeEdit,
   } = useContext(formContext);
   let serviceRef = useRef(null);
- // Function to strip HTML tags from a string
- const stripHtmlTags = (html) => {
-  if (html === null) {
-    return ''; // Return an empty string if html is null
-  }
-  const strippedHtml = html.replace(/(<([^>]+)>)/gi, '');
-  return strippedHtml;
-};
+  // Function to strip HTML tags from a string
+  const stripHtmlTags = (html) => {
+    if (html === null) {
+      return ""; // Return an empty string if html is null
+    }
+    const strippedHtml = html.replace(/(<([^>]+)>)/gi, "");
+    return strippedHtml;
+  };
   // Retrieve token from local storage or wherever it's stored
-  let id = JSON.parse(localStorage.getItem("token"));
+  let id = JSON.parse(localStorage.getItem("datas"));
   useEffect(() => {
     let fetch = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/basic_detail/`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/basicDetail/`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          if (res.data.result.length > 0) {
-            setBasicData(res.data.result);
-          } else {
-            setBasicData();
-          }
+          setBasicData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -199,20 +192,13 @@ const NewCard2 = () => {
     };
     let socialmedia = async () => {
       await axios
-        .get(
-          "https://aristostech-digitalcard-application.onrender.com/socialMedia_detail",
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get("http://localhost:3001/socialMediaDetail", {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          if (res.data.getSocialMediaDetail.length > 0) {
-            setSocialMediaData(res.data.getSocialMediaDetail[0]);
-          } else {
-            setSocialMediaData();
-          }
+          setSocialMediaData(res.data.result[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -220,20 +206,13 @@ const NewCard2 = () => {
     };
     let contactDetail = async () => {
       await axios
-        .get(
-          "https://aristostech-digitalcard-application.onrender.com/contact_detail",
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get("http://localhost:3001/contactDetail", {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          if (res.data.getContactDetail.length > 0) {
-            setContactData(res.data.getContactDetail[0]);
-          } else {
-            setContactData();
-          }
+          setContactData(res.data.result[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -241,17 +220,14 @@ const NewCard2 = () => {
     };
     let fetchService = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/service_detail`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/serviceDetail`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          setServiceData(res.data.getServiceDetail);
-          // setServiceData(res);
+          setServiceData(res.data.result);
+
         })
         .catch((err) => {
           console.log(err);
@@ -259,16 +235,13 @@ const NewCard2 = () => {
     };
     let fetchQRCode = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/qrcode_detail`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/QRCodeDetail`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          setQRCodeData(res.data.getQRCodeDetails);
+          setQRCodeData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -276,17 +249,13 @@ const NewCard2 = () => {
     };
     let fetchProduct = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/product_detail`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/productDetail`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          setProductData(res.data.getProductDetail);
-          // setServiceData(res);
+          setProductData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -294,17 +263,13 @@ const NewCard2 = () => {
     };
     let fetchGallery = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/gallery_detail`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/galleryDetail`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          setGalleryData(res.data.getGalleryDetail);
-          // setServiceData(res);
+          setGalleryImage(res.data.data.galleryImage);
         })
         .catch((err) => {
           console.log(err);
@@ -312,17 +277,13 @@ const NewCard2 = () => {
     };
     let fetchSocialMedia = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/socialMediaDetail`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          setSocialMediaData(res.data.getSocialMediaDetail);
-          // setServiceData(res);
+          setSocialMediaData(res.data.result);
         })
         .catch((err) => {
           console.log(err);
@@ -330,17 +291,13 @@ const NewCard2 = () => {
     };
     let fetchTestimonial = async () => {
       await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/testimonial_detail`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        )
+        .get(`http://localhost:3001/testimonialDetail`, {
+          headers: {
+            Authorization: `Bearer ${id.token}`,
+          },
+        })
         .then((res) => {
-          setTestimonialData(res.data.getTestimonialDetail);
-          // setServiceData(res);
+          setTestimonialData(res.data.result)
         })
         .catch((err) => {
           console.log(err);
@@ -398,21 +355,26 @@ const NewCard2 = () => {
   const properties2 = {
     prevArrow: (
       <button style={{ ...buttonStyle2 }}>
-     
-       <i className='bx bx-chevron-left bx-fade-right' style={{fontSize:'2.3rem',color:'skyblue'}}  ></i>
-      {/* <img width="18" height="18" src="https://img.icons8.com/fluency/48/back.png" alt="back"/> */}
+        <i
+          className="bx bx-chevron-left bx-fade-right"
+          style={{ fontSize: "2.3rem", color: "skyblue" }}
+        ></i>
+        {/* <img width="18" height="18" src="https://img.icons8.com/fluency/48/back.png" alt="back"/> */}
       </button>
     ),
     nextArrow: (
       <button style={{ ...buttonStyle2 }}>
-    <i class='bx bx-chevron-right bx-fade-right'style={{fontSize:'2.3rem',color:'skyblue'}}  ></i>
+        <i
+          class="bx bx-chevron-right bx-fade-right"
+          style={{ fontSize: "2.3rem", color: "skyblue" }}
+        ></i>
       </button>
     ),
   };
   const buttonStyle1 = {
     width: "0px",
     background: "none",
-    opacity:0,
+    opacity: 0,
     border: "0px",
     padding: "0px",
   };
@@ -442,229 +404,12 @@ const NewCard2 = () => {
   };
   return (
     <div className="newCard_container2">
-        {BasicData!= undefined ? (
-          <div className="card_box">
-            {BasicData.map((data, index) => {
-              return (
-                <div className="box-1" key={index}>
-                 <svg
-                      className="svg_top"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 1440 320"
-                    >
-                      <path
-                        fill="#003253"
-                        fillOpacity="1"
-                        d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-                      ></path>
-                    </svg>
-
-                  <div className="Image_details">
-                    <div className="banner">
-                      <img src={data.banner || background} alt="banner" />
-                    </div>
-                    <div className="logo">
-                      <img src={data.logo || avatar} alt="avatar" />
-                    </div>
-                  </div>
-               
-
-                  <div className="basic_details">
-               
-                    <div className="author_name">
-                      <h4>{data.fullName || "Jayakumar "}</h4>
-                    </div>
-                    <div className="professional">
-                      <h6>
-                        {data.profession || "AritosTech India Private Limited "}
-                      </h6>
-                    </div>
-                    <div className="summary">
-                      <p>
-                        {stripHtmlTags(data.summary )||
-                          `We're designers, developers, engineers, marketers, and pretty
-    much everything else for your business need. However, it is not
-    how we choose to introduce ourselves.`}
-                      </p>
-                    </div>
-                  </div>
-
-                  {SocialMediaData != undefined ? (
-                    <div className="social_medias">
-                
-                      <a href={SocialMediaData.Twiter} target="_blank">
-                        <i className="uil uil-globe"></i>
-                      </a>
-                      <a href={SocialMediaData.Facebook} target="_blank">
-                        <i className="uil uil-facebook-f"></i>
-                      </a>
-                      <a href={SocialMediaData.Instagram} target="_blank">
-                        <i className="uil uil-instagram"></i>
-                      </a>
-                      <a href={SocialMediaData.WhatsUp} target="_blank">
-                        <i className="uil uil-whatsapp"></i>
-                      </a>
-                      <a href={SocialMediaData.Twiter} target="_blank">
-                        <i className="uil uil-twitter"></i>
-                      </a>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-
-                  {/* //Contact */}
-                  {ContactData != undefined ? (
-                    <div>
-                      <div className="contact_container">
-                 
-                        <div className="contact_title">
-                          <h4>Contact</h4>
-                        </div>
-
-                        <div className="contact_lists">
-                          <div className="list">
-                            <div className="image">
-                              <i className="uil uil-envelope-edit"></i>
-                            </div>
-                            <div className="details">
-                              <h4>
-                                {ContactData.Email || "kodiyarasu01@gmail.com"}
-                              </h4>
-                              <h5>Email</h5>
-                            </div>
-                          </div>
-                          <div className="list">
-                            <div className="image">
-                              <i className="uil uil-envelope-add"></i>
-                            </div>
-                            <div className="details">
-                              <h4>
-                                {ContactData.AlternateEmail ||
-                                  "akodi01@gmail.com"}
-                              </h4>
-                              <h5>Alternate Email</h5>
-                            </div>
-                          </div>
-                          <div className="list">
-                            <div className="image">
-                              <i className="uil uil-calling"></i>
-                            </div>
-                            <div className="details">
-                              <h4>
-                                {ContactData.MobileNumber || "+91 8825457794"}
-                              </h4>
-                              <h5>Mobile Number</h5>
-                            </div>
-                          </div>
-                          <div className="list">
-                            <div className="image">
-                              <i className="uil uil-phone-alt"></i>
-                            </div>
-                            <div className="details">
-                              <h4>
-                                {ContactData.AlternateMobileNumber ||
-                                  "+91 63456464646"}
-                              </h4>
-                              <h5>Alternate MobileNumber</h5>
-                            </div>
-                          </div>
-                          <div className="list">
-                            <div className="image">
-                              <i className="uil uil-calendar-alt"></i>
-                            </div>
-                            <div className="details">
-                              <h4>{ContactData.DOB || "22/01/2021"}</h4>
-                              <h5>Year of Estimation</h5>
-                            </div>
-                          </div>
-                          <div className="list">
-                            <div className="image">
-                              <i className="uil uil-location-point"></i>
-                            </div>
-                            <div className="details">
-                              <h4>
-                                {ContactData.Address ||
-                                  `Chennai , T-Nagar,Tamilnadu`}
-                              </h4>
-                              <h5>Address</h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <svg
-                        className="svg"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 1440 320"
-                      >
-                        <path
-                          fill="#003253"
-                          fillOpacity="1"
-                          d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
-                        ></path>
-                      </svg>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              );
-            })}
-            {/* Box-1 Basic Detail and Contact */}
-
-            {/* Box-2 Service */}
-            {ServiceData.length >= 1 ? (
-              <div className="box-2">
-                <div className="our_service">
-                  <div className="service_title">
-                    <h4>Our Services</h4>
-                  </div>
-
-                  <div className="service_lists">
-                    {ServiceData != undefined
-                      ? ServiceData.map((data, index) => {
-                          return (
-                            <div className="list" key={index}>
-                           
-                              <div className="service_image">
-                                <img src={data.serviceImage} alt="frontEnd" />
-                              </div>
-                              <div className="service1_title">
-                                <h4>
-                                  {data.serviceTitle || "FrontEnd Development"}
-                                </h4>
-                              </div>
-                              <div className="service_detail">
-                                <p>
-                                  {stripHtmlTags(data.serviceSummary ) ||
-                                    `   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Voluptas maxime sapiente dolorum nemo nobis eveniet quaerat
-                      provident rem ut enim esse, necessitatibus praesentium
-                      voluptatum nam.`}
-                                </p>
-                              </div>
-                              <div className="service_cost">
-                                <button>Rs 15000</button>
-                              </div>
-                            </div>
-                          );
-                        })
-                      : ""}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {/* Box-3 QRCode */}
-            {QRCodeData.length >= 1 ? (
-              <div>
-          
-
-                {QRCodeData.map((data, index) => {
-                  return (
-                    <div className="box-3" key={index}>
-                            <svg
+      {BasicData != undefined ? (
+        <div className="card_box">
+          {BasicData.map((data, index) => {
+            return (
+              <div className="box-1" key={index}>
+                <svg
                   className="svg_top"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 1440 320"
@@ -672,206 +417,466 @@ const NewCard2 = () => {
                   <path
                     fill="#003253"
                     fillOpacity="1"
-                    d="M0,64L34.3,85.3C68.6,107,137,149,206,165.3C274.3,181,343,171,411,160C480,149,549,139,617,160C685.7,181,754,235,823,245.3C891.4,256,960,224,1029,197.3C1097.1,171,1166,149,1234,122.7C1302.9,96,1371,64,1406,48L1440,32L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+                    d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
                   ></path>
                 </svg>
-                      <div className="qrCode_container">
-                      
-                        <div className="qrcode_title">
-                          <h4>
-                            QR Code <img src={qr3} alt="img" />
-                          </h4>
-                        </div>
 
-                        <div className="illustration1">
-                          <img src={qr2} alt="qr" />
+                <div className="Image_details">
+                  <div className="banner">
+                    <img src={data.banner || background} alt="banner" />
+                  </div>
+                  <div className="logo">
+                    <img src={data.logo || avatar} alt="avatar" />
+                  </div>
+                </div>
+
+                <div className="basic_details">
+                  <div className="author_name">
+                    <h4>{data.fullName || "Jayakumar "}</h4>
+                  </div>
+                  <div className="professional">
+                    <h6>
+                      {data.profession || "AritosTech India Private Limited "}
+                    </h6>
+                  </div>
+                  <div className="summary">
+                    <p>
+                      {stripHtmlTags(data.summary) ||
+                        `We're designers, developers, engineers, marketers, and pretty
+    much everything else for your business need. However, it is not
+    how we choose to introduce ourselves.`}
+                    </p>
+                  </div>
+                </div>
+
+                {SocialMediaData != undefined ? (
+                  <div className="social_medias">
+                    <a href={SocialMediaData.Twiter} target="_blank">
+                      <i className="uil uil-globe"></i>
+                    </a>
+                    <a href={SocialMediaData.Facebook} target="_blank">
+                      <i className="uil uil-facebook-f"></i>
+                    </a>
+                    <a href={SocialMediaData.Instagram} target="_blank">
+                      <i className="uil uil-instagram"></i>
+                    </a>
+                    <a href={SocialMediaData.WhatsUp} target="_blank">
+                      <i className="uil uil-whatsapp"></i>
+                    </a>
+                    <a href={SocialMediaData.Twiter} target="_blank">
+                      <i className="uil uil-twitter"></i>
+                    </a>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {/* //Contact */}
+                {ContactData != undefined ? (
+                  <div>
+                    <div className="contact_container">
+                      <div className="contact_title">
+                        <h4>Contact</h4>
+                      </div>
+
+                      <div className="contact_lists">
+                        <div className="list">
+                          <div className="image">
+                            <i className="uil uil-envelope-edit"></i>
+                          </div>
+                          <div className="details">
+                            <h4>
+                              {ContactData.Email || "kodiyarasu01@gmail.com"}
+                            </h4>
+                            <h5>Email</h5>
+                          </div>
                         </div>
-                        <div className="illustration2">
-                          <img src={qr1} alt="qr" />
+                        <div className="list">
+                          <div className="image">
+                            <i className="uil uil-envelope-add"></i>
+                          </div>
+                          <div className="details">
+                            <h4>
+                              {ContactData.AlternateEmail ||
+                                "akodi01@gmail.com"}
+                            </h4>
+                            <h5>Alternate Email</h5>
+                          </div>
                         </div>
-                        <div className="qrCode_image">
-                          <img src={data.QRCodeImage} alt="qrs" />
+                        <div className="list">
+                          <div className="image">
+                            <i className="uil uil-calling"></i>
+                          </div>
+                          <div className="details">
+                            <h4>
+                              {ContactData.MobileNumber || "+91 8825457794"}
+                            </h4>
+                            <h5>Mobile Number</h5>
+                          </div>
+                        </div>
+                        <div className="list">
+                          <div className="image">
+                            <i className="uil uil-phone-alt"></i>
+                          </div>
+                          <div className="details">
+                            <h4>
+                              {ContactData.AlternateMobileNumber ||
+                                "+91 63456464646"}
+                            </h4>
+                            <h5>Alternate MobileNumber</h5>
+                          </div>
+                        </div>
+                        <div className="list">
+                          <div className="image">
+                            <i className="uil uil-calendar-alt"></i>
+                          </div>
+                          <div className="details">
+                            <h4>{ContactData.DOB || "22/01/2021"}</h4>
+                            <h5>Year of Estimation</h5>
+                          </div>
+                        </div>
+                        <div className="list">
+                          <div className="image">
+                            <i className="uil uil-location-point"></i>
+                          </div>
+                          <div className="details">
+                            <h4>
+                              {stripHtmlTags(ContactData.Address) ||
+                                `Chennai , T-Nagar,Tamilnadu`}
+                            </h4>
+                            <h5>Address</h5>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+                    <svg
+                      className="svg"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 1440 320"
+                    >
+                      <path
+                        fill="#003253"
+                        fillOpacity="1"
+                        d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
+                      ></path>
+                    </svg>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            );
+          })}
+          {/* Box-1 Basic Detail and Contact */}
 
+          {/* Box-2 Service */}
+          {ServiceData.length >= 1 ? (
+            <div className="box-2">
+              <div className="our_service">
+                <div className="service_title">
+                  <h4>Our Services</h4>
+                </div>
+
+                <div className="service_lists">
+                  {ServiceData != undefined
+                    ? ServiceData.map((data, index) => {
+                        return (
+                          <div className="list" key={index}>
+                            <div className="service_image">
+                              <img src={data.serviceImage} alt="frontEnd" />
+                            </div>
+                            <div className="service1_title">
+                              <h4>
+                                {data.serviceTitle || "FrontEnd Development"}
+                              </h4>
+                            </div>
+                            <div className="service_detail">
+                              <p>
+                                {stripHtmlTags(data.serviceSummary) ||
+                                  `   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      Voluptas maxime sapiente dolorum nemo nobis eveniet quaerat
+                      provident rem ut enim esse, necessitatibus praesentium
+                      voluptatum nam.`}
+                              </p>
+                            </div>
+                            <div className="service_cost">
+                              <button>Rs 15000</button>
+                            </div>
+                          </div>
+                        );
+                      })
+                    : ""}
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* Box-3 QRCode */}
+          {QRCodeData.length >= 1 ? (
+            <div>
+              {QRCodeData.map((data, index) => {
+                return (
+                  <div className="box-3" key={index}>
+                    <svg
+                      className="svg_top"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 1440 320"
+                    >
+                      <path
+                        fill="#003253"
+                        fillOpacity="1"
+                        d="M0,64L34.3,85.3C68.6,107,137,149,206,165.3C274.3,181,343,171,411,160C480,149,549,139,617,160C685.7,181,754,235,823,245.3C891.4,256,960,224,1029,197.3C1097.1,171,1166,149,1234,122.7C1302.9,96,1371,64,1406,48L1440,32L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+                      ></path>
+                    </svg>
+                    <div className="qrCode_container">
+                      <div className="qrcode_title">
+                        <h4>
+                          QR Code <img src={qr3} alt="img" />
+                        </h4>
+                      </div>
+
+                      <div className="illustration1">
+                        <img src={qr2} alt="qr" />
+                      </div>
+                      <div className="illustration2">
+                        <img src={qr1} alt="qr" />
+                      </div>
+                      <div className="qrCode_image">
+                        <img src={data.QRCodeImage} alt="qrs" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              <svg
+                className="svg"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1440 320"
+              >
+                <path
+                  fill="#003253"
+                  fillOpacity="1"
+                  d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
+                ></path>
+              </svg>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* Box-4 Product */}
+          {ProductData.length >= 1 ? (
+            <div className="box-4">
+              <div className="product_container">
+                <div className="product_title">
+                  <h4>Our Products</h4>
+                </div>
+                <Slide
+                  className="product_slide"
+                  slidesToScroll={1}
+                  slidesToShow={2}
+                  indicators={true}
+                  autoplay
+                  {...properties}
+                  autoplayInterval={1000}
+                >
+                  {ProductData.map((data, index) => {
+                    return (
+                      <div className="box" key={index}>
+                        <img src={data.productImage} alt="taxi" />
+
+                        <div className="title">
+                          <h4>{data.productTitle}</h4>
+                          <button>
+                            Rs : <span>8000</span>
+                          </button>
+                        </div>
+                        <div className="product_summary">
+                          <p>
+                            {stripHtmlTags(data.productSummary) ||
+                              `  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Recusandae expedita illo totam, corrupti est impedit!`}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </Slide>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {/* Box-5 Gallery */}
+          {GalleryData.length >= 1 ? (
+            <div className="box_gallery">
+              {/* Gallery */}
+              <div className="gallery">
+                <div className="gallery_title">
+                  <h4>Gallery</h4>
+                </div>
+                <Slide
+                  className="slide"
+                  slidesToScroll={1}
+                  slidesToShow={1}
+                  indicators={true}
+                  autoplay
+                  {...properties1}
+                  autoplayInterval={1000}
+                >
+                  {GalleryData.map((data, index) => {
+                    return (
+                      <div key={index} className="gall">
+                        <img
+                          src={
+                            data.galleryImage != undefined
+                              ? data.galleryImage
+                              : background
+                          }
+                          alt="gallery"
+                        />
+                      </div>
+                    );
+                  })}
+                </Slide>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* Box-6 Testimonial */}
+
+          {TestimonialData.length >= 1 ? (
+            <div className="testimonial_con">
+              <div className="box-5">
                 <svg
-                  className="svg"
+                  className="testimonial_wave"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 1440 320"
                 >
                   <path
                     fill="#003253"
                     fillOpacity="1"
-                    d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
-                  ></path>
-                </svg>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {/* Box-4 Product */}
-            {ProductData.length >= 1 ? (
-              <div className="box-4">
-                <div className="product_container">
-                  <div className="product_title">
-                    <h4>Our Products</h4>
-                  </div>
-                  <Slide
-                    className="product_slide"
-                    slidesToScroll={1}
-                    slidesToShow={2}
-                    indicators={true}
-                    autoplay
-                    {...properties}
-                    autoplayInterval={1000}
-                  >
-                    {ProductData.map((data, index) => {
-                      return (
-                        <div className="box" key={index}>
-                      
-
-                          <img src={data.productImage} alt="taxi" />
-
-                          <div className="title">
-                            <h4>{data.productTitle}</h4>
-                            <button>
-                              Rs : <span>8000</span>
-                            </button>
-                          </div>
-                          <div className="product_summary">
-                            <p>
-                              {stripHtmlTags(data.productSummary ) ||
-                                `  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Recusandae expedita illo totam, corrupti est impedit!`}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </Slide>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-            {/* Box-5 Gallery */}
-            {GalleryData.length >= 1 ? (
-              <div className="box_gallery">
-                {/* Gallery */}
-                <div className="gallery">
-                  <div className="gallery_title">
-                    <h4>Gallery</h4>
-                  </div>
-                  <Slide
-                    className="slide"
-                    slidesToScroll={1}
-                    slidesToShow={1}
-                    indicators={true}
-                    autoplay
-                    {...properties1}
-                    autoplayInterval={1000}
-                  >
-                    {GalleryData.map((data, index) => {
-                      return (
-                        <div key={index} className="gall">
-                       
-                          <img
-                            src={
-                              data.galleryImage != undefined
-                                ? data.galleryImage
-                                : background
-                            }
-                            alt="gallery"
-                          />
-                        </div>
-                      );
-                    })}
-                  </Slide>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            {/* Box-6 Testimonial */}
-
-            {TestimonialData.length >= 1 ? (
-              <div className="testimonial_con">
-          
-                <div className="box-5">
-                <svg className="testimonial_wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                  <path
-                    fill="#003253"
-                    fillOpacity="1"
                     d="M0,192L480,64L960,224L1440,64L1440,320L960,320L480,320L0,320Z"
                   ></path>
                 </svg>
-                  <div className="testimonial_container">
-                    <div className="testimonial_title">
-                      <h4>Testimonials</h4>
-                    </div>
-                    <div className="testimonial_details">
-                      <Slide
-                        {...properties2}
-                        slidesToScroll={1}
-                        slidesToShow={1}
-                        indicators={true}
-                        autoplay
-                      >
-                        {TestimonialData.map((data, index) => {
-                          return (
-                            <div className="slide_1" key={index}>
-                        
-                              <img
-                                className="TestimonialImage"
-                                src={data.clientImage || logo}
-                              />
+                <div className="testimonial_container">
+                  <div className="testimonial_title">
+                    <h4>Testimonials</h4>
+                  </div>
+                  <div className="testimonial_details">
+                    <Slide
+                      {...properties2}
+                      slidesToScroll={1}
+                      slidesToShow={1}
+                      indicators={true}
+                      autoplay
+                    >
+                      {TestimonialData.map((data, index) => {
+                        return (
+                          <div className="slide_1" key={index}>
+                            <img
+                              className="TestimonialImage"
+                              src={data.clientImage || logo}
+                            />
 
-                              <div className="details">
-                                <p className="name">
-                                  {data.clientName || "Marry"}
-                                </p>
-                                <small>
-                                  {stripHtmlTags(data.clientFeedback ) ||
-                                    ` Lorem, ipsum dolor sit amet consectetur adipisicing
+                            <div className="details">
+                              <p className="name">
+                                {data.clientName || "Marry"}
+                              </p>
+                              <small>
+                                {stripHtmlTags(data.clientFeedback) ||
+                                  ` Lorem, ipsum dolor sit amet consectetur adipisicing
                           elit. Sunt dolores maiores nam quisquam magni
                           provident labore laboriosam asperiores culpa
                           molestiae!`}
-                                </small>
-                              </div>
+                              </small>
                             </div>
-                          );
-                        })}
-                      </Slide>
-                    </div>
+                          </div>
+                        );
+                      })}
+                    </Slide>
                   </div>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                  <path
-                    fill="#003253"
-                    fillOpacity="1"
-                    d="M0,192L480,64L960,224L1440,64L1440,0L960,0L480,0L0,0Z"
-                  ></path>
-                </svg>
               </div>
-            ) : (
-              ""
-            )}
-            {BasicData != undefined &&
-            ServiceData != undefined &&
-            ContactData != undefined &&
-            ProductData != undefined &&
-            GalleryData.length>=1 ? (
-              <div>
-                {/* //FeedBack */}
-                <div className="box-6">
-                  <div className="feedback_container">
-                    <div className="feedback_heading">
-                      <h5>Give Feedback Something About Us </h5>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path
+                  fill="#003253"
+                  fillOpacity="1"
+                  d="M0,192L480,64L960,224L1440,64L1440,0L960,0L480,0L0,0Z"
+                ></path>
+              </svg>
+            </div>
+          ) : (
+            ""
+          )}
+          {BasicData != undefined &&
+          ServiceData != undefined &&
+          ContactData != undefined &&
+          ProductData != undefined &&
+          GalleryData.length >= 1 ? (
+            <div>
+              {/* //FeedBack */}
+              <div className="box-6">
+                <div className="feedback_container">
+                  <div className="feedback_heading">
+                    <h5>Give Feedback Something About Us </h5>
+                  </div>
+                  <form action="">
+                    <div className="form_group">
+                      <input
+                        type="text"
+                        placeholder="Enter Full Name"
+                        name="name"
+                        id="name"
+                      />
+                      <img
+                        width="64"
+                        height="64"
+                        src="https://img.icons8.com/nolan/64/user.png"
+                        alt="user"
+                      />
+                    </div>
+                    <div className="form_group">
+                      <textarea
+                        name="msg"
+                        id="msg"
+                        cols="30"
+                        rows="4"
+                        placeholder="Tell something about us !"
+                      ></textarea>
+                      <img
+                        width="48"
+                        height="48"
+                        src="https://img.icons8.com/fluency/48/edit-text-file.png"
+                        alt="edit-text-file"
+                      />
+                    </div>
+                    <div className="form_actions">
+                      <button type="submit">Send Feedback</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              {/* /Enquire */}
+              <div className="box-7">
+                <div className="enquiry">
+                  <div className="inquire_title">
+                    <h4>Make Inquiries</h4>
+                  </div>
+                  <div className="equiry_container">
+                    <div className="enquiry_heading">
+                      <h5> Be in Touch </h5>
+                      <img
+                        width="48"
+                        height="48"
+                        src="https://img.icons8.com/fluency/48/group-background-selected.png"
+                        alt="group-background-selected"
+                      />
                     </div>
                     <form action="">
                       <div className="form_group">
@@ -886,6 +891,34 @@ const NewCard2 = () => {
                           height="64"
                           src="https://img.icons8.com/nolan/64/user.png"
                           alt="user"
+                        />
+                      </div>
+                      <div className="form_group">
+                        <input
+                          type="email"
+                          placeholder="Enter your email"
+                          name="email"
+                          id="email"
+                        />
+                        <img
+                          width="64"
+                          height="64"
+                          src="https://img.icons8.com/nolan/64/new-post.png"
+                          alt="new-post"
+                        />
+                      </div>
+                      <div className="form_group">
+                        <input
+                          type="tel"
+                          placeholder="Enter your mobile Number"
+                          name="tel"
+                          id="tel"
+                        />
+                        <img
+                          width="64"
+                          height="64"
+                          src="https://img.icons8.com/nolan/64/phone-disconnected.png"
+                          alt="phone-disconnected"
                         />
                       </div>
                       <div className="form_group">
@@ -904,111 +937,29 @@ const NewCard2 = () => {
                         />
                       </div>
                       <div className="form_actions">
-                        <button type="submit">Send Feedback</button>
+                        <button type="submit">Send Message</button>
                       </div>
                     </form>
                   </div>
                 </div>
-                {/* /Enquire */}
-                <div className="box-7">
-                  <div className="enquiry">
-                    <div className="inquire_title">
-                      <h4>Make Inquiries</h4>
-                    </div>
-                    <div className="equiry_container">
-                      <div className="enquiry_heading">
-                        <h5> Be in Touch </h5>
-                        <img
-                          width="48"
-                          height="48"
-                          src="https://img.icons8.com/fluency/48/group-background-selected.png"
-                          alt="group-background-selected"
-                        />
-                      </div>
-                      <form action="">
-                        <div className="form_group">
-                          <input
-                            type="text"
-                            placeholder="Enter Full Name"
-                            name="name"
-                            id="name"
-                          />
-                          <img
-                            width="64"
-                            height="64"
-                            src="https://img.icons8.com/nolan/64/user.png"
-                            alt="user"
-                          />
-                        </div>
-                        <div className="form_group">
-                          <input
-                            type="email"
-                            placeholder="Enter your email"
-                            name="email"
-                            id="email"
-                          />
-                          <img
-                            width="64"
-                            height="64"
-                            src="https://img.icons8.com/nolan/64/new-post.png"
-                            alt="new-post"
-                          />
-                        </div>
-                        <div className="form_group">
-                          <input
-                            type="tel"
-                            placeholder="Enter your mobile Number"
-                            name="tel"
-                            id="tel"
-                          />
-                          <img
-                            width="64"
-                            height="64"
-                            src="https://img.icons8.com/nolan/64/phone-disconnected.png"
-                            alt="phone-disconnected"
-                          />
-                        </div>
-                        <div className="form_group">
-                          <textarea
-                            name="msg"
-                            id="msg"
-                            cols="30"
-                            rows="4"
-                            placeholder="Tell something about us !"
-                          ></textarea>
-                          <img
-                            width="48"
-                            height="48"
-                            src="https://img.icons8.com/fluency/48/edit-text-file.png"
-                            alt="edit-text-file"
-                          />
-                        </div>
-                        <div className="form_actions">
-                          <button type="submit">Send Message</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+              </div>
 
-                <div className="box-8">
-                  {/* Copyrights */}
-                  <div className="copyright">
-                    <p>Copyright Reserved &copy; 2021 DigitalCard.com</p>
-                  </div>
+              <div className="box-8">
+                {/* Copyrights */}
+                <div className="copyright">
+                  <p>Copyright Reserved &copy; 2021 DigitalCard.com</p>
                 </div>
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-        ) : (
-          ""
-        )}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
 
 export default NewCard2;
-
-

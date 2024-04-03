@@ -176,151 +176,6 @@ let Forms = () => {
     setQRCodeEdit,
   } = useContext(formContext);
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
-  // Fetching all data:
-  // useEffect(() => {
-  //   let fetch = async () => {
-  //     setLoader3(true);
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorageDatas.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setBanner(res.data.result[0].banner);
-  //         setLogo(res.data.result[0].logo);
-  //         setFullName(res.data.result[0].fullName);
-  //         setProfession(res.data.result[0].profession);
-  //         setSummary(res.data.result[0].summary);
-  //         setBasicID(res.data.result[0]._id);
-  //         setLoader3(false);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setLoader3(false);
-  //       });
-  //   };
-  //   let socialmedia = async () => {
-  //     await axios
-  //       .get("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorageDatas.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setSocialMediaData(res.data.result);
-  //         setFacebook(res.data.result[0].Facebook);
-  //         setInstagram(res.data.result[0].Instagram);
-  //         setTwiter(res.data.result[0].Twiter);
-  //         setWhatsUp(res.data.result[0].WhatsUp);
-  //         setLinkedIn(res.data.result[0].LinkedIn);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  //   let fetchService = async () => {
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail`, {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorageDatas.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         console.log(res);
-  //         setServiceData(res.data.result);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   let fetchQRCode = async () => {
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/qrcode_detail`, {
-  //         headers: {
-  //           Authorization: `Bearer ${id.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setQRCodeData(res.data.getQRCodeDetails);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   let fetchProduct = async () => {
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/product_detail`, {
-  //         headers: {
-  //           Authorization: `Bearer ${id.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setProductData(res.data.getProductDetail);
-  //         // setServiceData(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   let fetchGallery = async () => {
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/gallery_detail`, {
-  //         headers: {
-  //           Authorization: `Bearer ${id.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setGalleryData(res.data.getGalleryDetail);
-  //         // setServiceData(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   let fetchSocialMedia = async () => {
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/socialMedia_detail`, {
-  //         headers: {
-  //           Authorization: `Bearer ${id.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setSocialMediaData(res.data.getSocialMediaDetail);
-  //         // setServiceData(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   let fetchTestimonial = async () => {
-  //     await axios
-  //       .get(`https://aristostech-digitalcard-application.onrender.com/testimonial_detail`, {
-  //         headers: {
-  //           Authorization: `Bearer ${id.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setTestimonialData(res.data.getTestimonialDetail);
-  //         // setServiceData(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   fetch();
-  //   socialmedia();
-
-  //   fetchService();
-  //   // fetchQRCode();
-  //   // fetchProduct();
-  //   // fetchGallery();
-  //   // fetchSocialMedia();
-  //   // fetchTestimonial();
-  // }, []);
-
-
   return (
     <>
       <div
@@ -359,12 +214,12 @@ let Forms = () => {
         {BasicData != undefined &&
         ContactData != undefined &&
         SocialMediaData != undefined &&
-        ServiceData.length >= 1 &&
-        ProductData.length >= 1 &&
-        GalleryData.length >= 1 &&
-        TestimonialData.length >= 1 ? (
+        ServiceData!= undefined &&
+        ProductData!= undefined &&
+        GalleryData!= undefined &&
+        TestimonialData!= undefined ? (
           <div className="final_digiCard">
-            <Link to={`/${fullName}`} target="_blank">
+            <Link to={'/aristostech'} target="_blank">
               <i className="bx bxs-hand-right bx-flashing"></i>Get Your Digital
               Card
             </Link>
