@@ -249,7 +249,7 @@ const SocialMedia = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `https://aristostech-digitalcard-application.onrender.comigitalcard-application.onrender.com/socialMediaDetail/update/${SocialMediaData[0]._id}`,
+          `https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/update/${SocialMediaData[0]._id}`,
           data,
           {
             headers: {
