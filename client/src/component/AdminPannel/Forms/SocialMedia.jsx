@@ -159,7 +159,7 @@ const SocialMedia = () => {
         let socialmedia = async () => {
           setLoader4(true)
           await axios
-            .get(`https://aristostech-digitalcard-application.onrender.comigitalcard-application.onrender.com/socialMediaDetail/specific/${id}`, {
+            .get(`https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/specific/${id}`, {
               headers: {
                 Authorization: `Bearer ${localStorageDatas.token}`,
               },
@@ -198,13 +198,14 @@ const SocialMedia = () => {
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.comigitalcard-application.onrender.com/socialMediaDetail", SocialMediadata, {
+        .post("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", SocialMediadata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
         })
         .then((res) => {
           setLoader3(false);
+          
           toast.success(res.data.message, {
             position: "top-center",
             autoClose: 2000,
@@ -223,7 +224,7 @@ const SocialMedia = () => {
       setLoader3(false);
     } catch (error) {
       // Handle errors
-      toast.error(error.response.data.message, {
+      toast.error(error.message, {
         position: "top-center",
         autoClose: 2000,
         transition: Flip,

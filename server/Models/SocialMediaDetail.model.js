@@ -9,24 +9,24 @@ let SocialMediaDetailSchema=new mongoose.Schema({
       },
     Facebook:{
         type:String,
-        unique:true
+        // unique:true
     },
     LinkedIn:{
         type:String,
-        unique:true
+        // unique:true
     },
     WhatsUp:{
         type:String,
         required:true,
-        unique:true
+        // unique:true
     },
     Instagram:{
         type:String,
-        unique:true
+        // unique:true
     },
     Twiter:{
         type:String,
-        unique:true
+        // unique:true
     }
 },
 {timestamps:true}

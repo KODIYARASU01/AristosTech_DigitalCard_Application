@@ -16,6 +16,7 @@ const App = () => {
   let [userToken, setUserToken] = useState("");
   let [loader3, setLoader3] = useState(false);
   let [loader4, setLoader4] = useState(false);
+  let [loader5, setLoader5] = useState(false);
   // State to store user authentication
   let [UserDetails, setUserDetails] = useState([]);
   let [show, setShow] = useState(false);
@@ -149,6 +150,8 @@ const App = () => {
         value={{
           loader4,
           setLoader4,
+          loader5,
+          setLoader5,
           ServiceId,
           setServiceId,
           userToken,
