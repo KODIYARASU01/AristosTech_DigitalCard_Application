@@ -2,13 +2,13 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import "./App.css";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import formContext from "./component/Context/FormContext";
-import BasicDetail from "./component/AdminPannel/Forms/BasicDetail";
 import NewCard2 from "./component/AdminPannel/Cards/NewCard2";
-
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
 // let UserDetail = lazy(() => import("./component/UserDetail/UserDetail"));
 let AdminPannel = lazy(() => import("./component/AdminPannel/AdminPannel"));
+
+let SuperAdminPanel=lazy(()=>import('./component/SuperAdmin_Panel/SuperAdmin'))
 const App = () => {
   const navigate = useNavigate();
 
@@ -137,7 +137,6 @@ const App = () => {
   let [TestimonialEdit, setTestimonialEdit] = useState(false);
   let [QRCodeEdit, setQRCodeEdit] = useState(false);
 
-  console.log(user);
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -363,6 +362,8 @@ const App = () => {
               path="/aristostech/:id"
               element={user ? <NewCard2 /> : <SignIn />}
             />
+
+            <Route path="/super_admin" element={<SuperAdminPanel/>}/>
           </Routes>
         </Suspense>
       </formContext.Provider>

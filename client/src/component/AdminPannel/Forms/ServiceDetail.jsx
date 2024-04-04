@@ -39,7 +39,7 @@ const ServiceDetail = () => {
     let fetchService = async () => {
       setLoader4(true)
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specific/${id}`, {
+        .get(`http://localhost:3001/serviceDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -88,7 +88,7 @@ const ServiceDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/serviceDetail", data, {
+        .post("http://localhost:3001/serviceDetail", data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -139,7 +139,7 @@ const ServiceDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/update/${ServiceId}`, data, {
+        .put(`http://localhost:3001/serviceDetail/update/${ServiceId}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -185,7 +185,7 @@ const ServiceDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specificId/${e.target.id}`, {
+      .get(`http://localhost:3001/serviceDetail/specificId/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -220,7 +220,7 @@ const ServiceDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .delete(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/delete/${e.target.id}`, {
+      .delete(`http://localhost:3001/serviceDetail/delete/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },

@@ -159,7 +159,7 @@ const SocialMedia = () => {
         let socialmedia = async () => {
           setLoader4(true)
           await axios
-            .get(`https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/specific/${id}`, {
+            .get(`http://localhost:3001/socialMediaDetail/specific/${id}`, {
               headers: {
                 Authorization: `Bearer ${localStorageDatas.token}`,
               },
@@ -198,7 +198,7 @@ const SocialMedia = () => {
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", SocialMediadata, {
+        .post("http://localhost:3001/socialMediaDetail", SocialMediadata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -249,7 +249,7 @@ const SocialMedia = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/update/${SocialMediaData[0]._id}`,
+          `http://localhost:3001/socialMediaDetail/update/${SocialMediaData[0]._id}`,
           data,
           {
             headers: {

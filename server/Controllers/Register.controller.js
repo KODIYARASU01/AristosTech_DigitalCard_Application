@@ -7,6 +7,10 @@ export const RegisterUser = async (req, res) => {
     //Get all those field data from body:
     let { profile, email, password, firstName, lastName, mobileNumber,location } =
       req.body;
+
+      if(mobileNumber.length <=9 || mobileNumber.length >=11 ){
+       return res.status(400).json({ message: "MobileNumber not valid" });
+      };
     //if user doesn't fill all those fields error through:
     if (!email || !password || !firstName || !lastName) {
       res.status(400).json({ message: "Fill all those * fields" });

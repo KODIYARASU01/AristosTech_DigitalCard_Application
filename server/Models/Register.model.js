@@ -25,6 +25,7 @@ let RegisterSchema = new mongoose.Schema(
     },
     mobileNumber: {
       type: String,
+      min:10
     },
     location:{
       type: String,

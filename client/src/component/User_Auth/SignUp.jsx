@@ -61,7 +61,7 @@ const SignUp = () => {
     };
     try {
       axios
-        .post("https://aristostech-digitalcard-application.onrender.com/auth/register", data)
+        .post("http://localhost:3001/auth/register", data)
         .then((response) => {
           toast.success(response.data.message, {
             position: "top-right",
@@ -185,7 +185,7 @@ const SignUp = () => {
               </div>
               {/* //Last Name */}
               <div className="form_group">
-                <label htmlFor="lastName">LastName </label>
+                <label htmlFor="last_Name">LastName </label>
                 <input
                   type="text"
                   placeholder="Eg : Kumar or K"
