@@ -5,7 +5,7 @@ import axios from "axios";
 const SuperAdmin = () => {
     let[AllUsers,setAllUsers]=useState([]);
   useEffect(() => {
-    axios.get("http://localhost:3001/auth/register")
+    axios.get("https://aristostech-digitalcard-application.onrender.com/auth/register")
       .then((res) => {
         console.log(res.data.data);
         setAllUsers(res.data.data)

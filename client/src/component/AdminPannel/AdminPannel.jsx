@@ -185,7 +185,7 @@ const AdminPannel = () => {
     setLoader(true);
     axios
       .get(
-        `http://localhost:3001/auth/register/${UserData.id}`
+        `https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`
       )
       .then((responce) => {
         setProfile(responce.data.data.profile);
@@ -253,7 +253,7 @@ const AdminPannel = () => {
       };
       axios
         .put(
-          `http://localhost:3001/auth/register/${UserData.id}`,
+          `https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`,
           data
         )
         .then((res) => {

@@ -44,7 +44,7 @@ const TestimonialDetail = () => {
     let fetchTestimonial = async () => {
       setLoader4(true)
       await axios
-        .get(`http://localhost:3001/testimonialDetail/specific/${id}`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -92,7 +92,7 @@ const TestimonialDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post(`http://localhost:3001/testimonialDetail`, SocialMediadata, {
+        .post(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail`, SocialMediadata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -145,7 +145,7 @@ const TestimonialDetail = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `http://localhost:3001/testimonialDetail/update/${TestimonialID}`,
+          `https://aristostech-digitalcard-application.onrender.com/testimonialDetail/update/${TestimonialID}`,
           data,
           {
             headers: {
@@ -192,7 +192,7 @@ const TestimonialDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .get(`http://localhost:3001/testimonialDetail/specificId/${e.target.id}`, {
+      .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specificId/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
@@ -228,7 +228,7 @@ const TestimonialDetail = () => {
     // Retrieve token from local storage or wherever it's stored
     let id = JSON.parse(localStorage.getItem("datas"));
     await axios
-      .delete(`http://localhost:3001/testimonialDetail/delete/${e.target.id}`, {
+      .delete(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/delete/${e.target.id}`, {
         headers: {
           Authorization: `Bearer ${id.token}`,
         },
