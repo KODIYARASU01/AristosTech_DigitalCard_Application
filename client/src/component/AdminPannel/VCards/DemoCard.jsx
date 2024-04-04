@@ -523,7 +523,7 @@ const DemoCard = () => {
                       </div>
                     </div>
 
-                    {SocialMediaData != undefined ? (
+                    {SocialMediaData && SocialMediaData.length > 0 ? (
                       <div className="social_medias">
                         <a href={SocialMediaData[0].Twiter} target="_blank">
                           <i className="uil uil-globe"></i>
