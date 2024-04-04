@@ -6,12 +6,14 @@ import formContext from "../../Context/FormContext.jsx";
 import {
   convertQRCodeImageToBase64,
 } from "../../Helper/Convert.js";
+import { useParams } from 'react-router-dom';
 import axios from "axios";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Editor } from "primereact/editor";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const QRCodeDetail = () => {
+  let id=useParams();
     let {
         userToken,
         setUserToken,
@@ -149,15 +151,14 @@ const QRCodeDetail = () => {
       useEffect(() => {
         let fetchQRCode = async () => {
           await axios
-            .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail`, {
+            .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specific/${id}`, {
               headers: {
                 Authorization: `Bearer ${localStorageDatas.token}`,
               },
             })
             .then((res) => {
-          
-              setQRCodeData(res.data.result);
-              setQRCodeImage(res.data.result[0].QRCodeImage)
+              setQRCodeData(res.data.data);
+              // setQRCodeImage(res.data.result[0].QRCodeImage)
             })
             .catch((err) => {
               console.log(err);
@@ -370,7 +371,7 @@ const QRCodeDetail = () => {
                   id="QRCodeImage"
                 />
               </div>
-              {QRCodeData!=undefined  ? (
+              {QRCodeData && QRCodeData.length >0  ? (
                 <div className="form_submit">
                   {/* <button onClick={handleQRCodeUpdate}>
                     Update{loader3 ? <span className="loader3"></span> : ""}

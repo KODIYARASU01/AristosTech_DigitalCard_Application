@@ -3,13 +3,7 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
 import upload from "../../../assets/Social Medias/addImage.gif";
-import f from "../../../assets/Social Medias/f.gif";
-import linkedin from "../../../assets/Social Medias/linkedin.gif";
-import whatsup from "../../../assets/Social Medias/whatsup.gif";
-import twiter from "../../../assets/Social Medias/twiter.gif";
-import insta from "../../../assets/Social Medias/insta.gif";
-import clientProfile from "../../../assets/logo2.jpg";
-import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import formContext from "../../Context/FormContext.jsx";
 import {
@@ -24,6 +18,7 @@ import { Editor } from "primereact/editor";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const GalleryDetail = () => {
+  let id=useParams();
   let {
     userToken,
     setUserToken,
@@ -162,14 +157,13 @@ const GalleryDetail = () => {
   useEffect(() => {
     let fetchGallery = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setGalleryData(res.data.result);
-          // setServiceData(res);
+          setGalleryData(res.data.data)
         })
         .catch((err) => {
           console.log(err);
@@ -414,7 +408,7 @@ const GalleryDetail = () => {
             </div>
           )}
         </form>
-        {GalleryData.length > 0 ? (
+        {GalleryData && GalleryData.length > 0 ? (
           <div>
             {GalleryData.map((data, index) => {
               return (

@@ -5,30 +5,23 @@ import avatar from "../../../assets/avatar_2.png";
 import logo from "../../../assets/avatar_2.png";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import frontEnd from "../../../assets/service/f1.svg";
-import backend from "../../../assets/service/b1.svg";
-import wordpress from "../../../assets/service/wp.svg";
-import Ecommerse from "../../../assets/service/ecommerse2.jpg";
-import qrCode from "../../../assets/QRCODE/qr.svg";
+
+import { useParams } from "react-router-dom";
 import qr1 from "../../../assets/QRCODE/qr-code-isometric.svg";
 import qr2 from "../../../assets/QRCODE/qr-code-monochromatic.svg";
 import qr3 from "../../../assets/QRCODE/qr-code-outline.svg";
-//Product
-import taxi from "../../../assets/products/taxi1.jpg";
-import ecommerse from "../../../assets/products/ecommerse2.jpg";
-import crm from "../../../assets/products/sassCRM.jpg";
-import cloud from "../../../assets/products/cloudBilling1.jpg";
-import jobPortal from "../../../assets/products/jobPortal.jpg";
-//Gallery
-import gallery from "../../../assets/Background/12.jpg";
-import gallery1 from "../../../assets/Background/21.jpg";
-import gallery2 from "../../../assets/Background/22.jpg";
-import gallery3 from "../../../assets/Background/12.jpg";
+import { Editor } from "primereact/editor";
+
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 //Testimonial
 import { useContext } from "react";
 import formContext from "../../Context/FormContext";
 import axios from "axios";
 const NewCard2 = () => {
+
+  let id=useParams();
   let {
     userToken,
     setUserToken,
@@ -165,40 +158,48 @@ const NewCard2 = () => {
     setQRCodeEdit,
   } = useContext(formContext);
   let serviceRef = useRef(null);
-  // Function to strip HTML tags from a string
-  const stripHtmlTags = (html) => {
-    if (html === null) {
-      return ""; // Return an empty string if html is null
-    }
-    const strippedHtml = html.replace(/(<([^>]+)>)/gi, "");
-    return strippedHtml;
-  };
+
   // Retrieve token from local storage or wherever it's stored
-  let id = JSON.parse(localStorage.getItem("datas"));
+  let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
   useEffect(() => {
     let fetch = async () => {
+      setLoader3(true);
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setBasicData(res.data.result);
+          setBasicData(res.data.data)
+          setBanner(res.data.data[0].banner);
+          setLogo(res.data.data[0].logo);
+          setFullName(res.data.data[0].fullName);
+          setProfession(res.data.data[0].profession);
+          setSummary(res.data.data[0].summary);
+          setBasicID(res.data.data[0]._id);
+          setLoader3(false);
         })
         .catch((err) => {
           console.log(err);
+          setLoader3(false);
         });
     };
     let socialmedia = async () => {
       await axios
-        .get("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", {
+        .get(`https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setSocialMediaData(res.data.result[0]);
+
+          setSocialMediaData(res.data.data);
+          setFacebook(res.data.data[0].Facebook);
+          setInstagram(res.data.data[0].Instagram);
+          setTwiter(res.data.data[0].Twiter);
+          setWhatsUp(res.data.data[0].WhatsUp);
+          setLinkedIn(res.data.data[0].LinkedIn);
         })
         .catch((err) => {
           console.log(err);
@@ -206,13 +207,20 @@ const NewCard2 = () => {
     };
     let contactDetail = async () => {
       await axios
-        .get("https://aristostech-digitalcard-application.onrender.com/contactDetail", {
+        .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setContactData(res.data.result[0]);
+
+          setContactData(res.data.data);
+          setEmail1(res.data.data[0].Email1);
+          setAlternateEmail(res.data.data[0].AlternateEmail);
+          setMobileNumber1(res.data.data[0].MobileNumber1);
+          setAlternateMobileNumber(res.data.data[0].AlternateMobileNumber);
+          setDOB(res.data.data[0].DOB);
+          setAddress(res.data.data[0].Address);
         })
         .catch((err) => {
           console.log(err);
@@ -220,14 +228,14 @@ const NewCard2 = () => {
     };
     let fetchService = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setServiceData(res.data.result);
-
+          console.log(res.data.data)
+          setServiceData(res.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -235,13 +243,14 @@ const NewCard2 = () => {
     };
     let fetchQRCode = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setQRCodeData(res.data.result);
+          setQRCodeData(res.data.data);
+          // setQRCodeImage(res.data.result[0].QRCodeImage)
         })
         .catch((err) => {
           console.log(err);
@@ -249,13 +258,15 @@ const NewCard2 = () => {
     };
     let fetchProduct = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setProductData(res.data.result);
+
+          setProductData(res.data.data);
+
         })
         .catch((err) => {
           console.log(err);
@@ -263,13 +274,13 @@ const NewCard2 = () => {
     };
     let fetchGallery = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setGalleryImage(res.data.data.galleryImage);
+          setGalleryData(res.data.data)
         })
         .catch((err) => {
           console.log(err);
@@ -277,13 +288,19 @@ const NewCard2 = () => {
     };
     let fetchSocialMedia = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/socialMediaDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setSocialMediaData(res.data.result);
+
+          setSocialMediaData(res.data.data);
+          setFacebook(res.data.data[0].Facebook);
+          setInstagram(res.data.data[0].Instagram);
+          setTwiter(res.data.data[0].Twiter);
+          setWhatsUp(res.data.data[0].WhatsUp);
+          setLinkedIn(res.data.data[0].LinkedIn);
         })
         .catch((err) => {
           console.log(err);
@@ -291,13 +308,15 @@ const NewCard2 = () => {
     };
     let fetchTestimonial = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specific/${id}`, {
           headers: {
-            Authorization: `Bearer ${id.token}`,
+            Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setTestimonialData(res.data.result)
+          console.log(res.data.data)
+          setTestimonialData(res.data.data);
+
         })
         .catch((err) => {
           console.log(err);
@@ -313,6 +332,7 @@ const NewCard2 = () => {
     fetchSocialMedia();
     fetchTestimonial();
   }, []);
+
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -402,6 +422,14 @@ const NewCard2 = () => {
       </button>
     ),
   };
+    // // Function to strip HTML tags from a string
+    const stripHtmlTags1 = (html) => {
+      if (html === null || typeof html === 'undefined') {
+        return ''; // Return an empty string if html is null or undefined
+      }
+      const strippedHtml = html.replace(/(<([^>]+)>)/gi, '');
+      return strippedHtml;
+    };
   return (
     <div className="newCard_container2">
       {BasicData != undefined ? (
@@ -441,7 +469,7 @@ const NewCard2 = () => {
                   </div>
                   <div className="summary">
                     <p>
-                      {stripHtmlTags(data.summary) ||
+                      {stripHtmlTags1(data.summary) ||
                         `We're designers, developers, engineers, marketers, and pretty
     much everything else for your business need. However, it is not
     how we choose to introduce ourselves.`}
@@ -541,7 +569,7 @@ const NewCard2 = () => {
                           </div>
                           <div className="details">
                             <h4>
-                              {stripHtmlTags(ContactData.Address) ||
+                              {stripHtmlTags1(ContactData.Address) ||
                                 `Chennai , T-Nagar,Tamilnadu`}
                             </h4>
                             <h5>Address</h5>
@@ -592,7 +620,7 @@ const NewCard2 = () => {
                             </div>
                             <div className="service_detail">
                               <p>
-                                {stripHtmlTags(data.serviceSummary) ||
+                                {stripHtmlTags1(data.serviceSummary) ||
                                   `   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                       Voluptas maxime sapiente dolorum nemo nobis eveniet quaerat
                       provident rem ut enim esse, necessitatibus praesentium
@@ -696,7 +724,7 @@ const NewCard2 = () => {
                         </div>
                         <div className="product_summary">
                           <p>
-                            {stripHtmlTags(data.productSummary) ||
+                            {stripHtmlTags1(data.productSummary) ||
                               `  Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Recusandae expedita illo totam, corrupti est impedit!`}
                           </p>
@@ -789,7 +817,7 @@ const NewCard2 = () => {
                                 {data.clientName || "Marry"}
                               </p>
                               <small>
-                                {stripHtmlTags(data.clientFeedback) ||
+                                {stripHtmlTags1(data.clientFeedback) ||
                                   ` Lorem, ipsum dolor sit amet consectetur adipisicing
                           elit. Sunt dolores maiores nam quisquam magni
                           provident labore laboriosam asperiores culpa

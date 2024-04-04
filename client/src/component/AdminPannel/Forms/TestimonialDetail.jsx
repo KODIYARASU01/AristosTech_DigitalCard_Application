@@ -3,7 +3,7 @@ import React, { useContext,useEffect } from "react";
 import user from "../../../assets/Social Medias/user1.gif";
 
 import clientProfile from "../../../assets/logo2.jpg";
-
+import { useParams } from "react-router-dom";
 import formContext from "../../Context/FormContext.jsx";
 import { convertTestimonialImageToBase64 } from "../../Helper/Convert.js";
 import axios from "axios";
@@ -13,6 +13,7 @@ import { Editor } from "primereact/editor";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const TestimonialDetail = () => {
+  let id=useParams();
   let {
     loader3,
     setLoader3,
@@ -40,13 +41,14 @@ const TestimonialDetail = () => {
   useEffect(() => {
     let fetchTestimonial = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setTestimonialData(res.data.result);
+          console.log(res.data.data)
+          setTestimonialData(res.data.data);
 
         })
         .catch((err) => {
@@ -56,6 +58,14 @@ const TestimonialDetail = () => {
 
     fetchTestimonial();
   }, []);
+    // // Function to strip HTML tags from a string
+    const stripHtmlTags = (html) => {
+      if (html === null || typeof html === "undefined") {
+        return ""; // Return an empty string if html is null or undefined
+      }
+      const strippedHtml = html.replace(/(<([^>]+)>)/gi, "");
+      return strippedHtml;
+    };
   //Formik does not support file upload so we could create handler :
   const onUploadTestimonialImage = async (e) => {
     let base64 = await convertTestimonialImageToBase64(e.target.files[0]);
@@ -349,7 +359,7 @@ const TestimonialDetail = () => {
                   <div className="service_summary">
                     <p>
                       {data.clientFeedback
-                        ? data.clientFeedback
+                        ? stripHtmlTags(data.clientFeedback)
                         : "Feedback Empty"}
                     </p>
                   </div>

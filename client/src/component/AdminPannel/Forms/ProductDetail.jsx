@@ -4,12 +4,15 @@ import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
 import formContext from "../../Context/FormContext.jsx";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Editor } from "primereact/editor";
 import { convertProductImageToBase64 } from "../../Helper/Convert.js";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const ProductDetail = () => {
+  let id=useParams();
+
     let {
         userToken,
         setUserToken,
@@ -142,20 +145,19 @@ const ProductDetail = () => {
         QRCodeEdit,
         setQRCodeEdit,
       } = useContext(formContext);
-
-      console.log(ProductData)
       let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
   // Fetching all data:
   useEffect(() => {
     let fetchProduct = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/productDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setProductData(res.data.result);
+
+          setProductData(res.data.data);
 
         })
         .catch((err) => {
@@ -351,6 +353,14 @@ const ProductDetail = () => {
         setProductEdit(false);
       });
   }
+    // // Function to strip HTML tags from a string
+    const stripHtmlTags = (html) => {
+      if (html === null || typeof html === 'undefined') {
+        return ''; // Return an empty string if html is null or undefined
+      }
+      const strippedHtml = html.replace(/(<([^>]+)>)/gi, '');
+      return strippedHtml;
+    };
   return (
     <div>
       <div
@@ -464,7 +474,7 @@ const ProductDetail = () => {
                   <div className="service_summary">
                     <p>
                       {data.productSummary
-                        ? data.productSummary
+                        ? stripHtmlTags(data.productSummary)
                         : "Summary Empty"}
                     </p>
                   </div>

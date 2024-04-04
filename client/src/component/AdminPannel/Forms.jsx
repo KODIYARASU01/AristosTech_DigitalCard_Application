@@ -211,15 +211,15 @@ let Forms = () => {
         {/* //QRCode Image upload */}
         {QRCodeForm === true ? <QRCodeDetail /> : ""}
 
-        {BasicData != undefined &&
-        ContactData != undefined &&
-        SocialMediaData != undefined &&
-        ServiceData!= undefined &&
-        ProductData!= undefined &&
-        GalleryData!= undefined &&
-        TestimonialData!= undefined ? (
+        {BasicData .length > 0 &&
+        ContactData .length > 0 &&
+        SocialMediaData .length > 0 &&
+        ServiceData.length > 0 &&
+        ProductData.length > 0 &&
+        GalleryData.length > 0 &&
+        TestimonialData.length > 0 ? (
           <div className="final_digiCard">
-            <Link to={'/aristostech'} target="_blank">
+            <Link to={`/aristostech/${localStorageDatas.id}`} target="_blank">
               <i className="bx bxs-hand-right bx-flashing"></i>Get Your Digital
               Card
             </Link>

@@ -1,15 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import "./Styles/ContactDetail.scss";
 import user from "../../../assets/Social Medias/user1.gif";
-import background from "../../../assets/banner.jpg";
-import upload from "../../../assets/Social Medias/addImage.gif";
-import f from "../../../assets/Social Medias/f.gif";
-import linkedin from "../../../assets/Social Medias/linkedin.gif";
-import whatsup from "../../../assets/Social Medias/whatsup.gif";
-import twiter from "../../../assets/Social Medias/twiter.gif";
-import insta from "../../../assets/Social Medias/insta.gif";
-import clientProfile from "../../../assets/logo2.jpg";
-import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import formContext from "../../Context/FormContext.jsx";
 
@@ -21,6 +13,7 @@ import { Editor } from "primereact/editor";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 const ContactDetail = () => {
+  let id=useParams();
   let {
     userToken,
     setUserToken,
@@ -159,19 +152,20 @@ const ContactDetail = () => {
     let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
     let contactDetail = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setContactData(res.data.result);
-          setEmail1(res.data.result[0].Email1);
-          setAlternateEmail(res.data.result[0].AlternateEmail);
-          setMobileNumber1(res.data.result[0].MobileNumber1);
-          setAlternateMobileNumber(res.data.result[0].AlternateMobileNumber);
-          setDOB(res.data.result[0].DOB);
-          setAddress(res.data.result[0].Address);
+
+          setContactData(res.data.data);
+          setEmail1(res.data.data[0].Email1);
+          setAlternateEmail(res.data.data[0].AlternateEmail);
+          setMobileNumber1(res.data.data[0].MobileNumber1);
+          setAlternateMobileNumber(res.data.data[0].AlternateMobileNumber);
+          setDOB(res.data.data[0].DOB);
+          setAddress(res.data.data[0].Address);
         })
         .catch((err) => {
           console.log(err);
@@ -376,7 +370,7 @@ const ContactDetail = () => {
             />
           </div>
 
-          {ContactData.length>0 ? (
+          {ContactData && ContactData.length>0 ? (
             <div className="form_submit">
               <button onClick={handleContactFormEdit}>
                 Update{loader3 ? <span className="loader3"></span> : ""}

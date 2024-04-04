@@ -354,7 +354,7 @@ console.log(user)
             {/* You can use your authRoutes with useAuthRoutes hook here if needed */}
 
             <Route
-              path='/aristostech'
+              path='/aristostech/:id'
               element={user ? <NewCard2 /> : <SignIn />}
             />
           </Routes>

@@ -8,8 +8,7 @@ import linkedin from "../../../assets/Social Medias/linkedin.gif";
 import whatsup from "../../../assets/Social Medias/whatsup.gif";
 import twiter from "../../../assets/Social Medias/twiter.gif";
 import insta from "../../../assets/Social Medias/insta.gif";
-import clientProfile from "../../../assets/logo2.jpg";
-import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import formContext from "../../Context/FormContext.jsx";
 import axios from "axios";
 import { Flip, toast, ToastContainer } from "react-toastify";
@@ -18,6 +17,7 @@ import { Editor } from "primereact/editor";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const SocialMedia = () => {
+  let id=useParams();
     let {
         userToken,
         setUserToken,
@@ -156,18 +156,19 @@ const SocialMedia = () => {
 
         let socialmedia = async () => {
           await axios
-            .get("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", {
+            .get(`https://aristostech-digitalcard-application.onrender.comigitalcard-application.onrender.com/socialMediaDetail/specific/${id}`, {
               headers: {
                 Authorization: `Bearer ${localStorageDatas.token}`,
               },
             })
             .then((res) => {
-              setSocialMediaData(res.data.result);
-              setFacebook(res.data.result[0].Facebook);
-              setInstagram(res.data.result[0].Instagram);
-              setTwiter(res.data.result[0].Twiter);
-              setWhatsUp(res.data.result[0].WhatsUp);
-              setLinkedIn(res.data.result[0].LinkedIn);
+
+              setSocialMediaData(res.data.data);
+              setFacebook(res.data.data[0].Facebook);
+              setInstagram(res.data.data[0].Instagram);
+              setTwiter(res.data.data[0].Twiter);
+              setWhatsUp(res.data.data[0].WhatsUp);
+              setLinkedIn(res.data.data[0].LinkedIn);
             })
             .catch((err) => {
               console.log(err);
@@ -192,7 +193,7 @@ const SocialMedia = () => {
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/socialMediaDetail", SocialMediadata, {
+        .post("https://aristostech-digitalcard-application.onrender.comigitalcard-application.onrender.com/socialMediaDetail", SocialMediadata, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -242,7 +243,7 @@ const SocialMedia = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/update/${SocialMediaData[0]._id}`,
+          `https://aristostech-digitalcard-application.onrender.comigitalcard-application.onrender.com/socialMediaDetail/update/${SocialMediaData[0]._id}`,
           data,
           {
             headers: {

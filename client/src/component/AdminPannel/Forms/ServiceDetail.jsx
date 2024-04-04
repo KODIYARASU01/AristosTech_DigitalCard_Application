@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import user from "../../../assets/Social Medias/user1.gif";
 import background from "../../../assets/banner.jpg";
 import formContext from "../../Context/FormContext.jsx";
+import { useParams } from "react-router-dom";
 import { convertServiceImageToBase64 } from "../../Helper/Convert.js";
 import axios from "axios";
 import { Flip, toast, ToastContainer } from "react-toastify";
@@ -11,6 +12,7 @@ import { Editor } from "primereact/editor";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 const ServiceDetail = () => {
+  let id = useParams();
   let {
     ServiceId,
     setServiceId,
@@ -34,13 +36,14 @@ const ServiceDetail = () => {
     let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
     let fetchService = async () => {
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setServiceData(res.data.result);
+          console.log(res.data.data);
+          setServiceData(res.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -49,6 +52,15 @@ const ServiceDetail = () => {
 
     fetchService();
   }, []);
+
+  // // Function to strip HTML tags from a string
+  const stripHtmlTags = (html) => {
+    if (html === null || typeof html === "undefined") {
+      return ""; // Return an empty string if html is null or undefined
+    }
+    const strippedHtml = html.replace(/(<([^>]+)>)/gi, "");
+    return strippedHtml;
+  };
   //Formik does not support file upload so we could create handler :
   const onUploadServiceImage = async (e) => {
     let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
@@ -110,7 +122,7 @@ const ServiceDetail = () => {
   //Service form Update:
   async function handleServiceFormUpdate(e) {
     e.preventDefault();
-console.log(ServiceId)
+    console.log(ServiceId);
     try {
       setLoader3(true);
       // Retrieve token from local storage or wherever it's stored
@@ -343,7 +355,7 @@ console.log(ServiceId)
                   <div className="service_summary">
                     <p>
                       {data.serviceSummary
-                        ? data.serviceSummary
+                        ? stripHtmlTags(data.serviceSummary)
                         : "Summary Empty"}
                     </p>
                   </div>

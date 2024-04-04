@@ -247,17 +247,19 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap:1rem;
+        gap:3rem;
   
         .edit {
           color: gray;
           font-size: 1rem;
           cursor: pointer;
+          z-index: 400;
         }
         .delete {
           color: red;
           font-size: 1rem;
           cursor: pointer;
+          z-index: 400;
         }
       }
     }

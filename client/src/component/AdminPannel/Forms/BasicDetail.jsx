@@ -1,6 +1,7 @@
 import React, { useContext ,useEffect} from "react";
 import formContext from "../../Context/FormContext";
 import user from "../../../assets/Social Medias/user1.gif";
+import {useParams} from 'react-router-dom'
 import "./Styles/BasiDetails.scss";
 import background from "../../../assets/banner.jpg";
 import clientProfile from "../../../assets/logo2.jpg";
@@ -14,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import axios from "axios";
 const BasicDetail = () => {
+  let id=useParams();
   let {
     userToken,
     setUserToken,
@@ -44,19 +46,19 @@ console.log(BasicData)
     let fetch = async () => {
       setLoader3(true);
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/`, {
+        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
         })
         .then((res) => {
-          setBasicData(res.data.result)
-          setBanner(res.data.result[0].banner);
-          setLogo(res.data.result[0].logo);
-          setFullName(res.data.result[0].fullName);
-          setProfession(res.data.result[0].profession);
-          setSummary(res.data.result[0].summary);
-          setBasicID(res.data.result[0]._id);
+          setBasicData(res.data.data)
+          setBanner(res.data.data[0].banner);
+          setLogo(res.data.data[0].logo);
+          setFullName(res.data.data[0].fullName);
+          setProfession(res.data.data[0].profession);
+          setSummary(res.data.data[0].summary);
+          setBasicID(res.data.data[0]._id);
           setLoader3(false);
         })
         .catch((err) => {
@@ -283,7 +285,7 @@ console.log(BasicData)
               />
             </div>
 
-            {BasicData && BasicData.length === 1 ? (
+            {BasicData && BasicData.length > 0? (
               <div className="form_submit">
                 <button onClick={handleBasicFormEdit}>
                   Update{loader3 ? <span className="loader3"></span> : ""}
