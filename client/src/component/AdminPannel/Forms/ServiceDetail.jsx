@@ -14,6 +14,8 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 const ServiceDetail = () => {
   let id = useParams();
   let {
+    loader4,
+    setLoader4,
     ServiceId,
     setServiceId,
     loader3,
@@ -35,6 +37,7 @@ const ServiceDetail = () => {
   useEffect(() => {
     let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
     let fetchService = async () => {
+      setLoader4(true)
       await axios
         .get(`https://aristostech-digitalcard-application.onrender.com/serviceDetail/specific/${id}`, {
           headers: {
@@ -42,11 +45,13 @@ const ServiceDetail = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.data);
+  
           setServiceData(res.data.data);
+          setLoader4(false)
         })
         .catch((err) => {
           console.log(err);
+          setLoader4(false)
         });
     };
 

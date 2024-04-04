@@ -20,6 +20,8 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 const GalleryDetail = () => {
   let id=useParams();
   let {
+    loader4,
+    setLoader4,
     userToken,
     setUserToken,
     loader3,
@@ -156,6 +158,7 @@ const GalleryDetail = () => {
   // Fetching all data:
   useEffect(() => {
     let fetchGallery = async () => {
+      setLoader4(true)
       await axios
         .get(`https://aristostech-digitalcard-application.onrender.com/galleryDetail/specific/${id}`, {
           headers: {
@@ -163,10 +166,12 @@ const GalleryDetail = () => {
           },
         })
         .then((res) => {
-          setGalleryData(res.data.data)
+          setGalleryData(res.data.data);
+          setLoader4(false)
         })
         .catch((err) => {
           console.log(err);
+          setLoader4(false)
         });
     };
 

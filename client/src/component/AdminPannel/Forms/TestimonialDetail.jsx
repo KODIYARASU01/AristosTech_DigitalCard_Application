@@ -15,6 +15,8 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 const TestimonialDetail = () => {
   let id=useParams();
   let {
+    loader4,
+    setLoader4,
     loader3,
     setLoader3,
 
@@ -40,6 +42,7 @@ const TestimonialDetail = () => {
   // Fetching all data:
   useEffect(() => {
     let fetchTestimonial = async () => {
+      setLoader4(true)
       await axios
         .get(`https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specific/${id}`, {
           headers: {
@@ -47,12 +50,14 @@ const TestimonialDetail = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.data)
+  
           setTestimonialData(res.data.data);
+          setLoader4(false)
 
         })
         .catch((err) => {
           console.log(err);
+          setLoader4(false)
         });
     };
 

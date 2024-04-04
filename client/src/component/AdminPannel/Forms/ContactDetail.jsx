@@ -13,8 +13,10 @@ import { Editor } from "primereact/editor";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 const ContactDetail = () => {
-  let id=useParams();
+  let id = useParams();
   let {
+    loader4,
+    setLoader4,
     userToken,
     setUserToken,
     loader3,
@@ -148,17 +150,21 @@ const ContactDetail = () => {
   } = useContext(formContext);
   // Fetching all data:
   useEffect(() => {
+ 
     // Retrieve token from local storage or wherever it's stored
     let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
     let contactDetail = async () => {
+      setLoader4(true);
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorageDatas.token}`,
-          },
-        })
+        .get(
+          `https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorageDatas.token}`,
+            },
+          }
+        )
         .then((res) => {
-
           setContactData(res.data.data);
           setEmail1(res.data.data[0].Email1);
           setAlternateEmail(res.data.data[0].AlternateEmail);
@@ -166,9 +172,12 @@ const ContactDetail = () => {
           setAlternateMobileNumber(res.data.data[0].AlternateMobileNumber);
           setDOB(res.data.data[0].DOB);
           setAddress(res.data.data[0].Address);
+
+          setLoader4(false);
         })
         .catch((err) => {
           console.log(err);
+          setLoader4(false);
         });
     };
     contactDetail();
@@ -191,11 +200,15 @@ const ContactDetail = () => {
       };
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/contactDetail", Contactdata, {
-          headers: {
-            Authorization: `Bearer ${id.token}`,
-          },
-        })
+        .post(
+          "https://aristostech-digitalcard-application.onrender.com/contactDetail",
+          Contactdata,
+          {
+            headers: {
+              Authorization: `Bearer ${id.token}`,
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
           toast.success(res.data.message, {
@@ -370,7 +383,7 @@ const ContactDetail = () => {
             />
           </div>
 
-          {ContactData && ContactData.length>0 ? (
+          {ContactData && ContactData.length > 0 ? (
             <div className="form_submit">
               <button onClick={handleContactFormEdit}>
                 Update{loader3 ? <span className="loader3"></span> : ""}

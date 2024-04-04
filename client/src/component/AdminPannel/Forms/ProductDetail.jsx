@@ -14,6 +14,8 @@ const ProductDetail = () => {
   let id=useParams();
 
     let {
+      loader4,
+      setLoader4,
         userToken,
         setUserToken,
         loader3,
@@ -149,6 +151,7 @@ const ProductDetail = () => {
   // Fetching all data:
   useEffect(() => {
     let fetchProduct = async () => {
+      setLoader4(true)
       await axios
         .get(`https://aristostech-digitalcard-application.onrender.com/productDetail/specific/${id}`, {
           headers: {
@@ -158,10 +161,12 @@ const ProductDetail = () => {
         .then((res) => {
 
           setProductData(res.data.data);
+          setLoader4(false)
 
         })
         .catch((err) => {
           console.log(err);
+          setLoader4(false)
         });
     };
 

@@ -1,0 +1,52 @@
+.loader_comp{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(224, 255, 255, 0.301);
+    .loader4 {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: block;
+        margin:15px auto;
+        position: relative;
+        color: #174dff;
+        left: -100px;
+        box-sizing: border-box;
+        animation: shadowRolling 2s linear infinite;
+      }
+      
+      @keyframes shadowRolling {
+        0% {
+          box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+        }
+        12% {
+          box-shadow: 100px 0 rgb(103, 236, 85), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+        }
+        25% {
+          box-shadow: 110px 0 rgb(255, 208, 0), 100px 0 rgb(15, 3, 3), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+        }
+        36% {
+          box-shadow: 120px 0 rgb(103, 42, 247), 110px 0 rgb(168, 18, 255), 100px 0 white, 0px 0 rgba(255, 255, 255, 0);
+        }
+        50% {
+          box-shadow: 130px 0 rgb(0, 110, 255), 120px 0 rgb(255, 69, 178), 110px 0 rgb(255, 112, 17), 100px 0 white;
+        }
+        62% {
+          box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 rgb(9, 255, 243), 120px 0 rgb(202, 255, 11), 110px 0 white;
+        }
+        75% {
+          box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 rgb(255, 38, 9), 120px 0 white;
+        }
+        87% {
+          box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 white;
+        }
+        100% {
+          box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
+        }
+      }
+    
+}
+

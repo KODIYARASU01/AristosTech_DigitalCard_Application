@@ -15,8 +15,11 @@ import formContext from "../Context/FormContext";
 import Sidebar from "./Sidebar";
 import Forms from "./Forms";
 import DemoCard from "./VCards/DemoCard";
+import Loader from "./Loader/Loader";
 const AdminPannel = () => {
   let {
+    loader4,
+    setLoader4,
     ServiceId,
     setServiceId,
     user,
@@ -181,7 +184,9 @@ const AdminPannel = () => {
   useEffect(() => {
     setLoader(true);
     axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`)
+      .get(
+        `https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`
+      )
       .then((responce) => {
         setProfile(responce.data.data.profile);
         setFirstName(responce.data.data.firstName);
@@ -247,7 +252,10 @@ const AdminPannel = () => {
         mobileNumber,
       };
       axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`, data)
+        .put(
+          `https://aristostech-digitalcard-application.onrender.com/auth/register/${UserData.id}`,
+          data
+        )
         .then((res) => {
           toast.success(res.data.message, {
             position: "top-right",
@@ -338,6 +346,15 @@ const AdminPannel = () => {
           pauseOnHover
           theme="light"
         />
+{/* //Loader */}
+        {loader4 ? (
+          <div className="loader_component">
+            <Loader />
+          </div>
+        ) : (
+          ""
+        )}
+
         {/* Navbar */}
         <m.div className="nav_bar">
           <m.div className="brand">
@@ -537,16 +554,15 @@ const AdminPannel = () => {
         {/* //Live preview Button : */}
 
         {slideClose ? (
-                <div
-                className="live_preview"
-                onClick={() => setSlideShow(!slideClose)}
-              >
-                <p>
-                  <i class="bx bx-chevrons-right bx-flashing"></i>Close Preview
-                  <i class='bx bx-low-vision bx-flashing' ></i>
-                </p>
-              </div>
-        
+          <div
+            className="live_preview"
+            onClick={() => setSlideShow(!slideClose)}
+          >
+            <p>
+              <i class="bx bx-chevrons-right bx-flashing"></i>Close Preview
+              <i class="bx bx-low-vision bx-flashing"></i>
+            </p>
+          </div>
         ) : (
           <div
             className="live_preview"

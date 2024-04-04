@@ -17,6 +17,8 @@ import axios from "axios";
 const BasicDetail = () => {
   let id=useParams();
   let {
+    loader4,
+    setLoader4,
     userToken,
     setUserToken,
     loader3,
@@ -44,7 +46,7 @@ console.log(BasicData)
   // Fetching all data:
   useEffect(() => {
     let fetch = async () => {
-      setLoader3(true);
+      setLoader4(true);
       await axios
         .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${id}`, {
           headers: {
@@ -59,11 +61,11 @@ console.log(BasicData)
           setProfession(res.data.data[0].profession);
           setSummary(res.data.data[0].summary);
           setBasicID(res.data.data[0]._id);
-          setLoader3(false);
+          setLoader4(false);
         })
         .catch((err) => {
           console.log(err);
-          setLoader3(false);
+          setLoader4(false);
         });
     };
   

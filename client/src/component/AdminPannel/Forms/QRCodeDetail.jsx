@@ -15,6 +15,8 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 const QRCodeDetail = () => {
   let id=useParams();
     let {
+      loader4,
+      setLoader4,
         userToken,
         setUserToken,
         loader3,
@@ -150,6 +152,7 @@ const QRCodeDetail = () => {
       // Fetching all data:
       useEffect(() => {
         let fetchQRCode = async () => {
+          setLoader4(true)
           await axios
             .get(`https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specific/${id}`, {
               headers: {
@@ -158,10 +161,12 @@ const QRCodeDetail = () => {
             })
             .then((res) => {
               setQRCodeData(res.data.data);
+              setLoader4(false)
               // setQRCodeImage(res.data.result[0].QRCodeImage)
             })
             .catch((err) => {
               console.log(err);
+              setLoader4(false)
             });
         };
 

@@ -15,6 +15,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   let [userToken, setUserToken] = useState("");
   let [loader3, setLoader3] = useState(false);
+  let [loader4, setLoader4] = useState(false);
   // State to store user authentication
   let [UserDetails, setUserDetails] = useState([]);
   let [show, setShow] = useState(false);
@@ -135,7 +136,7 @@ const App = () => {
   let [TestimonialEdit, setTestimonialEdit] = useState(false);
   let [QRCodeEdit, setQRCodeEdit] = useState(false);
 
-console.log(user)
+  console.log(user);
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
@@ -146,6 +147,8 @@ console.log(user)
     <>
       <formContext.Provider
         value={{
+          loader4,
+          setLoader4,
           ServiceId,
           setServiceId,
           userToken,
@@ -354,7 +357,7 @@ console.log(user)
             {/* You can use your authRoutes with useAuthRoutes hook here if needed */}
 
             <Route
-              path='/aristostech/:id'
+              path="/aristostech/:id"
               element={user ? <NewCard2 /> : <SignIn />}
             />
           </Routes>
