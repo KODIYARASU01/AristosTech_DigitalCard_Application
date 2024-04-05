@@ -18,7 +18,7 @@
 
     .admin_header {
       display: grid;
-      grid-template-columns: 0.2fr 0.5fr 1fr 1.5fr 1fr 1.5fr 0.5fr;
+      grid-template-columns: 0.2fr 0.5fr 1fr 1.5fr 1fr 1fr 1.5fr 0.5fr;
       width: 100%;
       place-items: center;
       place-content: center;
@@ -30,6 +30,7 @@
       .user_name_title,
       .user_email_title,
       .user_created_title,
+      .user_place_title,
       .user_mobile_title,
       .user_action_title {
         display: flex;
@@ -45,7 +46,7 @@
     }
     .admin_list {
       display: grid;
-      grid-template-columns: 0.2fr 0.5fr 1fr 1.5fr 1fr 1.5fr 0.5fr;
+      grid-template-columns: 0.2fr 0.5fr 1fr 1.5fr 1fr 1fr 1.5fr 0.5fr;
       width: 100%;
       place-items: center;
       place-content: center;
@@ -59,11 +60,12 @@
       .createdAt,
       .UserName,
       .userEmail,
+      .userPlace,
       .userMobile,
       .actions {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
 
         p {
           font-weight: 600;

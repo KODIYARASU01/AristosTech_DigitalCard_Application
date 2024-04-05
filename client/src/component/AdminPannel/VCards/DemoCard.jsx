@@ -516,9 +516,7 @@ const DemoCard = () => {
                       <div className="summary">
                         <p>
                           {stripHtmlTags(data.summary) ||
-                            `We're designers, developers, engineers, marketers, and pretty
-    much everything else for your business need. However, it is not
-    how we choose to introduce ourselves.`}
+                            `Profile summary empty`}
                         </p>
                       </div>
                     </div>

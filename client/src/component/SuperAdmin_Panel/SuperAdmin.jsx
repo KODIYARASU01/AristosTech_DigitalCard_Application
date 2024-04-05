@@ -31,6 +31,9 @@ const SuperAdmin = () => {
             <div className="user_email_title">
               <p>Email</p>
             </div>
+            <div className="user_place_title">
+              <p>Place</p>
+            </div>
             <div className="user_mobile_title">
                 <p>Mobile Number</p>
             </div>
@@ -57,11 +60,14 @@ const SuperAdmin = () => {
         <div className="userEmail">
           <p>{data.email}</p>
         </div>
+        <div className="userPlace">
+          <p>{data.place ? data.place : 'Empty'}</p>
+        </div>
         <div className="userMobile">
             <p>{data.mobileNumber ? data.mobileNumber : "MobileNumber Empty"}</p>
         </div>
         <div className="createdAt">
-          <p>{data.createdAt}</p>
+          <p>{data.createdAt.slice(0,10)}</p>
         </div>
         <div className="actions">
           <i className="bx bx-show-alt show"></i>

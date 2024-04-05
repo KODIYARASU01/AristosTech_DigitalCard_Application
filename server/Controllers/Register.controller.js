@@ -11,6 +11,9 @@ export const RegisterUser = async (req, res) => {
       if(mobileNumber.length <=9 || mobileNumber.length >=11 ){
        return res.status(400).json({ message: "MobileNumber not valid" });
       };
+      if(password.length <=5 ){
+        return res.status(400).json({ message: "Password must been 6 digit required" });
+       };
     //if user doesn't fill all those fields error through:
     if (!email || !password || !firstName || !lastName) {
       res.status(400).json({ message: "Fill all those * fields" });
@@ -114,6 +117,10 @@ export const LoginUser = async (req, res) => {
   try {
     //Get value from body:
     let { email, password } = req.body;
+
+    if(password.length <=5 ){
+      return res.status(400).json({ message: "Password must been 6 digit required" });
+     };
     //User required to fill all those fields:
     if (!email || !password) {
       res.status(400).json({ message: "Fill all those * fields" });
