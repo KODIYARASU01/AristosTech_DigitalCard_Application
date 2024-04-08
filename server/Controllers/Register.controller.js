@@ -118,9 +118,7 @@ export const LoginUser = async (req, res) => {
     //Get value from body:
     let { email, password } = req.body;
 
-    if(password.length <=5 ){
-      return res.status(400).json({ message: "Password must been 6 digit required" });
-     };
+
     //User required to fill all those fields:
     if (!email || !password) {
       res.status(400).json({ message: "Fill all those * fields" });

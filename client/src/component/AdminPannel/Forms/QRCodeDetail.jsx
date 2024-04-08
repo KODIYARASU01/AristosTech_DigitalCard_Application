@@ -160,6 +160,7 @@ const QRCodeDetail = () => {
               },
             })
             .then((res) => {
+              console.log(res.data)
               setQRCodeData(res.data.data);
               setLoader4(false)
               // setQRCodeImage(res.data.result[0].QRCodeImage)
@@ -200,6 +201,7 @@ const QRCodeDetail = () => {
           },
         })
         .then((res) => {
+        
           setQRCodeData(res.data.result);
           toast.success(res.data.message, {
             position: "top-center",
@@ -361,10 +363,10 @@ const QRCodeDetail = () => {
               {/* //product image */}
               <div className="form_group">
                 <label htmlFor="QRCodeImage">
-                <p> Upload QRCode Image<span>{serviceImage !=undefined ? <i className='bx bx-check' style={{color:'green'}}></i> :<i className='bx bxs-chevrons-down bx-flashing' ></i>}</span></p>
+                <p> Upload QRCode Image<span>{QRCodeImage !=undefined ? <i className='bx bx-check' style={{color:'green'}}></i> :<i className='bx bxs-chevrons-down bx-flashing' ></i>}</span></p>
                   <img
                     className="QRCodeImage"
-                    src={QRCodeImage !== undefined ? QRCodeImage : background}
+                    src={QRCodeImage != undefined ? QRCodeImage : background}
                     alt="QRCodeImage"
                     name="QRCodeImage"
                   />
@@ -376,7 +378,7 @@ const QRCodeDetail = () => {
                   id="QRCodeImage"
                 />
               </div>
-              {QRCodeData && QRCodeData.length >0  ? (
+              {QRCodeData && QRCodeData.length > 0  ? (
                 <div className="form_submit">
                   {/* <button onClick={handleQRCodeUpdate}>
                     Update{loader3 ? <span className="loader3"></span> : ""}
@@ -404,9 +406,9 @@ const QRCodeDetail = () => {
               )}
             </form>
 
-            { QRCodeData !== undefined ? (
+            { QRCodeData && QRCodeData !== undefined ? (
           <div>
-            {QRCodeData.map((data, index) => {
+            {QRCodeData && QRCodeData.map((data, index) => {
               return (
                 <div className="qrcode_list" key={index}>
                   <div className="ser_length">

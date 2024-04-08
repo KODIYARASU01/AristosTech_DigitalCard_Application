@@ -367,7 +367,7 @@ const GalleryDetail = () => {
               Upload Gallery Image
               <img
                 className="galleryImage"
-                src={galleryImage !== undefined ? galleryImage : background}
+                src={GalleryData.galleryImage != undefined ? galleryImage : background}
                 alt=""
                 name="galleryImage"
               />

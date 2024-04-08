@@ -8,15 +8,19 @@ let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
 // let UserDetail = lazy(() => import("./component/UserDetail/UserDetail"));
 let AdminPannel = lazy(() => import("./component/AdminPannel/AdminPannel"));
 
-let SuperAdminPanel=lazy(()=>import('./component/SuperAdmin_Panel/SuperAdmin'))
+let SuperAdminPanel = lazy(() =>
+  import("./component/SuperAdmin_Panel/SuperAdmin")
+);
 const App = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState(null);
   let [userToken, setUserToken] = useState("");
   let [loader3, setLoader3] = useState(false);
   let [loader4, setLoader4] = useState(false);
   let [loader5, setLoader5] = useState(false);
+  //AllUser Data:
+
+  let [AllData, setAllData] = useState([]);
   // State to store user authentication
   let [UserDetails, setUserDetails] = useState([]);
   let [show, setShow] = useState(false);
@@ -136,17 +140,20 @@ const App = () => {
 
   let [TestimonialEdit, setTestimonialEdit] = useState(false);
   let [QRCodeEdit, setQRCodeEdit] = useState(false);
-
+  const Token = JSON.parse(localStorage.getItem("datas"));
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
     if (Token) {
       setUser(Token);
     }
   }, [navigate]); // Load user from localStorage on component mount
+
   return (
     <>
       <formContext.Provider
         value={{
+          AllData,
+          setAllData,
           loader4,
           setLoader4,
           loader5,
@@ -359,11 +366,11 @@ const App = () => {
             {/* You can use your authRoutes with useAuthRoutes hook here if needed */}
 
             <Route
-              path="/aristostech/:id"
+              path={`/Digital_Card/:id`}
               element={user ? <NewCard2 /> : <SignIn />}
             />
 
-            <Route path="/super_admin" element={<SuperAdminPanel/>}/>
+            <Route path="/super_admin" element={<SuperAdminPanel />} />
           </Routes>
         </Suspense>
       </formContext.Provider>
