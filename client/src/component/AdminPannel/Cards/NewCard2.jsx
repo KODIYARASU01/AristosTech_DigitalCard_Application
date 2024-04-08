@@ -167,7 +167,9 @@ const NewCard2 = () => {
   let getAllUserData = async () => {
     setVCardLoader(true);
     await axios
-      .get(`http://localhost:3001/vcard/getuser?id=${id.id}`)
+      .get(
+        `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
+      )
       .then((res) => {
         setAllData(res.data.data);
 
@@ -473,7 +475,7 @@ const NewCard2 = () => {
     <>
       {vCardLoader ? (
         <div className="vcard_loader">
-          <i className='bx bxl-go-lang bx-flashing' ></i>
+          <i className="bx bxl-go-lang bx-flashing"></i>
           <span class="vcard_loaders"></span>
         </div>
       ) : (
