@@ -1,15 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import "./Form.scss";
-import user from "../../assets/Social Medias/user1.gif";
-import background from "../../assets/banner.jpg";
-import upload from "../../assets/Social Medias/addImage.gif";
-import f from "../../assets/Social Medias/f.gif";
-import linkedin from "../../assets/Social Medias/linkedin.gif";
-import whatsup from "../../assets/Social Medias/whatsup.gif";
-import twiter from "../../assets/Social Medias/twiter.gif";
-import insta from "../../assets/Social Medias/insta.gif";
-import clientProfile from "../../assets/logo2.jpg";
-import { Link, UNSAFE_DataRouterContext } from "react-router-dom";
+
+import { Link, useParams } from "react-router-dom";
 
 import formContext from "../Context/FormContext.jsx";
 import {
@@ -37,6 +29,7 @@ import QRCodeDetail from "./Forms/QRCodeDetail.jsx";
 import TestimonialDetail from "./Forms/TestimonialDetail.jsx";
 
 let Forms = () => {
+  let id1=useParams();
   let [id, setId] = useState();
   useEffect(() => {
     let id = JSON.parse(localStorage.getItem("datas"));
@@ -175,6 +168,7 @@ let Forms = () => {
     QRCodeEdit,
     setQRCodeEdit,
   } = useContext(formContext);
+
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
   return (
     <>
@@ -219,7 +213,7 @@ let Forms = () => {
         GalleryData && GalleryData.length > 0 &&
         TestimonialData && TestimonialData.length > 0 ? (
           <div className="final_digiCard">
-            <Link to={`/Digital_Card/${localStorageDatas.id}`} target="_blank">
+            <Link to={`/Digital_Card/${BasicData[0].user}`} target="_blank">
               <i className="bx bxs-hand-right bx-flashing"></i>Get Your Digital
               Card
             </Link>

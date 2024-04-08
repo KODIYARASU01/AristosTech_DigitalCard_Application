@@ -367,7 +367,7 @@ const App = () => {
 
             <Route
               path={`/Digital_Card/:id`}
-              element={user ? <NewCard2 /> : <SignIn />}
+              element={<NewCard2 />}
             />
 
             <Route path="/super_admin" element={<SuperAdminPanel />} />
