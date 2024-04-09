@@ -29,14 +29,13 @@ import QRCodeDetail from "./Forms/QRCodeDetail.jsx";
 import TestimonialDetail from "./Forms/TestimonialDetail.jsx";
 
 let Forms = () => {
-  let id1=useParams();
-  let [id, setId] = useState();
-  useEffect(() => {
-    let id = JSON.parse(localStorage.getItem("datas"));
-    setId(id);
-  }, []);
+  let id=useParams();
+  // let [id, setId] = useState();
+
 
   let {
+    loader4,
+    setLoader4,
     userToken,
     setUserToken,
     loader3,
@@ -213,7 +212,7 @@ let Forms = () => {
         GalleryData && GalleryData.length > 0 &&
         TestimonialData && TestimonialData.length > 0 ? (
           <div className="final_digiCard">
-            <Link to={`/Digital_Card/${BasicData[0].user}`} target="_blank">
+            <Link to={`/${localStorageDatas.name}/${BasicData[0].user}`} target="_blank">
               <i className="bx bxs-hand-right bx-flashing"></i>Get Your Digital
               Card
             </Link>

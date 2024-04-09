@@ -5,15 +5,24 @@ import jwt from "jsonwebtoken";
 export const RegisterUser = async (req, res) => {
   try {
     //Get all those field data from body:
-    let { profile, email, password, firstName, lastName, mobileNumber,location } =
-      req.body;
+    let {
+      profile,
+      email,
+      password,
+      firstName,
+      lastName,
+      mobileNumber,
+      location,
+    } = req.body;
 
-      if(mobileNumber.length <=9 || mobileNumber.length >=11 ){
-       return res.status(400).json({ message: "MobileNumber not valid" });
-      };
-      if(password.length <=5 ){
-        return res.status(400).json({ message: "Password must been 6 digit required" });
-       };
+    if (mobileNumber.length <= 9 || mobileNumber.length >= 11) {
+      return res.status(400).json({ message: "MobileNumber not valid" });
+    }
+    if (password.length <= 5) {
+      return res
+        .status(400)
+        .json({ message: "Password must been 6 digit required" });
+    }
     //if user doesn't fill all those fields error through:
     if (!email || !password || !firstName || !lastName) {
       res.status(400).json({ message: "Fill all those * fields" });
@@ -33,7 +42,7 @@ export const RegisterUser = async (req, res) => {
           firstName,
           lastName,
           mobileNumber,
-          location
+          location,
         };
         //If doesn't exist created new user data to database:
         let createUser = await UserAuth.create(data);
@@ -94,11 +103,11 @@ export const UpdateRegisteredUserSpecificData = async (req, res) => {
       req.body;
     let data = {
       profile,
-      email,//Password stored secure with hashing type
+      email, //Password stored secure with hashing type
       firstName,
       lastName,
       mobileNumber,
-      location
+      location,
     };
     //If doesn't exist created new user data to database:
     await UserAuth.findByIdAndUpdate(id, data);
@@ -111,13 +120,26 @@ export const UpdateRegisteredUserSpecificData = async (req, res) => {
       .json({ message: "Profile Updating Failed", error: error.message });
   }
 };
-
+//Update data to mongodb -- > Upate Specific Registered User Data  :
+export const DeleteRegisteredUserSpecificData = async (req, res) => {
+  try {
+    let { id } = req.params;
+    //If doesn't exist created new user data to database:
+    await UserAuth.findByIdAndDelete(id);
+    res.status(201).json({
+      message: "Profile Deleted Sucessfully",
+    });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ message: "Profile Deleted Failed", error: error.message });
+  }
+};
 //Login user:
 export const LoginUser = async (req, res) => {
   try {
     //Get value from body:
     let { email, password } = req.body;
-
 
     //User required to fill all those fields:
     if (!email || !password) {
@@ -138,7 +160,11 @@ export const LoginUser = async (req, res) => {
         } else {
           //Create token for specific user:
           let token = jwt.sign(
-            { id: checkUser.id, email: checkUser.email,name:checkUser.firstName }, //Token payload stored our  data
+            {
+              id: checkUser.id,
+              email: checkUser.email,
+              name: checkUser.firstName,
+            }, //Token payload stored our  data
             process.env.SECRET_KEY,
             { expiresIn: "30d" }
           );
@@ -148,14 +174,12 @@ export const LoginUser = async (req, res) => {
           }
 
           //Token Store to local Strorage:
-          res
-            .status(200)
-            .json({
-              token: token,
-              id: checkUser.id,
-              name:checkUser.firstName,
-              message: "User Login Sucessfully ",
-            });
+          res.status(200).json({
+            token: token,
+            id: checkUser.id,
+            name: checkUser.firstName,
+            message: "User Login Sucessfully ",
+          });
         }
       }
     }

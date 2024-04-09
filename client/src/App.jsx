@@ -3,14 +3,18 @@ import "./App.css";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import formContext from "./component/Context/FormContext";
 import NewCard2 from "./component/AdminPannel/Cards/NewCard2";
+
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
 // let UserDetail = lazy(() => import("./component/UserDetail/UserDetail"));
 let AdminPannel = lazy(() => import("./component/AdminPannel/AdminPannel"));
 
+let Update_User_Form=lazy(()=>import ("./component/SuperAdmin_Panel/Update_User_Form"))
+
 let SuperAdminPanel = lazy(() =>
   import("./component/SuperAdmin_Panel/SuperAdmin")
 );
+let Super_Admin_Register=lazy(()=>import('./component/User_Auth/Super_Admin_Register'))
 const App = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -140,6 +144,10 @@ const App = () => {
 
   let [TestimonialEdit, setTestimonialEdit] = useState(false);
   let [QRCodeEdit, setQRCodeEdit] = useState(false);
+
+  //Super Admin pannel Register form
+  let [AddUser, setAddUser] = useState(false);
+  let [EditUser, setEditUser] = useState(false);
   const Token = JSON.parse(localStorage.getItem("datas"));
   useEffect(() => {
     const Token = JSON.parse(localStorage.getItem("datas"));
@@ -152,6 +160,10 @@ const App = () => {
     <>
       <formContext.Provider
         value={{
+          EditUser,
+          setEditUser,
+          AddUser,
+          setAddUser,
           AllData,
           setAllData,
           loader4,
@@ -365,12 +377,12 @@ const App = () => {
             />
             {/* You can use your authRoutes with useAuthRoutes hook here if needed */}
 
-            <Route
-              path={`/Digital_Card/:id`}
-              element={<NewCard2 />}
-            />
+            <Route path={`/Digital_Card/:id`} element={<NewCard2 />} />
 
             <Route path="/super_admin" element={<SuperAdminPanel />} />
+
+            <Route path='/update_user/:id' element={<Update_User_Form/>}/>
+            <Route path='/super_admin_register' element={<Super_Admin_Register/>}/>
           </Routes>
         </Suspense>
       </formContext.Provider>

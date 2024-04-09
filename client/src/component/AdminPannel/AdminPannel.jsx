@@ -222,12 +222,7 @@ const AdminPannel = () => {
         });
       });
   }, []);
-  //Formik does not support file upload so we could create handler :
-  const onUpload = async (e) => {
-    let base64 = await convertToBase64(e.target.files[0]);
 
-    setProfile(base64);
-  };
   //Password Show hide :
   let handleShow = () => {
     let password = document.getElementById("password");
@@ -238,6 +233,12 @@ const AdminPannel = () => {
         : password.setAttribute("type", "password");
     }
   };
+    //Formik does not support file upload so we could create handler :
+    const onUpload = async (e) => {
+      let base64 = await convertToBase64(e.target.files[0]);
+  
+      setProfile(base64);
+    };
   //Update UserDetail
   let handleSubmit = async (e) => {
     e.preventDefault();
