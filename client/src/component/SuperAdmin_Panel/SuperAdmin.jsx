@@ -310,7 +310,7 @@ const SuperAdmin = () => {
                             <p>{data.email}</p>
                           </div>
                           <div className="userPlace">
-                            <p>{data.place ? data.place : "Empty"}</p>
+                            <p>{data.location ? data.location : "Empty"}</p>
                           </div>
                           <div className="userMobile">
                             <p>
