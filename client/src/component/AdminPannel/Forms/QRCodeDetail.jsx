@@ -406,7 +406,7 @@ const QRCodeDetail = () => {
               )}
             </form>
 
-            { QRCodeData && QRCodeData !== undefined ? (
+            { QRCodeData && QRCodeData != undefined ? (
           <div>
             {QRCodeData && QRCodeData.map((data, index) => {
               return (

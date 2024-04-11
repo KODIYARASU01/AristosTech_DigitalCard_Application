@@ -212,7 +212,7 @@ let Forms = () => {
         GalleryData && GalleryData.length > 0 &&
         TestimonialData && TestimonialData.length > 0 ? (
           <div className="final_digiCard">
-            <Link to={`/${localStorageDatas.name}/${BasicData[0].user}`} target="_blank">
+            <Link to={`/Digital_Card/${BasicData[0].user}`} target="_blank">
               <i className="bx bxs-hand-right bx-flashing"></i>Get Your Digital
               Card
             </Link>

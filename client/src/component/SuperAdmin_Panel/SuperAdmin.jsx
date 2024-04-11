@@ -9,6 +9,8 @@ import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const SuperAdmin = () => {
   let {
+    SuperAdminLoader,
+    setSuperAdmin_Loader,
     loader4,
     EditUser,
     setEditUser,
@@ -172,27 +174,29 @@ const SuperAdmin = () => {
   let [AllUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    setLoader4(true);
+    setSuperAdmin_Loader(true);
     axios
       .get(
         "https://aristostech-digitalcard-application.onrender.com/auth/register"
       )
       .then((res) => {
         setAllUsers(res.data.data);
-        setLoader4(false);
+        setSuperAdmin_Loader(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoader4(false);
+        setSuperAdmin_Loader(false);
       });
   }, []);
   //Update UserDetail
   let handleDeleteUser = async (e) => {
-    let id_val=e.target.id;
+    let id_val = e.target.id;
     e.preventDefault();
-    setLoader4(true);
     try {
-      axios.delete(`https://aristostech-digitalcard-application.onrender.com/auth/register/${id_val}`)
+      axios
+        .delete(
+          `https://aristostech-digitalcard-application.onrender.com/auth/register/${id_val}`
+        )
         .then((res) => {
           toast.success(res.data.message, {
             position: "top-right",
@@ -205,7 +209,7 @@ const SuperAdmin = () => {
             theme: "light",
             transition: Flip,
           });
-          
+          window.location.reload(false);
           setTimeout(() => {
             navigate("/super_admin");
             setProfile(undefined);
@@ -215,7 +219,6 @@ const SuperAdmin = () => {
             setMobileNumber("");
             setLocation("");
           }, 1000);
-          setLoader4(false);
         })
         .catch((error) => {
           console.log(error);
@@ -230,7 +233,6 @@ const SuperAdmin = () => {
             theme: "light",
             transition: Flip,
           });
-          setLoader4(false);
         });
     } catch (error) {
       console.log(error.message);
@@ -239,9 +241,9 @@ const SuperAdmin = () => {
 
   return (
     <>
-      {loader4 ? (
-        <div className="loader">
-          <span class="loader6"></span>
+      {SuperAdminLoader ? (
+        <div className="super_admin_loader">
+          <span class="loader7"></span>
         </div>
       ) : (
         <div>
@@ -330,9 +332,8 @@ const SuperAdmin = () => {
 
                             <i
                               className="bx bx-message-square-x delete"
-                            onClick={handleDeleteUser}
-
-                            id={data._id}
+                              onClick={handleDeleteUser}
+                              id={data._id}
                             ></i>
                           </div>
                         </div>
@@ -346,7 +347,7 @@ const SuperAdmin = () => {
                       padding: "1rem",
                       width: "100%",
                       margin: "10px auto",
-                      fontWeight:'550'
+                      fontWeight: "550",
                     }}
                   >
                     No User Found

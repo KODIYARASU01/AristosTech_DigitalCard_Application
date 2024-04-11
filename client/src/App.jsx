@@ -9,12 +9,16 @@ let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
 // let UserDetail = lazy(() => import("./component/UserDetail/UserDetail"));
 let AdminPannel = lazy(() => import("./component/AdminPannel/AdminPannel"));
 
-let Update_User_Form=lazy(()=>import ("./component/SuperAdmin_Panel/Update_User_Form"))
+let Update_User_Form = lazy(() =>
+  import("./component/SuperAdmin_Panel/Update_User_Form")
+);
 
 let SuperAdminPanel = lazy(() =>
   import("./component/SuperAdmin_Panel/SuperAdmin")
 );
-let Super_Admin_Register=lazy(()=>import('./component/User_Auth/Super_Admin_Register'))
+let Super_Admin_Register = lazy(() =>
+  import("./component/User_Auth/Super_Admin_Register")
+);
 const App = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -22,6 +26,7 @@ const App = () => {
   let [loader3, setLoader3] = useState(false);
   let [loader4, setLoader4] = useState(false);
   let [loader5, setLoader5] = useState(false);
+  let [SuperAdminLoader, setSuperAdmin_Loader] = useState(false);
   //AllUser Data:
 
   let [AllData, setAllData] = useState([]);
@@ -160,6 +165,8 @@ const App = () => {
     <>
       <formContext.Provider
         value={{
+          SuperAdminLoader,
+          setSuperAdmin_Loader,
           EditUser,
           setEditUser,
           AddUser,
@@ -381,8 +388,11 @@ const App = () => {
 
             <Route path="/super_admin" element={<SuperAdminPanel />} />
 
-            <Route path='/update_user/:id' element={<Update_User_Form/>}/>
-            <Route path='/super_admin_register' element={<Super_Admin_Register/>}/>
+            <Route path="/update_user/:id" element={<Update_User_Form />} />
+            <Route
+              path="/super_admin_register"
+              element={<Super_Admin_Register />}
+            />
           </Routes>
         </Suspense>
       </formContext.Provider>
