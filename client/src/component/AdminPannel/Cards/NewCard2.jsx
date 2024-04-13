@@ -11,17 +11,57 @@ import qr1 from "../../../assets/QRCODE/qr-code-isometric.svg";
 import qr2 from "../../../assets/QRCODE/qr-code-monochromatic.svg";
 import qr3 from "../../../assets/QRCODE/qr-code-outline.svg";
 import { Editor } from "primereact/editor";
-
+import loader from "../../../assets/loader.gif";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Confetti from "react-confetti";
+import { motion } from "framer-motion";
 //Testimonial
 import { useContext } from "react";
 import formContext from "../../Context/FormContext";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 const NewCard2 = () => {
+  let [formData, setFormData] = useState({
+    clientFullName1: "",
+    clientEmail1: "",
+    clientMobileNumber1: "",
+    clientInquiries1: "",
+  });
+
+  let [feedbackForm,setFeedbackForm]=useState({userName : "",userFeedback:"",currentRatting:0})
+  //Form Submit loader :
+  let [loading, setLoading] = useState(false);
+  //Collect form data by using useRef:
+  let form = useRef();
+  //Confetti Pieces :
+  const [pieces, setPieces] = useState(250);
+  //Confetti iniital false:
+  let [confetti, setConfetti] = useState(false);
+  //Popup show :
+  let [popup, setPopup] = useState(false);
+
+  let popUp_open = {
+    hide: { opacity: 0, scale: 0.2 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring" },
+    },
+  };
+
   let id = useParams();
   let [vCardLoader, setVCardLoader] = useState(false);
+  //Confetti function :
+  //Confetti function :
+  const StopConfetti = () => {
+    setTimeout(() => {
+      setPieces(0);
+    }, 7000);
+  };
 
   let {
     AllData,
@@ -163,7 +203,27 @@ const NewCard2 = () => {
 
   // Retrieve token from local storage or wherever it's stored
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  //recieve email and send email to user by  emailJS:
+  const sendEmail = (e) => {
+    // e.preventDefault();
 
+    emailjs
+      .sendForm(
+        "service_8jjtsu7",
+        "template_5ro61jb",
+        form.current,
+        "6JJQhAKoQ9fGApzig"
+      )
+      .then(
+        (result) => {
+          // console.log(result.text);
+          // console.log('message sent success')
+        },
+        (error) => {
+          // console.log(error.text);
+        }
+      );
+  };
   let getAllUserData = async () => {
     setVCardLoader(true);
     await axios
@@ -180,6 +240,7 @@ const NewCard2 = () => {
         setVCardLoader(false);
       });
   };
+
   useEffect(() => {
     let fetch = async () => {
       setLoader3(true);
@@ -471,6 +532,144 @@ const NewCard2 = () => {
     const strippedHtml = html.replace(/(<([^>]+)>)/gi, "");
     return strippedHtml;
   };
+
+  //Form Logic :
+  let formik = useFormik({
+    initialValues: {
+      clientFullName1: "",
+      clientEmail1: "",
+      clientMobileNumber1: "",
+      clientInquiries1: "",
+    },
+
+    //Validation :
+    validationSchema: Yup.object({
+      clientFullName1: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(20, "Name must be 20 character or less")
+        .required("Name is required"),
+      clientEmail1: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      clientMobileNumber1: Yup.string()
+        .min(10, "Invalid Mobile number")
+        .max(10, "Invalid Mobile number")
+        .required("MobileNumber is required"),
+      clientInquiries1: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(100, "Inquiries must be 100 character or less")
+        .required("Inquiries is required"),
+    }),
+    //Form Submit :
+    onSubmit: (values) => {
+      setFormData({
+        clientFullName1: values.clientFullName1,
+        clientEmail1: values.clientEmail1,
+        clientMobileNumber1: values.clientMobileNumber1,
+        clientInquiries1: values.clientInquiries1,
+      });
+
+      sendEmail();
+      setLoading(!loading);
+      setConfetti(true);
+      setTimeout(() => {
+        setPopup(!popup);
+        setLoading(false);
+        setConfetti(!confetti);
+        formik.values.clientFullName1 = "";
+        formik.values.clientEmail1 = "";
+        formik.values.clientMobileNumber1 = "";
+        formik.values.clientInquiries1 = "";
+      }, 4000);
+
+      setTimeout(() => {
+        setPopup(false);
+      }, 7000);
+      StopConfetti();
+    },
+  });
+  console.log(feedbackForm.currentRatting)
+  //Form Logic :
+  let feedbackFormik = useFormik({
+    initialValues: {
+      userName: "",
+      userFeedback: "",
+      currentRatting: 0,
+    },
+
+
+    //Validation :
+    validationSchema: Yup.object({
+      userName: Yup.string()
+        .min(3, "Min 3 char required")
+        .max(20, "Name must be 20 character or less")
+        .required("Name is required"),
+        userFeedback: Yup.string()
+        .min(10, "Minimum 10 character required")
+        .max(100, "Feedback must be 100 character or less")
+        .required("Feedback is required"),
+        currentRatting:Yup.string()
+        .min(1,'Minimum Star Required')
+        .required("Ratting is required"),
+    }),
+    //Form Submit :
+    onSubmit: (values) => {
+      setFeedbackForm({
+        userName: values.userName,
+        userFeedback: values.userFeedback,
+        currentRatting: values.currentRatting,
+      });
+      setTimeout(() => {
+        formik.values.userName = "";
+        formik.values.userFeedback = "";
+        formik.values.currentRatting = 0;
+      }, 4000);
+    },
+  });
+  //Start Ratting:
+  // let currentRatting=0;
+  function handleRatting(e) {
+    let star = e.target;
+    // console.log(star,star.classList);
+    if(star.classList.contains('star')){
+      let ratting=parseInt(star.dataset.rating,10);
+      highlightStar(ratting)
+    }
+  };
+  //Remove Ratting:
+  function removeRatting(){
+    highlightStar(feedbackForm.currentRatting)
+  };
+  //Staring Setted
+  function RattingSetted(e){
+   
+    let starRating=document.querySelector('.ratting_container')
+    let star = e.target;
+    // console.log(star,star.classList);
+    if(star.classList.contains('star')){
+      feedbackForm.currentRatting=parseInt(star.dataset.rating,10);
+     starRating.setAttribute('data-rating',feedbackForm.currentRatting);
+     highlightStar(feedbackForm.currentRatting);
+     alert(`You rated ${feedbackForm.currentRatting} stars`)
+    }
+  };
+
+  //Highlight star color:
+  function highlightStar(ratting){
+  
+    let stars=document.querySelectorAll('.star');
+
+    stars.forEach((star,index)=>{
+      if(index < ratting){
+        star.classList.add('highlight')
+      }
+      else{
+        star.classList.remove('highlight')
+      }
+    })
+    
+  };
+
   return (
     <>
       {vCardLoader ? (
@@ -479,12 +678,12 @@ const NewCard2 = () => {
           <span class="vcard_loaders"></span>
         </div>
       ) : (
-        <div className="newCard_container2">
+        <motion.div className="newCard_container2">
           {AllData.BasicDetail != undefined ? (
-            <div className="card_box">
+            <motion.div className="card_box">
               {AllData.BasicDetail.map((data, index) => {
                 return (
-                  <div className="box-1" key={index}>
+                  <motion.div className="box-1" key={index}>
                     <svg
                       className="svg_top"
                       xmlns="http://www.w3.org/2000/svg"
@@ -565,8 +764,8 @@ const NewCard2 = () => {
 
                     {/* //Contact */}
                     {AllData.ContactDetails != undefined ? (
-                      <div>
-                        <div className="contact_container">
+                      <motion.div>
+                        <motion.div className="contact_container">
                           <div className="contact_title">
                             <h4>Contact</h4>
                           </div>
@@ -646,7 +845,7 @@ const NewCard2 = () => {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </motion.div>
                         <svg
                           className="svg"
                           xmlns="http://www.w3.org/2000/svg"
@@ -658,18 +857,18 @@ const NewCard2 = () => {
                             d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
                           ></path>
                         </svg>
-                      </div>
+                      </motion.div>
                     ) : (
                       ""
                     )}
-                  </div>
+                  </motion.div>
                 );
               })}
               {/* Box-1 Basic Detail and Contact */}
 
               {/* Box-2 Service */}
               {AllData.ServiceDetails.length >= 1 ? (
-                <div className="box-2">
+                <motion.div className="box-2">
                   <div className="our_service">
                     <div className="service_title">
                       <h4>Our Services</h4>
@@ -707,7 +906,7 @@ const NewCard2 = () => {
                         : ""}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ) : (
                 ""
               )}
@@ -717,7 +916,7 @@ const NewCard2 = () => {
                 <div>
                   {AllData.QRCodeDetails.map((data, index) => {
                     return (
-                      <div className="box-3" key={index}>
+                      <motion.div className="box-3" key={index}>
                         <svg
                           className="svg_top"
                           xmlns="http://www.w3.org/2000/svg"
@@ -746,7 +945,7 @@ const NewCard2 = () => {
                             <img src={data.QRCodeImage} alt="qrs" />
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
 
@@ -768,7 +967,7 @@ const NewCard2 = () => {
 
               {/* Box-4 Product */}
               {AllData.ProductDetails.length >= 1 ? (
-                <div className="box-4">
+                <motion.div className="box-4">
                   <div className="product_container">
                     <div className="product_title">
                       <h4>Our Products</h4>
@@ -805,13 +1004,13 @@ const NewCard2 = () => {
                       })}
                     </Slide>
                   </div>
-                </div>
+                </motion.div>
               ) : (
                 ""
               )}
               {/* Box-5 Gallery */}
               {AllData.GalleryDetails.length >= 1 ? (
-                <div className="box_gallery">
+                <motion.div className="box_gallery">
                   {/* Gallery */}
                   <div className="gallery">
                     <div className="gallery_title">
@@ -842,7 +1041,7 @@ const NewCard2 = () => {
                       })}
                     </Slide>
                   </div>
-                </div>
+                </motion.div>
               ) : (
                 ""
               )}
@@ -850,7 +1049,7 @@ const NewCard2 = () => {
               {/* Box-6 Testimonial */}
 
               {AllData.TestimonialDetails.length >= 1 ? (
-                <div className="testimonial_con">
+                <motion.div className="testimonial_con">
                   <div className="box-5">
                     <svg
                       className="testimonial_wave"
@@ -912,7 +1111,7 @@ const NewCard2 = () => {
                       d="M0,192L480,64L960,224L1440,64L1440,0L960,0L480,0L0,0Z"
                     ></path>
                   </svg>
-                </div>
+                </motion.div>
               ) : (
                 ""
               )}
@@ -921,42 +1120,117 @@ const NewCard2 = () => {
               AllData.ContactDetails != undefined &&
               AllData.ProductDetails != undefined &&
               AllData.GalleryDetails.length >= 1 ? (
-                <div>
+                <motion.div>
                   {/* //FeedBack */}
                   <div className="box-6">
                     <div className="feedback_container">
                       <div className="feedback_heading">
                         <h5>Give Feedback Something About Us </h5>
                       </div>
-                      <form action="">
+                      <form action="" onSubmit={feedbackFormik.handleSubmit}>
                         <div className="form_group">
+                          <label
+                            htmlFor="clientName_Input"
+                            className={`${
+                              feedbackFormik.errors.userName ? "error" : ""
+                            } `}
+                          >
+                            {feedbackFormik.touched.userName &&
+                            feedbackFormik.errors.userName
+                              ? feedbackFormik.errors.userName
+                              : "Your Name"}
+                            <span>
+                              <sup>*</sup>
+                            </span>
+                          </label>
                           <input
                             type="text"
-                            placeholder="Enter Full Name"
-                            name="name"
-                            id="name"
+                            placeholder="Enter Your Name"
+                            name="userName"
+                            id="userName"
+                            value={feedbackFormik.values.userName}
+                            onChange={feedbackFormik.handleChange}
+                            onBlur={feedbackFormik.handleBlur}
                           />
-                          <img
-                            width="64"
-                            height="64"
-                            src="https://img.icons8.com/nolan/64/user.png"
-                            alt="user"
-                          />
+                          <div className="icon">
+                            <i className="bx bx-mobile"></i>
+                          </div>
                         </div>
                         <div className="form_group">
+                          <label
+                            htmlFor="clientFeedBack_Input"
+                            className={`${
+                              feedbackFormik.errors.userFeedback ? "error" : ""
+                            } `}
+                          >
+                            {feedbackFormik.touched.userFeedback &&
+                            feedbackFormik.errors.userFeedback
+                              ? feedbackFormik.errors.userFeedback
+                              : "Your FeedBack"}
+                            <span>
+                              <sup>*</sup>
+                            </span>
+                          </label>
                           <textarea
-                            name="msg"
-                            id="msg"
+                            id="userFeedback"
+                            name="userFeedback"
                             cols="30"
-                            rows="4"
-                            placeholder="Tell something about us !"
+                            rows="7"
+                            placeholder="Enter your Feedback"
+                            value={feedbackFormik.values.userFeedback}
+                            onChange={feedbackFormik.handleChange}
+                            onBlur={feedbackFormik.handleBlur}
                           ></textarea>
-                          <img
-                            width="48"
-                            height="48"
-                            src="https://img.icons8.com/fluency/48/edit-text-file.png"
-                            alt="edit-text-file"
-                          />
+                          <div className="icon">
+                            <i className="bx bxs-comment-detail"></i>
+                          </div>
+                        </div>
+                        <div className="form_group">
+                          <label
+                            htmlFor="clientName_Input"
+                            className={`${
+                              feedbackFormik.errors.currentRatting ? "error" : ""
+                            } `}
+                          >
+                            {feedbackFormik.touched.currentRatting &&
+                            feedbackFormik.errors.currentRatting
+                              ? feedbackFormik.errors.currentRatting
+                              : "Ratting"}
+                            <span>
+                              <sup>*</sup>
+                            </span>
+                          </label>
+                          <div
+                            className="ratting_container"
+                            data-rating="0"
+                            name='currentRatting'
+                            id="currentRatting"
+                            onMouseOver={handleRatting}
+                            onMouseLeave={removeRatting}
+                            onClick={RattingSetted}
+                            value={feedbackFormik.values.currentRatting}
+                            onChange={feedbackFormik.handleChange}
+                            onBlur={feedbackFormik.handleBlur}
+                          >
+                            <span className="ratting_star">
+                              <i className="bx bxs-star star" data-rating="1"></i>
+                            </span>
+                            <span className="ratting_star">
+                              <i className="bx bxs-star star" data-rating="2"></i>
+                            </span>
+                            <span className="ratting_star">
+                              <i className="bx bxs-star star" data-rating="3"></i>
+                            </span>
+                            <span className="ratting_star">
+                              <i className="bx bxs-star star" data-rating="4"></i>
+                            </span>
+                            <span className="ratting_star">
+                              <i className="bx bxs-star star" data-rating="5"></i>
+                            </span>
+                          </div>
+                          <div className="icon">
+                            <i className="bx bxs-award bx-tada"></i>
+                          </div>
                         </div>
                         <div className="form_actions">
                           <button type="submit">Send Feedback</button>
@@ -980,67 +1254,170 @@ const NewCard2 = () => {
                             alt="group-background-selected"
                           />
                         </div>
-                        <form action="">
+                        <form
+                          action=""
+                          ref={form}
+                          onSubmit={formik.handleSubmit}
+                        >
+                          {/* //First Name */}
                           <div className="form_group">
+                            <label
+                              htmlFor="clientFullName1"
+                              className={`${
+                                formik.errors.clientFullName1 ? "error" : ""
+                              } `}
+                            >
+                              {formik.touched.clientFullName1 &&
+                              formik.errors.clientFullName1
+                                ? formik.errors.clientFullName1
+                                : "FullName"}
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
                             <input
                               type="text"
-                              placeholder="Enter Full Name"
-                              name="name"
-                              id="name"
+                              placeholder="Enter your Fullname "
+                              name="clientFullName1"
+                              id="clientFullName1"
+                              value={formik.values.clientFullName1}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                             />
-                            <img
-                              width="64"
-                              height="64"
-                              src="https://img.icons8.com/nolan/64/user.png"
-                              alt="user"
-                            />
+                            <div className="icon">
+                              <i className="bx bxs-user"></i>
+                            </div>
                           </div>
+                          {/* //Last Name */}
                           <div className="form_group">
+                            <label
+                              htmlFor="clientEmail1"
+                              className={`${
+                                formik.errors.clientEmail1 ? "error" : ""
+                              } `}
+                            >
+                              {formik.touched.clientEmail1 &&
+                              formik.errors.clientEmail1
+                                ? formik.errors.clientEmail1
+                                : "Email"}
+
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
                             <input
                               type="email"
-                              placeholder="Enter your email"
-                              name="email"
-                              id="email"
+                              placeholder="Eg : abc@gmail.com"
+                              name="clientEmail1"
+                              id="clientEmail1"
+                              value={formik.values.clientEmail1}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                             />
-                            <img
-                              width="64"
-                              height="64"
-                              src="https://img.icons8.com/nolan/64/new-post.png"
-                              alt="new-post"
-                            />
+                            <div className="icon">
+                              <i className="bx bx-envelope"></i>
+                            </div>
                           </div>
                           <div className="form_group">
+                            <label
+                              htmlFor="clientMobileNumber1"
+                              className={`${
+                                formik.errors.clientMobileNumber1 ? "error" : ""
+                              } `}
+                            >
+                              {formik.touched.clientMobileNumber1 &&
+                              formik.errors.clientMobileNumber1
+                                ? formik.errors.clientMobileNumber1
+                                : "Mobile Number"}
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
                             <input
                               type="tel"
-                              placeholder="Enter your mobile Number"
-                              name="tel"
-                              id="tel"
+                              placeholder="Eg : +91 456789714"
+                              name="clientMobileNumber1"
+                              id="clientMobileNumber1"
+                              value={formik.values.clientMobileNumber1}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                             />
-                            <img
-                              width="64"
-                              height="64"
-                              src="https://img.icons8.com/nolan/64/phone-disconnected.png"
-                              alt="phone-disconnected"
-                            />
+                            <div className="icon">
+                              <i className="bx bx-mobile"></i>
+                            </div>
                           </div>
                           <div className="form_group">
+                            <label
+                              htmlFor="clientInquiries1"
+                              className={`${
+                                formik.errors.clientInquiries1 ? "error" : ""
+                              } `}
+                            >
+                              {formik.touched.clientInquiries1 &&
+                              formik.errors.clientInquiries1
+                                ? formik.errors.clientInquiries1
+                                : "Fill your Quiries"}
+                              <span>
+                                <sup>*</sup>
+                              </span>
+                            </label>
                             <textarea
-                              name="msg"
-                              id="msg"
+                              id="clientInquiries1"
+                              name="clientInquiries1"
                               cols="30"
-                              rows="4"
-                              placeholder="Tell something about us !"
+                              rows="7"
+                              placeholder="Enter your Quiries"
+                              value={formik.values.clientInquiries1}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
                             ></textarea>
-                            <img
-                              width="48"
-                              height="48"
-                              src="https://img.icons8.com/fluency/48/edit-text-file.png"
-                              alt="edit-text-file"
-                            />
+                            <div className="icon">
+                              <i className="bx bxs-comment-detail"></i>
+                            </div>
                           </div>
+
                           <div className="form_actions">
-                            <button type="submit">Send Message</button>
+                            <button type="submit">
+                              Send Message{" "}
+                              {loading ? (
+                                <span className="form_loader"></span>
+                              ) : (
+                                ""
+                              )}
+                            </button>
                           </div>
+
+                          <motion.div className="popup_container">
+                            {popup ? (
+                              <motion.div
+                                className="popup"
+                                variants={popUp_open}
+                                initial="hide"
+                                animate="show"
+                              >
+                                <motion.i
+                                  onClick={() => setPopup(false)}
+                                  className="uil uil-times"
+                                ></motion.i>
+                                <h4>Thanks for your responce!</h4>
+                                <small>{formData.name}</small>
+                                <p>Your email successfully received </p>
+                                <small>{formData.email}</small>
+                                <small>Will let you know shortly...</small>
+                              </motion.div>
+                            ) : (
+                              ""
+                            )}
+                          </motion.div>
+                          {confetti ? (
+                            <Confetti
+                              gravity={0.2}
+                              numberOfPieces={pieces}
+                              className="confetti"
+                            />
+                          ) : (
+                            ""
+                          )}
                         </form>
                       </div>
                     </div>
@@ -1052,15 +1429,15 @@ const NewCard2 = () => {
                       <p>Copyright Reserved &copy; 2021 DigitalCard.com</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ) : (
                 ""
               )}
-            </div>
+            </motion.div>
           ) : (
             ""
           )}
-        </div>
+        </motion.div>
       )}
     </>
   );

@@ -3,6 +3,8 @@ import "./App.css";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import formContext from "./component/Context/FormContext";
 import NewCard2 from "./component/AdminPannel/Cards/NewCard2";
+import NewCardDesign1 from "./component/AdminPannel/Cards/NewCardDesign1";
+import CryptoJS from "crypto-js";
 
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
@@ -159,6 +161,20 @@ const App = () => {
     if (Token) {
       setUser(Token);
     }
+
+    const urlString = window.location.href;
+    const url = new URL(urlString);
+
+    const pathnameParts = url.pathname.split("/");
+    const filteredPathname = pathnameParts.slice(2).join("/");
+
+    const decryptData = (encryptedText) => {
+      const bytes = CryptoJS.AES.decrypt(filteredPathname, "mani");
+      return bytes.toString(CryptoJS.enc.Utf8);
+    };
+
+    let id = decryptData();
+    if (id !== "") navigate(`/Digital_Card/${id}`);
   }, [navigate]); // Load user from localStorage on component mount
 
   return (
@@ -393,6 +409,7 @@ const App = () => {
               path="/super_admin_register"
               element={<Super_Admin_Register />}
             />
+            <Route path="/new_design" element={<NewCardDesign1 />} />
           </Routes>
         </Suspense>
       </formContext.Provider>

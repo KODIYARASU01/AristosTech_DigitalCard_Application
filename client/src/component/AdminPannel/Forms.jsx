@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import "./Form.scss";
 
 import { Link, useParams } from "react-router-dom";
-
+import CryptoJS from 'crypto-js'
 import formContext from "../Context/FormContext.jsx";
 import {
   convertToBase64Basic,
@@ -169,6 +169,11 @@ let Forms = () => {
   } = useContext(formContext);
 
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
+  const encryptData = (data) => {
+
+    
+    return   `/Digital_Card/${CryptoJS.AES.encrypt(data,"mani").toString()}`;
+  };
   return (
     <>
       <div
@@ -212,7 +217,11 @@ let Forms = () => {
         GalleryData && GalleryData.length > 0 &&
         TestimonialData && TestimonialData.length > 0 ? (
           <div className="final_digiCard">
-            <Link to={`/Digital_Card/${BasicData[0].user}`} target="_blank">
+            <Link to={
+encryptData(BasicData[0].user)
+
+
+            } target="_blank">
               <i className="bx bxs-hand-right bx-flashing"></i>Get Your Digital
               Card
             </Link>
