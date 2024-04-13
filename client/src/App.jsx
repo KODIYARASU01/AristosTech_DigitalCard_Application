@@ -162,19 +162,19 @@ const App = () => {
       setUser(Token);
     }
 
-    const urlString = window.location.href;
-    const url = new URL(urlString);
+    // const urlString = window.location.href;
+    // const url = new URL(urlString);
 
-    const pathnameParts = url.pathname.split("/");
-    const filteredPathname = pathnameParts.slice(2).join("/");
+    // const pathnameParts = url.pathname.split("/");
+    // const filteredPathname = pathnameParts.slice(2).join("/");
 
-    const decryptData = (encryptedText) => {
-      const bytes = CryptoJS.AES.decrypt(filteredPathname, "mani");
-      return bytes.toString(CryptoJS.enc.Utf8);
-    };
+    // const decryptData = (encryptedText) => {
+    //   const bytes = CryptoJS.AES.decrypt(filteredPathname, "mani");
+    //   return bytes.toString(CryptoJS.enc.Utf8);
+    // };
 
-    let id = decryptData();
-    if (id !== "") navigate(`/Digital_Card/${id}`);
+    // let id = decryptData();
+    // if (id !== "") navigate(`/Digital_Card/${id}`);
   }, [navigate]); // Load user from localStorage on component mount
 
   return (

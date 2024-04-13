@@ -20,6 +20,7 @@ import QRCodeDetailRoute from "./Routes/QRCodeDetail.route.js";
 import SocialMediaDetailRoute from "./Routes/SocialMediaDetail.route.js";
 import TestimonialDetailRoute from "./Routes/TestimonialDetail.route.js";
 import UserAllDataRoute from "./Routes/AllDetails.js";
+import FeedBackRoute from "./Routes/FeeBack.route.js";
 //Accept json type data send to server:
 app.use(cors());
 app.use(express.json({ limit: "30mb" }));
@@ -41,7 +42,7 @@ app.use("/QRCodeDetail", QRCodeDetailRoute);
 app.use("/socialMediaDetail", SocialMediaDetailRoute);
 app.use("/testimonialDetail", TestimonialDetailRoute);
 app.use("/vcard", UserAllDataRoute);
-
+app.use("/feedback",FeedBackRoute);
 //Home route for server side only for demo purpose:
 app.get("/", (req, res) => {
   res.send("server is running Sucessfully");

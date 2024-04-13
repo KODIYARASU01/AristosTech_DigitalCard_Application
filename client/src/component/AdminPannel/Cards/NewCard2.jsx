@@ -5,7 +5,7 @@ import avatar from "../../../assets/avatar_2.png";
 import logo from "../../../assets/avatar_2.png";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-
+import profile from '../../../assets/User_Auth/profile.png'
 import { useParams } from "react-router-dom";
 import qr1 from "../../../assets/QRCODE/qr-code-isometric.svg";
 import qr2 from "../../../assets/QRCODE/qr-code-monochromatic.svg";
@@ -19,6 +19,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Confetti from "react-confetti";
 import { motion } from "framer-motion";
+import { Flip, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //Testimonial
 import { useContext } from "react";
 import formContext from "../../Context/FormContext";
@@ -32,7 +34,17 @@ const NewCard2 = () => {
     clientInquiries1: "",
   });
 
-  let [feedbackForm,setFeedbackForm]=useState({userName : "",userFeedback:"",currentRatting:0})
+  let [feedbackForm, setFeedbackForm] = useState({
+    userName: '',
+    userFeedback: '',
+    currentRatting: 0,
+  });
+
+  let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  console.log(AllFeedBacks);
+  // let[userName,setUserName]=useState('');
+  // let[userFeedback,setUserFeedback]=useState('');
+  // let[currentRatting,setCurrentRatting]=useState(0)
   //Form Submit loader :
   let [loading, setLoading] = useState(false);
   //Collect form data by using useRef:
@@ -231,6 +243,7 @@ const NewCard2 = () => {
         `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
       )
       .then((res) => {
+        console.log(res)
         setAllData(res.data.data);
 
         setVCardLoader(false);
@@ -240,199 +253,19 @@ const NewCard2 = () => {
         setVCardLoader(false);
       });
   };
+  //AllFeedbackFetching:
 
+  async function fetchAllMessage(){
+    axios.get(`https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`).then((res)=>{
+      setAllFeedBacks(res.data.fetchData
+      )
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
   useEffect(() => {
-    let fetch = async () => {
-      setLoader3(true);
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setBasicData(res.data.data);
-          setBanner(res.data.data[0].banner);
-          setLogo(res.data.data[0].logo);
-          setFullName(res.data.data[0].fullName);
-          setProfession(res.data.data[0].profession);
-          setSummary(res.data.data[0].summary);
-          setBasicID(res.data.data[0]._id);
-          setLoader3(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoader3(false);
-        });
-    };
-    let socialmedia = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setSocialMediaData(res.data.data);
-          setFacebook(res.data.data[0].Facebook);
-          setInstagram(res.data.data[0].Instagram);
-          setTwiter(res.data.data[0].Twiter);
-          setWhatsUp(res.data.data[0].WhatsUp);
-          setLinkedIn(res.data.data[0].LinkedIn);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let contactDetail = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setContactData(res.data.data);
-          setEmail1(res.data.data[0].Email1);
-          setAlternateEmail(res.data.data[0].AlternateEmail);
-          setMobileNumber1(res.data.data[0].MobileNumber1);
-          setAlternateMobileNumber(res.data.data[0].AlternateMobileNumber);
-          setDOB(res.data.data[0].DOB);
-          setAddress(res.data.data[0].Address);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let fetchService = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/serviceDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data.data);
-          setServiceData(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let fetchQRCode = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/QRCodeDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setQRCodeData(res.data.data);
-          // setQRCodeImage(res.data.result[0].QRCodeImage)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let fetchProduct = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/productDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setProductData(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let fetchGallery = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/galleryDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setGalleryData(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let fetchSocialMedia = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/socialMediaDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setSocialMediaData(res.data.data);
-          setFacebook(res.data.data[0].Facebook);
-          setInstagram(res.data.data[0].Instagram);
-          setTwiter(res.data.data[0].Twiter);
-          setWhatsUp(res.data.data[0].WhatsUp);
-          setLinkedIn(res.data.data[0].LinkedIn);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    let fetchTestimonial = async () => {
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/testimonialDetail/specific/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorageDatas.token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data.data);
-          setTestimonialData(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    // fetch();
-    // socialmedia();
-    // contactDetail();
-    // fetchService();
-    // fetchQRCode();
-    // fetchProduct();
-    // fetchGallery();
-    // fetchSocialMedia();
-    // fetchTestimonial();
     getAllUserData();
+    fetchAllMessage();
   }, []);
 
   const buttonStyle = {
@@ -588,15 +421,50 @@ const NewCard2 = () => {
       StopConfetti();
     },
   });
-  console.log(feedbackForm.currentRatting)
+
+
+
+
+  async function feedBackSubmit() {
+    // e.preventDefault();
+    await axios
+      .post(`http://localhost:3001/feedback/${id.id}`, feedbackForm)
+      .then((res) => {
+        try{
+          console.log(res.data)
+       
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+
+ 
+        }catch(error){
+          console.log(error)
+          toast.error(res.data.error, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+        }
+     
+      })
+      .catch((error) => {
+        toast.error(error.response.data.error, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+      });
+  }
   //Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
-      userName: "",
-      userFeedback: "",
+      userName: '',
+      userFeedback: '',
       currentRatting: 0,
     },
-
 
     //Validation :
     validationSchema: Yup.object({
@@ -604,26 +472,29 @@ const NewCard2 = () => {
         .min(3, "Min 3 char required")
         .max(20, "Name must be 20 character or less")
         .required("Name is required"),
-        userFeedback: Yup.string()
+      userFeedback: Yup.string()
         .min(10, "Minimum 10 character required")
         .max(100, "Feedback must be 100 character or less")
         .required("Feedback is required"),
-        currentRatting:Yup.string()
-        .min(1,'Minimum Star Required')
+      currentRatting: Yup.number()
+        .min(0, "Minimum Star Required")
         .required("Ratting is required"),
     }),
     //Form Submit :
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      feedBackSubmit(values);
+
+      feedBackSubmit();
       setFeedbackForm({
         userName: values.userName,
         userFeedback: values.userFeedback,
         currentRatting: values.currentRatting,
       });
       setTimeout(() => {
-        formik.values.userName = "";
-        formik.values.userFeedback = "";
-        formik.values.currentRatting = 0;
-      }, 4000);
+        feedbackFormik.values.userName = "";
+        feedbackFormik.values.userFeedback = "";
+        feedbackFormik.values.currentRatting = 0;
+      }, 7000);
     },
   });
   //Start Ratting:
@@ -631,43 +502,38 @@ const NewCard2 = () => {
   function handleRatting(e) {
     let star = e.target;
     // console.log(star,star.classList);
-    if(star.classList.contains('star')){
-      let ratting=parseInt(star.dataset.rating,10);
-      highlightStar(ratting)
+    if (star.classList.contains("star")) {
+      let ratting = parseInt(star.dataset.rating, 10);
+      highlightStar(ratting);
     }
-  };
+  }
   //Remove Ratting:
-  function removeRatting(){
-    highlightStar(feedbackForm.currentRatting)
-  };
+  function removeRatting() {
+    highlightStar(feedbackForm.currentRatting);
+  }
   //Staring Setted
-  function RattingSetted(e){
-   
-    let starRating=document.querySelector('.ratting_container')
+  function RattingSetted(e) {
+    let starRating = document.querySelector(".ratting_container");
     let star = e.target;
     // console.log(star,star.classList);
-    if(star.classList.contains('star')){
-      feedbackForm.currentRatting=parseInt(star.dataset.rating,10);
-     starRating.setAttribute('data-rating',feedbackForm.currentRatting);
-     highlightStar(feedbackForm.currentRatting);
-     alert(`You rated ${feedbackForm.currentRatting} stars`)
+    if (star.classList.contains("star")) {
+      feedbackForm.currentRatting = parseInt(star.dataset.rating, 10);
+      starRating.setAttribute("data-rating", feedbackForm.currentRatting);
+      highlightStar(feedbackForm.currentRatting);
+      alert(`You rated ${feedbackForm.currentRatting} stars`);
     }
-  };
-
+  }
   //Highlight star color:
-  function highlightStar(ratting){
-  
-    let stars=document.querySelectorAll('.star');
+  function highlightStar(ratting) {
+    let stars = document.querySelectorAll(".star");
 
-    stars.forEach((star,index)=>{
-      if(index < ratting){
-        star.classList.add('highlight')
+    stars.forEach((star, index) => {
+      if (index < ratting) {
+        star.classList.add("highlight");
+      } else {
+        star.classList.remove("highlight");
       }
-      else{
-        star.classList.remove('highlight')
-      }
-    })
-    
+    });
   };
 
   return (
@@ -681,6 +547,14 @@ const NewCard2 = () => {
         <motion.div className="newCard_container2">
           {AllData.BasicDetail != undefined ? (
             <motion.div className="card_box">
+              <ToastContainer
+                closeOnClick
+                autoClose={2000}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
               {AllData.BasicDetail.map((data, index) => {
                 return (
                   <motion.div className="box-1" key={index}>
@@ -1148,6 +1022,8 @@ const NewCard2 = () => {
                             placeholder="Enter Your Name"
                             name="userName"
                             id="userName"
+                            // value={userName}
+                            // onChange={(e)=>setUserName(e.target.value)}
                             value={feedbackFormik.values.userName}
                             onChange={feedbackFormik.handleChange}
                             onBlur={feedbackFormik.handleBlur}
@@ -1177,6 +1053,8 @@ const NewCard2 = () => {
                             cols="30"
                             rows="7"
                             placeholder="Enter your Feedback"
+                            // value={userFeedback}
+                            // onChange={(e)=>setUserFeedback(e.target.value)}
                             value={feedbackFormik.values.userFeedback}
                             onChange={feedbackFormik.handleChange}
                             onBlur={feedbackFormik.handleBlur}
@@ -1189,7 +1067,9 @@ const NewCard2 = () => {
                           <label
                             htmlFor="clientName_Input"
                             className={`${
-                              feedbackFormik.errors.currentRatting ? "error" : ""
+                              feedbackFormik.errors.currentRatting
+                                ? "error"
+                                : ""
                             } `}
                           >
                             {feedbackFormik.touched.currentRatting &&
@@ -1203,29 +1083,46 @@ const NewCard2 = () => {
                           <div
                             className="ratting_container"
                             data-rating="0"
-                            name='currentRatting'
+                            name="currentRatting"
                             id="currentRatting"
                             onMouseOver={handleRatting}
                             onMouseLeave={removeRatting}
                             onClick={RattingSetted}
+                            // value={currentRatting}
+                            // onChange={(e)=>setCurrentRatting(e.target.value)}
                             value={feedbackFormik.values.currentRatting}
                             onChange={feedbackFormik.handleChange}
                             onBlur={feedbackFormik.handleBlur}
                           >
                             <span className="ratting_star">
-                              <i className="bx bxs-star star" data-rating="1"></i>
+                              <i
+                                className="bx bxs-star star"
+                                data-rating="1"
+                              ></i>
                             </span>
                             <span className="ratting_star">
-                              <i className="bx bxs-star star" data-rating="2"></i>
+                              <i
+                                className="bx bxs-star star"
+                                data-rating="2"
+                              ></i>
                             </span>
                             <span className="ratting_star">
-                              <i className="bx bxs-star star" data-rating="3"></i>
+                              <i
+                                className="bx bxs-star star"
+                                data-rating="3"
+                              ></i>
                             </span>
                             <span className="ratting_star">
-                              <i className="bx bxs-star star" data-rating="4"></i>
+                              <i
+                                className="bx bxs-star star"
+                                data-rating="4"
+                              ></i>
                             </span>
                             <span className="ratting_star">
-                              <i className="bx bxs-star star" data-rating="5"></i>
+                              <i
+                                className="bx bxs-star star"
+                                data-rating="5"
+                              ></i>
                             </span>
                           </div>
                           <div className="icon">
@@ -1236,6 +1133,87 @@ const NewCard2 = () => {
                           <button type="submit">Send Feedback</button>
                         </div>
                       </form>
+
+                      {/* //Feedback messages */}
+                      <div className="Feedback_container">
+                        <div className="feeback_title">
+                          <button><i className='bx bxs-message-rounded-dots'></i>See All Comments</button>
+                        </div>
+                        <div className="comment_box">
+
+                          {AllFeedBacks.map((data,index)=>{
+                            return(
+                              <div className="message" key={index}>
+                              <div className="user_detail">
+                                <div className="profile">
+                                  <img src={profile} alt="profile" />
+                                </div>
+                                <div className="details">
+                                <div className="userName">
+                                <p>{data.userName}<i className='bx bxs-user-check'></i></p>
+                               </div>
+                               <div className="stars">
+                               <div
+                                className="ratting_container1"
+                                data-rating={data.currentRatting}
+                                name="currentRatting"
+                                id="currentRatting"
+                                // onMouseOver={handleRatting}
+                                // onMouseLeave={removeRatting}
+                                // onClick={FetchinghighlightStar}
+                                // onMouseOver={(e)=>RattingStarFetched(e,data.currentRatting)}
+                                // value={currentRatting}
+                                // onChange={(e)=>setCurrentRatting(e.target.value)}
+                                value={data.currentRatting}
+                                onChange={feedbackFormik.handleChange}
+                                onBlur={feedbackFormik.handleBlur}
+                              >
+                                <span className="ratting_star">
+                                  <i
+                                    className="bx bxs-star star1"
+                                    data-rating="1"
+                                  ></i>
+                                </span>
+                                <span className="ratting_star">
+                                  <i
+                                    className="bx bxs-star star1"
+                                    data-rating="2"
+                                  ></i>
+                                </span>
+                                <span className="ratting_star">
+                                  <i
+                                    className="bx bxs-star star1"
+                                    data-rating="3"
+                                  ></i>
+                                </span>
+                                <span className="ratting_star">
+                                  <i
+                                    className="bx bxs-star star1"
+                                    data-rating="4"
+                                  ></i>
+                                </span>
+                                <span className="ratting_star">
+                                  <i
+                                    className="bx bxs-star star1"
+                                    data-rating="5"
+                                  ></i>
+                                </span>
+                              </div>
+                               </div>
+                                </div>
+                              </div>
+                           
+                               <div className="comments">
+                               <i className='bx bx-chat'></i>
+                                <span>{data.userFeedback}</span>
+                               </div>
+                              </div>
+                            )
+                          })}
+                         
+                       
+                        </div>
+                      </div>
                     </div>
                   </div>
                   {/* /Enquire */}
