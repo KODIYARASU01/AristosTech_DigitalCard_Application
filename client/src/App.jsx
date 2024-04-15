@@ -5,6 +5,8 @@ import formContext from "./component/Context/FormContext";
 import NewCard2 from "./component/AdminPannel/Cards/NewCard2";
 import NewCardDesign1 from "./component/AdminPannel/Cards/NewCardDesign1";
 import CryptoJS from "crypto-js";
+import AllProducts from "./component/AdminPannel/Cards/AllProducts";
+import AllServices from "./component/AdminPannel/Cards/AllServices";
 
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
@@ -410,6 +412,9 @@ const App = () => {
               element={<Super_Admin_Register />}
             />
             <Route path="/new_design" element={<NewCardDesign1 />} />
+
+            <Route path="/all_products" element={<AllProducts/>}/>
+            <Route path="/all_services" element={<AllServices/>}/>
           </Routes>
         </Suspense>
       </formContext.Provider>

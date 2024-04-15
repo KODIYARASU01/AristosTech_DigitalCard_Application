@@ -77,11 +77,11 @@ export const updateSpecificUserData = async (req, res) => {
     let updateSpecificData = await ContactDetails.findByIdAndUpdate(id, data);
 
     if (!updateSpecificData) {
-      res.status(400).json({ message: "Specific Data Not Found" });
+      res.status(400).json({ message: "Contact Data Not Found" });
     } else {
       res
         .status(201)
-        .json({ message: "Specific Data Updated", data: updateSpecificData });
+        .json({ message: "Contact Data Updated", data: updateSpecificData });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

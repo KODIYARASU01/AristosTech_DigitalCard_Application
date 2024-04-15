@@ -19,13 +19,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Confetti from "react-confetti";
 import { motion } from "framer-motion";
+import axios from "axios";
+import emailjs from "@emailjs/browser";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //Testimonial
 import { useContext } from "react";
 import formContext from "../../Context/FormContext";
-import axios from "axios";
-import emailjs from "@emailjs/browser";
+
 
 const NewCard2 = () => {
   let {
@@ -185,15 +186,15 @@ const NewCard2 = () => {
   // let[currentRatting,setCurrentRatting]=useState(0)
   //Form Submit loader :
   let [loading, setLoading] = useState(false);
-  //Collect form data by using useRef:
-  let form = useRef();
+ 
   //Confetti Pieces :
   const [pieces, setPieces] = useState(250);
   //Confetti iniital false:
   let [confetti, setConfetti] = useState(false);
   //Popup show :
   let [popup, setPopup] = useState(false);
-
+ //Collect form data by using useRef:
+ let form = useRef();
   let popUp_open = {
     hide: { opacity: 0, scale: 0.2 },
     show: {
@@ -242,7 +243,9 @@ const NewCard2 = () => {
   async function fetchAllMessage() {
     setFeedbackLoader(true);
     axios
-      .get(`https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`)
+      .get(
+        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`
+      )
       .then((res) => {
         setAllFeedBacks(res.data.fetchData);
         setCommentOpen(!commentOpen);
@@ -258,7 +261,9 @@ const NewCard2 = () => {
     let getAllUserData = async () => {
       setVCardLoader(true);
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`)
+        .get(
+          `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
+        )
         .then((res) => {
           setAllData(res.data.data);
 
@@ -429,7 +434,10 @@ const NewCard2 = () => {
   async function feedBackSubmit() {
     // e.preventDefault();
     await axios
-      .post(`https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`, feedbackForm)
+      .post(
+        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`,
+        feedbackForm
+      )
       .then((res) => {
         try {
           toast.success(res.data.message, {
@@ -511,9 +519,9 @@ const NewCard2 = () => {
       feedbackForm.currentRatting = parseInt(star.dataset.rating, 10);
       starRating.setAttribute("data-rating", feedbackForm.currentRatting);
       highlightStar(feedbackForm.currentRatting);
-      alert(`You rated ${feedbackForm.currentRatting} stars`);
     }
   }
+
   //Highlight star color:
   function highlightStar(ratting) {
     let stars = document.querySelectorAll(".star");
@@ -526,6 +534,7 @@ const NewCard2 = () => {
       }
     });
   }
+
 
   return (
     <>
@@ -1168,16 +1177,23 @@ const NewCard2 = () => {
                                           className="ratting_container1"
                                           data-rating={data.currentRatting}
                                           name="currentRatting"
-                                          id="currentRatting"
-                                          // onMouseOver={handleRatting}
-                                          // onMouseLeave={removeRatting}
-                                          // onClick={FetchinghighlightStar}
-                                          // onMouseOver={(e)=>RattingStarFetched(e,data.currentRatting)}
-                                          // value={currentRatting}
-                                          // onChange={(e)=>setCurrentRatting(e.target.value)}
+                                          // id="currentRatting"
+                                          id={
+                                            data.currentRatting == 0
+                                              ? "noRatting"
+                                              : "" || data.currentRatting == 1
+                                              ? "singleRatting"
+                                              : "" || data.currentRatting == 2
+                                              ? "doubleRatting"
+                                              : "" || data.currentRatting == 3
+                                              ? "ThreeRatting"
+                                              : "" || data.currentRatting == 4
+                                              ? "fourRatting"
+                                              : "" || data.currentRatting == 5
+                                              ? "fullRatting"
+                                              : ""
+                                          }
                                           value={data.currentRatting}
-                                          onChange={feedbackFormik.handleChange}
-                                          onBlur={feedbackFormik.handleBlur}
                                         >
                                           <span className="ratting_star">
                                             <i
