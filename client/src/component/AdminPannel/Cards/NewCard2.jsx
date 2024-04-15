@@ -5,7 +5,7 @@ import avatar from "../../../assets/avatar_2.png";
 import logo from "../../../assets/avatar_2.png";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import profile from '../../../assets/User_Auth/profile.png'
+import profile from "../../../assets/User_Auth/profile.png";
 import { useParams } from "react-router-dom";
 import qr1 from "../../../assets/QRCODE/qr-code-isometric.svg";
 import qr2 from "../../../assets/QRCODE/qr-code-monochromatic.svg";
@@ -26,55 +26,8 @@ import { useContext } from "react";
 import formContext from "../../Context/FormContext";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
+
 const NewCard2 = () => {
-  let [formData, setFormData] = useState({
-    clientFullName1: "",
-    clientEmail1: "",
-    clientMobileNumber1: "",
-    clientInquiries1: "",
-  });
-
-  let [feedbackForm, setFeedbackForm] = useState({
-    userName: '',
-    userFeedback: '',
-    currentRatting: 0,
-  });
-
-  let [AllFeedBacks, setAllFeedBacks] = useState([]);
-  console.log(AllFeedBacks);
-  // let[userName,setUserName]=useState('');
-  // let[userFeedback,setUserFeedback]=useState('');
-  // let[currentRatting,setCurrentRatting]=useState(0)
-  //Form Submit loader :
-  let [loading, setLoading] = useState(false);
-  //Collect form data by using useRef:
-  let form = useRef();
-  //Confetti Pieces :
-  const [pieces, setPieces] = useState(250);
-  //Confetti iniital false:
-  let [confetti, setConfetti] = useState(false);
-  //Popup show :
-  let [popup, setPopup] = useState(false);
-
-  let popUp_open = {
-    hide: { opacity: 0, scale: 0.2 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      transition: { type: "spring" },
-    },
-  };
-
-  let id = useParams();
-  let [vCardLoader, setVCardLoader] = useState(false);
-  //Confetti function :
-  //Confetti function :
-  const StopConfetti = () => {
-    setTimeout(() => {
-      setPieces(0);
-    }, 7000);
-  };
-
   let {
     AllData,
     setAllData,
@@ -212,6 +165,53 @@ const NewCard2 = () => {
     QRCodeEdit,
     setQRCodeEdit,
   } = useContext(formContext);
+  let [formData, setFormData] = useState({
+    clientFullName1: "",
+    clientEmail1: "",
+    clientMobileNumber1: "",
+    clientInquiries1: "",
+  });
+
+  let [feedbackForm, setFeedbackForm] = useState({
+    userName: "",
+    userFeedback: "",
+    currentRatting: 0,
+  });
+  let [feedbackLoader, setFeedbackLoader] = useState(false);
+  let [commentOpen, setCommentOpen] = useState(false);
+  let [AllFeedBacks, setAllFeedBacks] = useState([]);
+  // let[userName,setUserName]=useState('');
+  // let[userFeedback,setUserFeedback]=useState('');
+  // let[currentRatting,setCurrentRatting]=useState(0)
+  //Form Submit loader :
+  let [loading, setLoading] = useState(false);
+  //Collect form data by using useRef:
+  let form = useRef();
+  //Confetti Pieces :
+  const [pieces, setPieces] = useState(250);
+  //Confetti iniital false:
+  let [confetti, setConfetti] = useState(false);
+  //Popup show :
+  let [popup, setPopup] = useState(false);
+
+  let popUp_open = {
+    hide: { opacity: 0, scale: 0.2 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring" },
+    },
+  };
+
+  let id = useParams();
+  let [vCardLoader, setVCardLoader] = useState(false);
+  //Confetti function :
+  //Confetti function :
+  const StopConfetti = () => {
+    setTimeout(() => {
+      setPieces(0);
+    }, 7000);
+  };
 
   // Retrieve token from local storage or wherever it's stored
   let localStorageDatas = JSON.parse(localStorage.getItem("datas"));
@@ -236,36 +236,40 @@ const NewCard2 = () => {
         }
       );
   };
-  let getAllUserData = async () => {
-    setVCardLoader(true);
-    await axios
-      .get(
-        `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
-      )
-      .then((res) => {
-        console.log(res)
-        setAllData(res.data.data);
 
-        setVCardLoader(false);
+  //AllFeedbackFetching:
+
+  async function fetchAllMessage() {
+    setFeedbackLoader(true);
+    axios
+      .get(`https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`)
+      .then((res) => {
+        setAllFeedBacks(res.data.fetchData);
+        setCommentOpen(!commentOpen);
+        setFeedbackLoader(false);
       })
       .catch((error) => {
         console.log(error);
-        setVCardLoader(false);
+        setCommentOpen(false);
+        setFeedbackLoader(false);
       });
-  };
-  //AllFeedbackFetching:
-
-  async function fetchAllMessage(){
-    axios.get(`https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`).then((res)=>{
-      setAllFeedBacks(res.data.fetchData
-      )
-    }).catch((error)=>{
-      console.log(error)
-    })
   }
   useEffect(() => {
+    let getAllUserData = async () => {
+      setVCardLoader(true);
+      await axios
+        .get(`https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`)
+        .then((res) => {
+          setAllData(res.data.data);
+
+          setVCardLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setVCardLoader(false);
+        });
+    };
     getAllUserData();
-    fetchAllMessage();
   }, []);
 
   const buttonStyle = {
@@ -422,33 +426,25 @@ const NewCard2 = () => {
     },
   });
 
-
-
-
   async function feedBackSubmit() {
     // e.preventDefault();
     await axios
-      .post(`http://localhost:3001/feedback/${id.id}`, feedbackForm)
+      .post(`https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`, feedbackForm)
       .then((res) => {
-        try{
-          console.log(res.data)
-       
+        try {
           toast.success(res.data.message, {
             position: "top-center",
             autoClose: 2000,
             transition: Flip,
           });
-
- 
-        }catch(error){
-          console.log(error)
+        } catch (error) {
+          console.log(error);
           toast.error(res.data.error, {
             position: "top-center",
             autoClose: 2000,
             transition: Flip,
           });
         }
-     
       })
       .catch((error) => {
         toast.error(error.response.data.error, {
@@ -461,8 +457,8 @@ const NewCard2 = () => {
   //Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
-      userName: '',
-      userFeedback: '',
+      userName: "",
+      userFeedback: "",
       currentRatting: 0,
     },
 
@@ -470,31 +466,26 @@ const NewCard2 = () => {
     validationSchema: Yup.object({
       userName: Yup.string()
         .min(3, "Min 3 char required")
-        .max(20, "Name must be 20 character or less")
+        .max(50, "Name must be 20 character or less")
         .required("Name is required"),
       userFeedback: Yup.string()
         .min(10, "Minimum 10 character required")
-        .max(100, "Feedback must be 100 character or less")
+        .max(400, "Feedback must be 100 character or less")
         .required("Feedback is required"),
-      currentRatting: Yup.number()
-        .min(0, "Minimum Star Required")
-        .required("Ratting is required"),
     }),
     //Form Submit :
     onSubmit: async (values) => {
-      feedBackSubmit(values);
-
-      feedBackSubmit();
       setFeedbackForm({
         userName: values.userName,
         userFeedback: values.userFeedback,
         currentRatting: values.currentRatting,
       });
+      feedBackSubmit();
       setTimeout(() => {
         feedbackFormik.values.userName = "";
         feedbackFormik.values.userFeedback = "";
         feedbackFormik.values.currentRatting = 0;
-      }, 7000);
+      }, 4000);
     },
   });
   //Start Ratting:
@@ -534,7 +525,7 @@ const NewCard2 = () => {
         star.classList.remove("highlight");
       }
     });
-  };
+  }
 
   return (
     <>
@@ -1137,82 +1128,103 @@ const NewCard2 = () => {
                       {/* //Feedback messages */}
                       <div className="Feedback_container">
                         <div className="feeback_title">
-                          <button><i className='bx bxs-message-rounded-dots'></i>See All Comments</button>
-                        </div>
-                        <div className="comment_box">
+                          {commentOpen ? (
+                            <button onClick={() => setCommentOpen(false)}>
+                              <i className="bx bxs-message-rounded-dots"></i>
+                              Hide All Comments
+                            </button>
+                          ) : (
+                            <button onClick={fetchAllMessage}>
+                              <i className="bx bxs-message-rounded-dots"></i>See
+                              All Comments
+                            </button>
+                          )}
 
-                          {AllFeedBacks.map((data,index)=>{
-                            return(
-                              <div className="message" key={index}>
-                              <div className="user_detail">
-                                <div className="profile">
-                                  <img src={profile} alt="profile" />
-                                </div>
-                                <div className="details">
-                                <div className="userName">
-                                <p>{data.userName}<i className='bx bxs-user-check'></i></p>
-                               </div>
-                               <div className="stars">
-                               <div
-                                className="ratting_container1"
-                                data-rating={data.currentRatting}
-                                name="currentRatting"
-                                id="currentRatting"
-                                // onMouseOver={handleRatting}
-                                // onMouseLeave={removeRatting}
-                                // onClick={FetchinghighlightStar}
-                                // onMouseOver={(e)=>RattingStarFetched(e,data.currentRatting)}
-                                // value={currentRatting}
-                                // onChange={(e)=>setCurrentRatting(e.target.value)}
-                                value={data.currentRatting}
-                                onChange={feedbackFormik.handleChange}
-                                onBlur={feedbackFormik.handleBlur}
-                              >
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="1"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="2"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="3"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="4"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="5"
-                                  ></i>
-                                </span>
-                              </div>
-                               </div>
-                                </div>
-                              </div>
-                           
-                               <div className="comments">
-                               <i className='bx bx-chat'></i>
-                                <span>{data.userFeedback}</span>
-                               </div>
-                              </div>
-                            )
-                          })}
-                         
-                       
+                          {feedbackLoader ? (
+                            <span className="feedBack_loader"></span>
+                          ) : (
+                            ""
+                          )}
                         </div>
+
+                        {commentOpen ? (
+                          <div className="comment_box">
+                            {AllFeedBacks.map((data, index) => {
+                              return (
+                                <div className="message" key={index}>
+                                  <div className="user_detail">
+                                    <div className="profile">
+                                      <img src={profile} alt="profile" />
+                                    </div>
+                                    <div className="details">
+                                      <div className="userName">
+                                        <p>
+                                          {data.userName}
+                                          <i className="bx bxs-user-check"></i>
+                                        </p>
+                                      </div>
+                                      <div className="stars">
+                                        <div
+                                          className="ratting_container1"
+                                          data-rating={data.currentRatting}
+                                          name="currentRatting"
+                                          id="currentRatting"
+                                          // onMouseOver={handleRatting}
+                                          // onMouseLeave={removeRatting}
+                                          // onClick={FetchinghighlightStar}
+                                          // onMouseOver={(e)=>RattingStarFetched(e,data.currentRatting)}
+                                          // value={currentRatting}
+                                          // onChange={(e)=>setCurrentRatting(e.target.value)}
+                                          value={data.currentRatting}
+                                          onChange={feedbackFormik.handleChange}
+                                          onBlur={feedbackFormik.handleBlur}
+                                        >
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="1"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="2"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="3"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="4"
+                                            ></i>
+                                          </span>
+                                          <span className="ratting_star">
+                                            <i
+                                              className="bx bxs-star star1"
+                                              data-rating="5"
+                                            ></i>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="comments">
+                                    <i className="bx bx-chat"></i>
+                                    <span>{data.userFeedback}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                   </div>

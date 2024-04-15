@@ -16,7 +16,6 @@ let feebackSchema = new mongoose.Schema({
   },
   currentRatting: {
     type: Number,
-    required: true,
   },
 });
 

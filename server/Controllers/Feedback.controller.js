@@ -2,7 +2,7 @@ import feedBackMessage from "../Models/FeedBack.model.js";
 export const feedBackPost = async (req, res) => {
   try {
     let { userName, userFeedback, currentRatting } = req.body;
-    if (!userName || !userFeedback || !currentRatting) {
+    if (!userName || !userFeedback) {
       return res.status(400).json({ error: "All * field Required" });
     } else {
       let data = {

@@ -1341,7 +1341,9 @@
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            gap: 10px;
 
             button {
               display: flex;
@@ -1356,6 +1358,48 @@
               border: transparent;
               font-weight: 600;
             }
+            .feedBack_loader {
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              display: block;
+              margin:15px auto;
+              position: relative;
+              color: #253bff;
+              left: -100px;
+              box-sizing: border-box;
+              animation: shadowRolling 2s linear infinite;
+            }
+            
+            @keyframes shadowRolling {
+              0% {
+                box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+              }
+              12% {
+                box-shadow: 100px 0 rgb(76, 247, 176), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+              }
+              25% {
+                box-shadow: 110px 0 rgb(107, 98, 233), 100px 0 rgb(75, 45, 243), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+              }
+              36% {
+                box-shadow: 120px 0 rgb(94, 236, 255), 110px 0 rgb(226, 253, 72), 100px 0 rgb(219, 99, 119), 0px 0 rgba(255, 255, 255, 0);
+              }
+              50% {
+                box-shadow: 130px 0 rgb(240, 135, 49), 120px 0 rgb(56, 163, 74), 110px 0 rgb(99, 95, 95), 100px 0 rgb(135, 111, 221);
+              }
+              62% {
+                box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 white, 120px 0 white, 110px 0 white;
+              }
+              75% {
+                box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 white, 120px 0 white;
+              }
+              87% {
+                box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 white;
+              }
+              100% {
+                box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
+              }
+            }
           }
           .comment_box {
             width: 100%;
@@ -1369,6 +1413,8 @@
 
             .message {
               width: 100%;
+              padding: 10px;
+              border-bottom: 2px solid rgb(238, 237, 237);
               .user_detail {
                 display: flex;
                 align-items: center;
