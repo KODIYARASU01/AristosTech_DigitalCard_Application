@@ -8,7 +8,7 @@ const AllServices = () => {
            
           <div className="product_card">
           <div className="back_button">
-                <Link to='/new_design'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
+                <Link to='/'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
             </div>
             <div className="Product_card_title">
               <p>All Services</p>
