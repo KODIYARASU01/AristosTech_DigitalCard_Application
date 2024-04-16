@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./NewCardDesign1.scss";
-import banner_img from "../../../assets/Background/download.svg";
+import banner_img from "../../../assets/New_Design/programming-background-collage.jpg";
 import avatar from "../../../assets/User_Auth/profile.png";
 import shape from "../../../assets/New_Design/g.png";
 import "react-slideshow-image/dist/styles.css";
@@ -369,8 +369,8 @@ const NewCardDesign1 = () => {
                   <img src={avatar} alt="logo" />
                 </div>
                 <div className="user_Name">
-                  <p>Siva Kathikeyan</p>
-                  <small>Tamil Bollywood Actor</small>
+                  <p>Kodiyarasu C</p>
+                  <small>FullStack Web Developer With <span>MERN</span></small>
                 </div>
               </div>
 
