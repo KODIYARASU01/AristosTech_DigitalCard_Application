@@ -1487,12 +1487,13 @@
                     }
 
                     #noRatting{
-
+                      text-decoration: line-through;
+                      text-decoration-color: #ff2525;
                       span:nth-child(1) , span:nth-child(2), span:nth-child(3),span:nth-child(4),span:nth-child(5){
                         i{
                           
-                          text-decoration: line-through;
-                     text-decoration-color: #ff2525;
+                    //       text-decoration: line-through;
+                    //  text-decoration-color: #ff2525;
                        
                         }
                  
