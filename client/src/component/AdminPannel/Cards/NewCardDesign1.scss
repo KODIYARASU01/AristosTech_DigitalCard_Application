@@ -7,7 +7,11 @@
 .newCard_design_container {
   width: 100vw;
   height: 100vh;
-  background-color: aliceblue;
+background-image: url(../../../assets/Background/new_design_back1.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+
   display: flex;
   font-family: "Poppins";
   font-weight: 200;
@@ -18,11 +22,13 @@
   position: relative;
 
   .card_design_box {
+    opacity: 1;
     min-width: 35%;
     width: 35%;
     min-height: 500vh;
     height: auto;
     overflow: hidden;
+    z-index: 900;
     position: absolute;
     background-color: #8edeec;
 
