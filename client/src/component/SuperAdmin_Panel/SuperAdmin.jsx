@@ -177,7 +177,7 @@ const SuperAdmin = () => {
     setSuperAdmin_Loader(true);
     axios
       .get(
-        "https://aristostech-digitalcard-application.onrender.com/auth/register"
+        "http://localhost:3001/auth/register"
       )
       .then((res) => {
         setAllUsers(res.data.data);
@@ -195,7 +195,7 @@ const SuperAdmin = () => {
     try {
       axios
         .delete(
-          `https://aristostech-digitalcard-application.onrender.com/auth/register/${id_val}`
+          `http://localhost:3001/auth/register/${id_val}`
         )
         .then((res) => {
           toast.success(res.data.message, {

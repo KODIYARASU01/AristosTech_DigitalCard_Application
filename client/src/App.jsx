@@ -7,6 +7,10 @@ import NewCardDesign1 from "./component/AdminPannel/Cards/NewCardDesign1";
 import CryptoJS from "crypto-js";
 import AllProducts from "./component/AdminPannel/Cards/AllProducts";
 import AllServices from "./component/AdminPannel/Cards/AllServices";
+import DemoCard from "./component/AdminPannel/VCards/DemoCard";
+import NewCardDesign2 from "./component/AdminPannel/Cards/NewCardDesign2";
+import AllServices2 from "./component/AdminPannel/Cards/AllService2";
+import AllProducts2 from "./component/AdminPannel/Cards/AllProduct2";
 
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
@@ -411,10 +415,13 @@ const App = () => {
               path="/super_admin_register"
               element={<Super_Admin_Register />}
             /> */}
-            <Route path="/" element={<NewCardDesign1 />} />
-
+            {/* <Route path="/new_card" element={<NewCardDesign1 />} /> */}
+            <Route path="/" element={<NewCardDesign2 />} />
             <Route path="/all_products" element={<AllProducts/>}/>
             <Route path="/all_services" element={<AllServices/>}/>
+            <Route path="/New_products" element={<AllProducts2/>}/>
+            <Route path="/New_services" element={<AllServices2/>}/>
+            <Route path="/demo_card" element={<DemoCard/>}/>
           </Routes>
         </Suspense>
       </formContext.Provider>

@@ -1,14 +1,14 @@
 import React from 'react'
-import './AllServices.scss'
+import './AllService2.scss'
 import { Link } from 'react-router-dom';
-const AllServices = () => {
+const AllServices2 = () => {
   return (
     <div>
-        <div className="box-6_AllProducts">
+        <div className="box-6_AllService2">
            
           <div className="product_card">
           <div className="back_button">
-                <Link to='/new_card'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
+                <Link to='/'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
             </div>
             <div className="Product_card_title">
               <p>All Services</p>
@@ -45,4 +45,4 @@ const AllServices = () => {
   )
 }
 
-export default AllServices;
+export default AllServices2;

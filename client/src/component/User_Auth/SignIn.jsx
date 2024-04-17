@@ -44,7 +44,7 @@ const SignIn = () => {
     };
     try {
       axios
-        .post("https://aristostech-digitalcard-application.onrender.com/auth/login", data)
+        .post("http://localhost:3001/auth/login", data)
         .then((response) => {
           const datas = JSON.stringify({
             token: response?.data?.token,

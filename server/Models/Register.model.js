@@ -9,6 +9,7 @@ let RegisterSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: [true, "FirstName is Required"],
+      unique:true
     },
     lastName: {
       type: String,

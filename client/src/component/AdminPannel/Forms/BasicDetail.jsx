@@ -48,7 +48,7 @@ console.log(BasicData)
     let fetch = async () => {
       setLoader4(true);
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/basicDetail/specific/${id}`, {
+        .get(`http://localhost:3001/basicDetail/specific/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorageDatas.token}`,
           },
@@ -103,7 +103,7 @@ console.log(BasicData)
       setLoader3(true);
       // Make authenticated request with bearer token
       await axios
-        .post("https://aristostech-digitalcard-application.onrender.com/basicDetail", data, {
+        .post("http://localhost:3001/basicDetail", data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },
@@ -154,7 +154,7 @@ console.log(BasicData)
       };
       // Make authenticated request with bearer token
       await axios
-        .put(`https://aristostech-digitalcard-application.onrender.com/basicDetail/update/${BasicID}`, data, {
+        .put(`http://localhost:3001/basicDetail/update/${BasicID}`, data, {
           headers: {
             Authorization: `Bearer ${id.token}`,
           },

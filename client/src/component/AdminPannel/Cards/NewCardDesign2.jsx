@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./NewCardDesign1.scss";
+import "./NewCardDesign2.scss";
 import banner_img from "../../../assets/New_Design/programming-background-collage.jpg";
 import avatar from "../../../assets/User_Auth/profile.png";
 import shape from "../../../assets/New_Design/g.png";
-import "react-slideshow-image/dist/styles.css";
 import { Link, useParams } from "react-router-dom";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "react-quill/dist/quill.snow.css";
@@ -13,10 +12,12 @@ import Confetti from "react-confetti";
 import { motion } from "framer-motion";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
-//Service
+//Product
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 
+// import Carousel1 from 'react-multi-carousel';
+// import 'react-multi-carousel/lib/styles.css';
 //Carousel Testimonial
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -37,7 +38,38 @@ import product2 from "../../../assets/New_Design/2.jpg";
 import product3 from "../../../assets/New_Design/3.jpg";
 import product4 from "../../../assets/New_Design/4.jpg";
 import product5 from "../../../assets/New_Design/5.jpg";
-const NewCardDesign1 = () => {
+const NewCardDesign2 = () => {
+  const buttonStyle = {
+    width: "0px",
+    background: "none",
+    opacity: 0,
+    border: "0px",
+    padding: "0px",
+  };
+  const properties = {
+    prevArrow: (
+      <button style={{ ...buttonStyle }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
+        </svg>
+      </button>
+    ),
+    nextArrow: (
+      <button style={{ ...buttonStyle }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#fff"
+        >
+          <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
+        </svg>
+      </button>
+    ),
+  };
   let id = useParams();
   let [formData, setFormData] = useState({
     clientFullName1: "",
@@ -353,12 +385,21 @@ const NewCardDesign1 = () => {
       }
     });
   }
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+
+      setWidth(window.innerWidth);
+ 
+  },[]);
+
   return (
     <>
       <div className="newCard_design_container">
-        <div className="card_design_box">
-          {/* Banner,logo,userName */}
-          <div className="box-1">
+        <div className="card_design_box1">
+          <div style={{backgroundColor:'#003253'}}>
+     {/* Banner,logo,userName */}
+     <div className="box-1">
             <div className="banner">
               <div className="banner_image">
                 <img src={banner_img} alt="banner" />
@@ -368,18 +409,18 @@ const NewCardDesign1 = () => {
                 <div className="logo">
                   <img src={avatar} alt="logo" />
                 </div>
-                <div className="user_Name">
-                  <p>Kodiyarasu C</p>
-                  <small>FullStack Web Developer With <span>MERN</span></small>
-                </div>
               </div>
 
               <div className="svg_bottom">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <svg
+                  className="svg_top"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 1440 320"
+                >
                   <path
-                    fill="#8edeec"
-                    fill-opacity="1"
-                    d="M0,32L34.3,48C68.6,64,137,96,206,106.7C274.3,117,343,107,411,117.3C480,128,549,160,617,176C685.7,192,754,192,823,208C891.4,224,960,256,1029,256C1097.1,256,1166,224,1234,197.3C1302.9,171,1371,149,1406,138.7L1440,128L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
+                    fill="#003253"
+                    fillOpacity="1"
+                    d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
                   ></path>
                 </svg>
               </div>
@@ -388,6 +429,12 @@ const NewCardDesign1 = () => {
           {/* //Summary */}
           <div className="box-2">
             <div className="user_Personal_Detail">
+              <div className="user_Name">
+                <p>Kodiyarasu C</p>
+                <small>
+                  FullStack Web Developer With <span>MERN</span>
+                </small>
+              </div>
               <div className="summary">
                 <p>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -398,11 +445,37 @@ const NewCardDesign1 = () => {
               </div>
             </div>
           </div>
+          {/* SocialMedias */}
+          <div className="box-4">
+            <div className="social_medias">
+              <a href="" target="_blank" title="website">
+                <i className="bx bx-globe"></i>
+              </a>
+              <a href="" target="_blank" title="location">
+                <i className="bx bxs-map-alt"></i>
+              </a>
+              <a href="" target="_blank" title="facebook">
+                <i className="bx bxl-facebook-circle"></i>
+              </a>
+              <a href="" target="_blank" title="instagram">
+                <i className="bx bxl-instagram"></i>
+              </a>
+              <a href="" target="_blank" title="youtube">
+                <i className="bx bxl-youtube"></i>
+              </a>
+              <a href="" target="_blank" title="linkedin">
+                <i className="bx bxl-linkedin-square"></i>
+              </a>
+            </div>
+          </div>
           {/* ContactDetails */}
           <div className="box-3">
+            <div className="contact_title">
+              <h4>Contact</h4>
+            </div>
             <div className="contact_details">
               <div className="box">
-              <i className='bx bxs-envelope'></i>
+                <i className="bx bxs-envelope"></i>
                 <div className="data">
                   <p>kodiyarasu01@gmail.com</p>
                   <small>Email</small>
@@ -445,100 +518,21 @@ const NewCardDesign1 = () => {
               </div>
             </div>
           </div>
-
-          {/* SocialMedias */}
-          <div className="box-4">
-            <div className="social_medias">
-              <a href="" target="_blank" title="website">
-                <i className="bx bx-globe"></i>
-              </a>
-              <a href="" target="_blank" title="location">
-                <i className="bx bxs-map-alt"></i>
-              </a>
-              <a href="" target="_blank" title="facebook">
-                <i className="bx bxl-facebook-circle"></i>
-              </a>
-              <a href="" target="_blank" title="instagram">
-                <i className="bx bxl-instagram"></i>
-              </a>
-              <a href="" target="_blank" title="youtube">
-                <i className="bx bxl-youtube"></i>
-              </a>
-              <a href="" target="_blank" title="linkedin">
-                <i className="bx bxl-linkedin-square"></i>
-              </a>
-            </div>
           </div>
+     
+          {/* SVG bottom */}
+          <svg
+            className="basic_detail_bottom_svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+          >
+            <path
+              fill="#003253"
+              fillOpacity="1"
+              d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,149.3C1120,149,1280,203,1360,229.3L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
+            ></path>
+          </svg>
 
-          {/* products */}
-          <div className="box-5">
-            <div className="product_title">
-              <h4>Products</h4>
-            </div>
-
-            <div className="products">
-              <AutoplaySlider
-                infinite="true"
-                play={true}
-                cancelOnInteraction={false} // should stop playing on user interaction
-                interval={2000}
-              >
-                <div className="product_item">
-                  <img src={product1} alt="product" />
-                  <p>FrontEnd Development</p>
-
-                  <small>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-                  <button>
-                    <span> ₹</span> <p>5000</p>
-                  </button>
-                </div>
-                <div className="product_item">
-                  <img src={product2} alt="product" />
-                  <p>Backend Development</p>
-
-                  <small>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-
-                  <button>
-                    <span> ₹</span> <p>5000</p>
-                  </button>
-                </div>
-                <div className="product_item">
-                  <img src={product3} alt="product" />
-                  <p>FullStack Development</p>
-
-                  <small>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-
-                  <button>
-                    <span> ₹</span> <p>5000</p>
-                  </button>
-                </div>
-                <div className="product_item">
-                  <img src={product5} alt="product" />
-                  <p>FullStack12 Development</p>
-
-                  <small>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  </small>
-
-                  <button>
-                    <span> ₹</span> <p>5000</p>
-                  </button>
-                </div>
-              </AutoplaySlider>
-            </div>
-            <div className="all_products">
-              <Link to="/all_products">
-                <i className="bx bx-chevrons-right bx-flashing"></i> See All
-                Products
-              </Link>
-            </div>
-          </div>
           {/* Service */}
 
           <div className="box-6">
@@ -585,13 +579,86 @@ const NewCardDesign1 = () => {
               </div>
             </div>
             <div className="all_services">
-              <Link to="/all_services">
+              <Link to="/New_services">
                 <i className="bx bx-chevrons-right bx-flashing"></i> See All
                 Services
               </Link>
             </div>
           </div>
+          {/* products */}
+          <div className="box-5">
+            <div className="product_title">
+              <h4>Our Products</h4>
+            </div>
 
+            <div className="products">
+              <Slide
+                className="product_slide"
+                slidesToScroll={1}
+
+                
+                slidesToShow={width <600 ? 1: 2 }
+                indicators={true}
+                autoplay
+                {...properties}
+                autoplayInterval={1000}
+              >
+                <div className="product_item">
+                  <img src={product1} alt="product" />
+                  <p>FrontEnd Development</p>
+
+                  <small>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </small>
+                  <button>
+                   <p>₹5000</p>
+                  </button>
+                </div>
+                <div className="product_item">
+                  <img src={product2} alt="product" />
+                  <p>Backend Development</p>
+
+                  <small>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </small>
+
+                  <button>
+                   <p>₹5000</p>
+                  </button>
+                </div>
+                <div className="product_item">
+                  <img src={product3} alt="product" />
+                  <p>FullStack Development</p>
+
+                  <small>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </small>
+
+                  <button>
+                    <p>₹ 5000</p>
+                  </button>
+                </div>
+                <div className="product_item">
+                  <img src={product5} alt="product" />
+                  <p>FullStack12 Development</p>
+
+                  <small>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </small>
+
+                  <button>
+                    <p>₹ 5000</p>
+                  </button>
+                </div>
+              </Slide>
+            </div>
+            <div className="all_products">
+              <Link to="/New_products">
+                <i className="bx bx-chevrons-right bx-flashing"></i> See All
+                Products
+              </Link>
+            </div>
+          </div>
           {/* gallery */}
 
           <div className="box-7">
@@ -623,22 +690,24 @@ const NewCardDesign1 = () => {
                 viewBox="0 0 1440 320"
               >
                 <path
-                  fill="#224675"
+                  fill="#003253"
                   fill-opacity="1"
                   d="M0,0L40,16C80,32,160,64,240,69.3C320,75,400,53,480,42.7C560,32,640,32,720,58.7C800,85,880,139,960,176C1040,213,1120,235,1200,229.3C1280,224,1360,192,1400,176L1440,160L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
                 ></path>
               </svg>
-              <svg
+            
+              {/* <svg
                 className="qrsvg_bottom"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1440 320"
               >
                 <path
-                  fill="#224675"
+                  fill="#003253"
                   fill-opacity="1"
                   d="M0,224L80,213.3C160,203,320,181,480,149.3C640,117,800,75,960,85.3C1120,96,1280,160,1360,192L1440,224L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
                 ></path>
-              </svg>
+              </svg> */}
+              <svg   className="qrsvg_bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#003253" fill-opacity="1" d="M0,128L480,96L960,256L1440,96L1440,0L960,0L480,0L0,0Z"></path></svg>
             </div>
           </div>
 
@@ -650,7 +719,7 @@ const NewCardDesign1 = () => {
             </div>
             <div className="Testimonial">
               <div className="testimonial_box">
-                <Carousel autoPlay='true' >
+                <Carousel autoPlay="true">
                   <div className="content">
                     <div className="user_Detail">
                       <img src={avatar} alt="logo" />
@@ -722,22 +791,23 @@ const NewCardDesign1 = () => {
                 viewBox="0 0 1440 320"
               >
                 <path
-                  fill="#224675"
+                  fill="#003253"
                   fill-opacity="1"
                   d="M0,0L480,160L960,96L1440,224L1440,320L960,320L480,320L0,320Z"
                 ></path>
               </svg>
-              <svg
+              {/* <svg
                 className="qrsvg_bottom"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1440 320"
               >
                 <path
-                  fill="#224675"
+                  fill="#003253"
                   fill-opacity="1"
                   d="M0,256L180,192L360,96L540,160L720,256L900,96L1080,64L1260,128L1440,64L1440,0L1260,0L1080,0L900,0L720,0L540,0L360,0L180,0L0,0Z"
                 ></path>
-              </svg>
+              </svg> */}
+              <svg  className="qrsvg_bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#003253" fill-opacity="1" d="M0,160L60,176C120,192,240,224,360,224C480,224,600,192,720,160C840,128,960,96,1080,112C1200,128,1320,192,1380,224L1440,256L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
             </div>
           </div>
           {/* Feedback */}
@@ -1145,85 +1215,4 @@ const NewCardDesign1 = () => {
   );
 };
 
-export default NewCardDesign1;
-
-{
-  /* <Slide
-className="product_slide"
-slidesToScroll={1}
-slidesToShow={2}
-indicators={true}
-autoplay
-{...properties}
-autoplayInterval={1000}
->
-<div className="box" >
-  <img src={product1} alt="taxi" />
-
-  <div className="title">
-    <h4>FrontEnd Development</h4>
-    <button>
-      Rs : <span>8000</span>
-    </button>
-  </div>
-  <div className="product_summary">
-    <p>
-      
-         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Recusandae expedita illo totam, corrupti est impedit!
-    </p>
-  </div>
-</div>
-<div className="box" >
-  <img src={product2} alt="taxi" />
-
-  <div className="title">
-    <h4>FrontEnd Development</h4>
-    <button>
-      Rs : <span>8000</span>
-    </button>
-  </div>
-  <div className="product_summary">
-    <p>
-      
-         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Recusandae expedita illo totam, corrupti est impedit!
-    </p>
-  </div>
-</div>
-<div className="box" >
-  <img src={product4} alt="taxi" />
-
-  <div className="title">
-    <h4>FrontEnd Development</h4>
-    <button>
-      Rs : <span>8000</span>
-    </button>
-  </div>
-  <div className="product_summary">
-    <p>
-      
-         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Recusandae expedita illo totam, corrupti est impedit!
-    </p>
-  </div>
-</div>
-<div className="box" >
-  <img src={product5} alt="taxi" />
-
-  <div className="title">
-    <h4>FrontEnd Development</h4>
-    <button>
-      Rs : <span>8000</span>
-    </button>
-  </div>
-  <div className="product_summary">
-    <p>
-      
-         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Recusandae expedita illo totam, corrupti est impedit!
-    </p>
-  </div>
-</div>
-</Slide> */
-}
+export default NewCardDesign2;

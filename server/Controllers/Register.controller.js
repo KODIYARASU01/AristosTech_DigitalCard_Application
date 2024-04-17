@@ -22,7 +22,14 @@ export const RegisterUser = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Password must been 6 digit required" });
-    }
+    };
+
+    let findName=await find({firstName:firstName});
+
+    if(findName){
+      return res.status(400).json({message:'This Name Already Exist'})
+    };
+    
     //if user doesn't fill all those fields error through:
     if (!email || !password || !firstName || !lastName) {
       res.status(400).json({ message: "Fill all those * fields" });

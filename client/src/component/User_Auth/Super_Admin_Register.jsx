@@ -66,7 +66,7 @@ const Super_Admin_Register = () => {
     try {
       axios
         .post(
-          "https://aristostech-digitalcard-application.onrender.com/auth/register",
+          "http://localhost:3001/auth/register",
           data
         )
         .then((response) => {

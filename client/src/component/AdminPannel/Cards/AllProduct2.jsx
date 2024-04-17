@@ -5,16 +5,16 @@ import product3 from "../../../assets/New_Design/3.jpg";
 import product4 from "../../../assets/New_Design/4.jpg";
 import product5 from "../../../assets/New_Design/5.jpg";
 
-import './AllProduct.scss'
+import './AllProduct2.scss'
 import { Link } from 'react-router-dom';
-const AllProducts = () => {
+const AllProducts2 = () => {
   return (
     <div>
-        <div className="box-6_AllProducts">
+        <div className="box-6_AllProducts2">
            
           <div className="product_card">
           <div className="back_button">
-                <Link to='/new_card'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
+                <Link to='/'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
             </div>
             <div className="Product_card_title">
               <p>All Products</p>
@@ -74,4 +74,4 @@ const AllProducts = () => {
   )
 }
 
-export default AllProducts;
+export default AllProducts2;

@@ -244,7 +244,7 @@ const NewCard2 = () => {
     setFeedbackLoader(true);
     axios
       .get(
-        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`
+        `http://localhost:3001/feedback/${id.id}`
       )
       .then((res) => {
         setAllFeedBacks(res.data.fetchData);
@@ -262,7 +262,7 @@ const NewCard2 = () => {
       setVCardLoader(true);
       await axios
         .get(
-          `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
+          `http://localhost:3001/vcard/getuser?id=${id.id}`
         )
         .then((res) => {
           setAllData(res.data.data);
@@ -435,7 +435,7 @@ const NewCard2 = () => {
     // e.preventDefault();
     await axios
       .post(
-        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`,
+        `http://localhost:3001/feedback/${id.id}`,
         feedbackForm
       )
       .then((res) => {
