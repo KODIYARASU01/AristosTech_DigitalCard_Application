@@ -388,35 +388,35 @@ const App = () => {
       >
         <Suspense fallback={<h4>Loading.....</h4>}>
           <Routes>
-            {/* <Route
+            <Route
               path="/"
               element={
                 user ? <Navigate to={`/admin/${user.id}`} /> : <SignIn />
               }
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/register"
               element={
                 user ? <Navigate to={`/admin/${user.id}`} /> : <SignUp />
               }
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/admin/:id"
               element={user ? <AdminPannel /> : <SignIn />}
-            /> */}
+            />
             {/* You can use your authRoutes with useAuthRoutes hook here if needed */}
 
-            {/* <Route path={`/Digital_Card/:id`} element={<NewCard2 />} /> */}
+            <Route path={`/Digital_Card/:id`} element={<NewCard2 />} />
 
-            {/* <Route path="/super_admin" element={<SuperAdminPanel />} /> */}
+            <Route path="/super_admin" element={<SuperAdminPanel />} />
 
-            {/* <Route path="/update_user/:id" element={<Update_User_Form />} /> */}
-            {/* <Route
+            <Route path="/update_user/:id" element={<Update_User_Form />} />
+            <Route
               path="/super_admin_register"
               element={<Super_Admin_Register />}
-            /> */}
-            {/* <Route path="/new_card" element={<NewCardDesign1 />} /> */}
-            <Route path="/" element={<NewCardDesign2 />} />
+            />
+            <Route path="/new_card" element={<NewCardDesign1 />} />
+            <Route path="/new_card1/:id" element={<NewCardDesign2 />} />
             <Route path="/all_products" element={<AllProducts/>}/>
             <Route path="/all_services" element={<AllServices/>}/>
             <Route path="/New_products" element={<AllProducts2/>}/>

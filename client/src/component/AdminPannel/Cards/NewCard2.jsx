@@ -25,7 +25,7 @@ import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //Testimonial
 import { useContext } from "react";
-import formContext from "../../Context/FormContext";
+
 
 
 const NewCard2 = () => {
@@ -244,7 +244,7 @@ const NewCard2 = () => {
     setFeedbackLoader(true);
     axios
       .get(
-        `http://localhost:3001/feedback/${id.id}`
+        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`
       )
       .then((res) => {
         setAllFeedBacks(res.data.fetchData);
@@ -262,7 +262,7 @@ const NewCard2 = () => {
       setVCardLoader(true);
       await axios
         .get(
-          `http://localhost:3001/vcard/getuser?id=${id.id}`
+          `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
         )
         .then((res) => {
           setAllData(res.data.data);
@@ -435,7 +435,7 @@ const NewCard2 = () => {
     // e.preventDefault();
     await axios
       .post(
-        `http://localhost:3001/feedback/${id.id}`,
+        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`,
         feedbackForm
       )
       .then((res) => {
@@ -777,7 +777,7 @@ const NewCard2 = () => {
                               </div>
                             );
                           })
-                        : ""}
+                          : ""}
                     </div>
                   </div>
                 </motion.div>

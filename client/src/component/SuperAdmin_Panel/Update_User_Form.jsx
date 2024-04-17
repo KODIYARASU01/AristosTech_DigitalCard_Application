@@ -177,7 +177,7 @@ const Update_User_Form = () => {
     setLoader(true);
     axios
       .get(
-        `http://localhost:3001/auth/register/${id.id}`
+        `https://aristostech-digitalcard-application.onrender.com/auth/register/${id.id}`
       )
       .then((responce) => {
         setProfile(responce.data.data.profile);
@@ -236,7 +236,7 @@ const Update_User_Form = () => {
       };
       axios
         .put(
-          `http://localhost:3001/auth/register/${id.id}`,
+          `https://aristostech-digitalcard-application.onrender.com/auth/register/${id.id}`,
           data
         )
         .then((res) => {

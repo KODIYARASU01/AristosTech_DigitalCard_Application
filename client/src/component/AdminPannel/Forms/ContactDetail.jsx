@@ -157,7 +157,7 @@ const ContactDetail = () => {
       setLoader4(true);
       await axios
         .get(
-          `http://localhost:3001/contactDetail/specific/${id}`,
+          `https://aristostech-digitalcard-application.onrender.com/contactDetail/specific/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorageDatas.token}`,
@@ -201,7 +201,7 @@ const ContactDetail = () => {
       // Make authenticated request with bearer token
       await axios
         .post(
-          "http://localhost:3001/contactDetail",
+          "https://aristostech-digitalcard-application.onrender.com/contactDetail",
           Contactdata,
           {
             headers: {
@@ -250,7 +250,7 @@ const ContactDetail = () => {
       // Make authenticated request with bearer token
       await axios
         .put(
-          `http://localhost:3001/contactDetail/update/${ContactData[0]._id}`,
+          `https://aristostech-digitalcard-application.onrender.com/contactDetail/update/${ContactData[0]._id}`,
           data,
           {
             headers: {
