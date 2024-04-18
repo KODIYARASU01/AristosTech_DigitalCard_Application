@@ -114,6 +114,7 @@ const App = () => {
   let [Website, setWebsite] = useState();
   let [Direction, setDirection] = useState();
   let [UTube, setUTube] = useState();
+  let [Github, setGithub] = useState();
 
   //Testimonial:
   let [clientImage, setClientImage] = useState();
@@ -345,6 +346,8 @@ const App = () => {
           setDirection,
           UTube,
           setUTube,
+          Github,
+          setGithub,
           clientImage,
           setClientImage,
           clientName,

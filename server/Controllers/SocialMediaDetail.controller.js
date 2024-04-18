@@ -18,7 +18,8 @@ export const createData = async (req, res) => {
         WhatsUp: req.body.WhatsUp,
         Instagram: req.body.Instagram,
         Twiter: req.body.Twiter,
-        UTube:req.body.UTube
+        UTube:req.body.UTube,
+        Github:req.body.Github
       };
 
       const result = await SocialMediaDetails.create(data);

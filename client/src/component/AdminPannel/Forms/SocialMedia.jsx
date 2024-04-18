@@ -11,6 +11,7 @@ import insta from "../../../assets/Social Medias/insta.gif";
 import company from "../../../assets/Social Medias/company.gif";
 import direction from "../../../assets/Social Medias/direction.gif";
 import utube from "../../../assets/Social Medias/utube.gif";
+import git from '../../../assets/Social Medias/git.gif'
 import { useParams } from "react-router-dom";
 import formContext from "../../Context/FormContext.jsx";
 import axios from "axios";
@@ -45,6 +46,8 @@ const SocialMedia = () => {
     setDirection,
     UTube,
     setUTube,
+    Github,
+    setGithub,
     SocialMediaData,
     setSocialMediaData,
   } = useContext(formContext);
@@ -72,6 +75,7 @@ const SocialMedia = () => {
           setDirection(res.data.data[0].Direction);
           setWebsite(res.data.data[0].Website);
           setUTube(res.data.data[0].UTube);
+          setGithub(res.data.data[0].Github)
           setLoader4(false);
         })
         .catch((err) => {
@@ -97,6 +101,7 @@ const SocialMedia = () => {
         Direction,
         Website,
         UTube,
+        Github
       };
       setLoader3(true);
       // Make authenticated request with bearer token
@@ -126,6 +131,7 @@ const SocialMedia = () => {
           setTwiter("");
           setUTube("");
           setLinkedIn("");
+          setGithub("");
           setLoader3(false);
         })
         .catch((error) => {
@@ -163,6 +169,7 @@ const SocialMedia = () => {
         Website,
         Direction,
         UTube,
+        Github
       };
       // Make authenticated request with bearer token
       await axios
@@ -286,10 +293,10 @@ const SocialMedia = () => {
               <img src={whatsup} alt="WhatsUp" />
             </label>
             <div className="SocialMedia_input">
-              <small>Add Whatsup Link</small>
+              <small>Add your Whatsup Number</small>
               <input
                 type="tel"
-                placeholder="Eg : +91 2456456446"
+                placeholder="Eg : +912456456446"
                 name="whatsup"
                 id="whatsup"
                 value={WhatsUp}
@@ -345,6 +352,23 @@ const SocialMedia = () => {
                 id="utube"
                 value={UTube}
                 onChange={(e) => setUTube(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="or">(OR)</div>
+          <div className="form_group">
+            <label htmlFor="github">
+              <img src={git} alt="github" />
+            </label>
+            <div className="SocialMedia_input">
+              <small>Add your Github link</small>
+              <input
+                type="text"
+                placeholder="Eg : http://shorts.mp4"
+                name="github"
+                id="github"
+                value={Github}
+                onChange={(e) => setGithub(e.target.value)}
               />
             </div>
           </div>

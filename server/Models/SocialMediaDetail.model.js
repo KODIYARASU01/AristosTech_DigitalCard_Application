@@ -37,6 +37,9 @@ let SocialMediaDetailSchema = new mongoose.Schema(
     UTube: {
       type: String,
     },
+    Github: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

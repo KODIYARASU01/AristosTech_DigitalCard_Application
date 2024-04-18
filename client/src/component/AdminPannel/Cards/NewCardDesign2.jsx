@@ -179,6 +179,18 @@ const NewCardDesign2 = () => {
     QRCodeEdit,
     setQRCodeEdit,
   } = useContext(formContext);
+
+  // Function to handle click event
+  const handleClick = () => {
+    // Construct the WhatsApp API link
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${parseInt(
+      AllData.SocialMediaDetails[0].WhatsUp
+    )}&amp;text=Hi there!`;
+
+    // Open the WhatsApp link in a new tab
+    window.open(whatsappLink, "_blank");
+  };
+
   let [NewCardDesignLoader, setNewCardDesignLoader] = useState(false);
 
   //AllFeedbackFetching:
@@ -252,6 +264,7 @@ const NewCardDesign2 = () => {
     };
     getAllUserData();
   }, []);
+
   let [formData, setFormData] = useState({
     clientFullName1: "",
     clientEmail1: "",
@@ -565,32 +578,97 @@ const NewCardDesign2 = () => {
                 {AllData.SocialMediaDetails != undefined ? (
                   <div className="box-4">
                     <div className="social_medias">
-                      <a href="" target="_blank" title="website">
-                        <i className="bx bx-globe"></i>
-                      </a>
-                      <a href="" target="_blank" title="location">
-                        <i className="bx bxs-map-alt"></i>
-                      </a>
-                      <a
-                        href={AllData.SocialMediaDetails[0].Facebook}
-                        target="_blank"
-                        title="facebook"
-                      >
-                        <i className="bx bxl-facebook-circle"></i>
-                      </a>
-                      <a
-                        href={AllData.SocialMediaDetails[0].Instagram}
-                        target="_blank"
-                        title="instagram"
-                      >
-                        <i className="bx bxl-instagram"></i>
-                      </a>
-                      <a href="" target="_blank" title="youtube">
-                        <i className="bx bxl-youtube"></i>
-                      </a>
-                      <a href="" target="_blank" title="linkedin">
-                        <i className="bx bxl-linkedin-square"></i>
-                      </a>
+                      {AllData.SocialMediaDetails[0].Website !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].Website}
+                          target="_blank"
+                          title="website"
+                        >
+                          <i className="bx bx-globe"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+
+                      {AllData.SocialMediaDetails[0].Direction !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].Direction}
+                          target="_blank"
+                          title="location"
+                        >
+                          <i className="bx bxs-map-alt"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                      {AllData.SocialMediaDetails[0].WhatsUp !== "" ? (
+                        <a
+                          href="#"
+                          onClick={handleClick}
+                          target="_blank"
+                          title="whatsup"
+                          id="whatsappLink"
+                        >
+                          <i className="bx bxl-whatsapp"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                      {AllData.SocialMediaDetails[0].Facebook !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].Facebook}
+                          target="_blank"
+                          title="facebook"
+                        >
+                          <i className="bx bxl-facebook-circle"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                      {AllData.SocialMediaDetails[0].Instagram !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].Instagram}
+                          target="_blank"
+                          title="instagram"
+                        >
+                          <i className="bx bxl-instagram"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                      {AllData.SocialMediaDetails[0].UTube !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].UTube}
+                          target="_blank"
+                          title="youtube"
+                        >
+                          <i className="bx bxl-youtube"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                      {AllData.SocialMediaDetails[0].LinkedIn !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].LinkedIn}
+                          target="_blank"
+                          title="linkedin"
+                        >
+                          <i className="bx bxl-linkedin-square"></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                          {AllData.SocialMediaDetails[0].GitHub !== "" ? (
+                        <a
+                          href={AllData.SocialMediaDetails[0].GitHub}
+                          target="_blank"
+                          title="github"
+                        >
+                        <i className='bx bxl-github'></i>
+                        </a>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                 ) : (
