@@ -1,38 +1,49 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-
-let SocialMediaDetailSchema=new mongoose.Schema({
+let SocialMediaDetailSchema = new mongoose.Schema(
+  {
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-      },
-    Facebook:{
-        type:String,
-        // unique:true
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
-    LinkedIn:{
-        type:String,
-        // unique:true
+    Website: {
+      type: String,
     },
-    WhatsUp:{
-        type:String,
-        required:true,
-        // unique:true
+    Direction: {
+      type: String,
     },
-    Instagram:{
-        type:String,
-        // unique:true
+    Facebook: {
+      type: String,
+      // unique:true
     },
-    Twiter:{
-        type:String,
-        // unique:true
-    }
-},
-{timestamps:true}
+    LinkedIn: {
+      type: String,
+      // unique:true
+    },
+    WhatsUp: {
+      type: String,
+      required: true,
+      // unique:true
+    },
+    Instagram: {
+      type: String,
+      // unique:true
+    },
+    Twiter: {
+      type: String,
+      // unique:true
+    },
+    UTube: {
+      type: String,
+    },
+  },
+  { timestamps: true }
 );
 
-
-let SocialMediaDetails=mongoose.model('SocialMediaDetails',SocialMediaDetailSchema);
+let SocialMediaDetails = mongoose.model(
+  "SocialMediaDetails",
+  SocialMediaDetailSchema
+);
 
 export default SocialMediaDetails;

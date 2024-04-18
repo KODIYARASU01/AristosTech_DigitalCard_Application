@@ -111,6 +111,9 @@ const App = () => {
   let [WhatsUp, setWhatsUp] = useState();
   let [Instagram, setInstagram] = useState();
   let [Twiter, setTwiter] = useState();
+  let [Website, setWebsite] = useState();
+  let [Direction, setDirection] = useState();
+  let [UTube, setUTube] = useState();
 
   //Testimonial:
   let [clientImage, setClientImage] = useState();
@@ -336,6 +339,12 @@ const App = () => {
           setInstagram,
           Twiter,
           setTwiter,
+          Website,
+          setWebsite,
+          Direction,
+          setDirection,
+          UTube,
+          setUTube,
           clientImage,
           setClientImage,
           clientName,
@@ -417,11 +426,11 @@ const App = () => {
             />
             <Route path="/new_card" element={<NewCardDesign1 />} />
             <Route path="/new_card1/:id" element={<NewCardDesign2 />} />
-            <Route path="/all_products" element={<AllProducts/>}/>
-            <Route path="/all_services" element={<AllServices/>}/>
-            <Route path="/New_products" element={<AllProducts2/>}/>
-            <Route path="/New_services" element={<AllServices2/>}/>
-            <Route path="/demo_card" element={<DemoCard/>}/>
+            <Route path="/all_products" element={<AllProducts />} />
+            <Route path="/all_services" element={<AllServices />} />
+            <Route path="/New_products/:id" element={<AllProducts2 />} />
+            <Route path="/New_services/:id" element={<AllServices2 />} />
+            <Route path="/demo_card" element={<DemoCard />} />
           </Routes>
         </Suspense>
       </formContext.Provider>

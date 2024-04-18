@@ -1,14 +1,16 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import './AllService2.scss'
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const AllServices2 = () => {
+let id=useParams();
   return (
     <div>
         <div className="box-6_AllService2">
            
           <div className="product_card">
           <div className="back_button">
-                <Link to='/new_card1'><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
+                <Link to={`/new_card1/${id.id}`}><i className='bx bx-chevrons-left bx-flashing' ></i>Back</Link>
             </div>
             <div className="Product_card_title">
               <p>All Services</p>

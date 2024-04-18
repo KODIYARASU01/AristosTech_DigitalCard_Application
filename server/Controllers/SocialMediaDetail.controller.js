@@ -4,18 +4,21 @@ import SocialMediaDetails from "../Models/SocialMediaDetail.model.js";
 
 export const createData = async (req, res) => {
   try {
-    if (!req.body.WhatsUp) {
+    if (!req.body.Direction) {
       return res
         .status(401)
-        .json({ message: "Mandatory fields:WhatsUp" });
+        .json({ message: "Mandatory fields:Location link" });
     } else {
       let data = {
         user: req.user.id,
+        Direction:req.body.Direction,
+        Website:req.body.Website,
         Facebook: req.body.Facebook,
         LinkedIn: req.body.LinkedIn,
         WhatsUp: req.body.WhatsUp,
         Instagram: req.body.Instagram,
         Twiter: req.body.Twiter,
+        UTube:req.body.UTube
       };
 
       const result = await SocialMediaDetails.create(data);

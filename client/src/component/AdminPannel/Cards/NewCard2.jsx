@@ -26,8 +26,6 @@ import "react-toastify/dist/ReactToastify.css";
 //Testimonial
 import { useContext } from "react";
 
-
-
 const NewCard2 = () => {
   let {
     AllData,
@@ -186,15 +184,15 @@ const NewCard2 = () => {
   // let[currentRatting,setCurrentRatting]=useState(0)
   //Form Submit loader :
   let [loading, setLoading] = useState(false);
- 
+
   //Confetti Pieces :
   const [pieces, setPieces] = useState(250);
   //Confetti iniital false:
   let [confetti, setConfetti] = useState(false);
   //Popup show :
   let [popup, setPopup] = useState(false);
- //Collect form data by using useRef:
- let form = useRef();
+  //Collect form data by using useRef:
+  let form = useRef();
   let popUp_open = {
     hide: { opacity: 0, scale: 0.2 },
     show: {
@@ -535,7 +533,6 @@ const NewCard2 = () => {
     });
   }
 
-
   return (
     <>
       {vCardLoader ? (
@@ -777,7 +774,7 @@ const NewCard2 = () => {
                               </div>
                             );
                           })
-                          : ""}
+                        : ""}
                     </div>
                   </div>
                 </motion.div>

@@ -3,6 +3,7 @@ import "./NewCardDesign2.scss";
 import banner_img from "../../../assets/New_Design/programming-background-collage.jpg";
 import avatar from "../../../assets/User_Auth/profile.png";
 import shape from "../../../assets/New_Design/g.png";
+import profile from "../../../assets/User_Auth/profile.png";
 import { Link, useParams } from "react-router-dom";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "react-quill/dist/quill.snow.css";
@@ -38,7 +39,8 @@ import product2 from "../../../assets/New_Design/2.jpg";
 import product3 from "../../../assets/New_Design/3.jpg";
 import product4 from "../../../assets/New_Design/4.jpg";
 import product5 from "../../../assets/New_Design/5.jpg";
-
+import { Flip, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const NewCardDesign2 = () => {
   let {
     AllData,
@@ -178,6 +180,26 @@ const NewCardDesign2 = () => {
     setQRCodeEdit,
   } = useContext(formContext);
   let [NewCardDesignLoader, setNewCardDesignLoader] = useState(false);
+
+  //AllFeedbackFetching:
+
+  async function fetchAllMessage() {
+    setFeedbackLoader(true);
+    axios
+      .get(
+        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`
+      )
+      .then((res) => {
+        setAllFeedBacks(res.data.fetchData);
+        setCommentOpen(!commentOpen);
+        setFeedbackLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setCommentOpen(false);
+        setFeedbackLoader(false);
+      });
+  }
   const buttonStyle = {
     width: "0px",
     background: "none",
@@ -210,11 +232,14 @@ const NewCardDesign2 = () => {
     ),
   };
   let id = useParams();
+
   useEffect(() => {
     let getAllUserData = async () => {
       setNewCardDesignLoader(true);
       await axios
-        .get(`https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`)
+        .get(
+          `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
+        )
         .then((res) => {
           setAllData(res.data.data);
 
@@ -233,6 +258,12 @@ const NewCardDesign2 = () => {
     clientMobileNumber1: "",
     clientInquiries1: "",
   });
+  let [feedbackForm, setFeedbackForm] = useState({
+    userName: "",
+    userFeedback: "",
+    currentRatting: 0,
+  });
+  let [feedbackLoader, setFeedbackLoader] = useState(false);
   //Popup show :
   let [popup, setPopup] = useState(false);
   //Form Submit loader :
@@ -330,16 +361,42 @@ const NewCardDesign2 = () => {
       }, 7000);
     },
   });
-  let [feedbackForm, setFeedbackForm] = useState({
-    userName: "",
-    userFeedback: "",
-    currentRatting: 0,
-  });
-  let [feedbackLoader, setFeedbackLoader] = useState(false);
+
   let [commentOpen, setCommentOpen] = useState(false);
   let [AllFeedBacks, setAllFeedBacks] = useState([]);
   const AutoplaySlider = withAutoplay(AwesomeSlider);
 
+  async function feedBackSubmit() {
+    // e.preventDefault();
+    await axios
+      .post(
+        `https://aristostech-digitalcard-application.onrender.com/feedback/${id.id}`,
+        feedbackForm
+      )
+      .then((res) => {
+        try {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+        } catch (error) {
+          console.log(error);
+          toast.error(res.data.error, {
+            position: "top-center",
+            autoClose: 2000,
+            transition: Flip,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data.error, {
+          position: "top-center",
+          autoClose: 2000,
+          transition: Flip,
+        });
+      });
+  }
   //Form Logic :
   let feedbackFormik = useFormik({
     initialValues: {
@@ -437,6 +494,14 @@ const NewCardDesign2 = () => {
         <div className="newCard_design_container">
           {AllData.BasicDetail != undefined ? (
             <div className="card_design_box1">
+              <ToastContainer
+                closeOnClick
+                autoClose={2000}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
               <div style={{ backgroundColor: "#003253" }}>
                 {/* Banner,logo,userName */}
 
@@ -650,7 +715,7 @@ const NewCardDesign2 = () => {
                       : ""}
                   </div>
                   <div className="all_services">
-                    <Link to="/New_services">
+                    <Link to={`/New_services/${id.id}`}>
                       <i className="bx bx-chevrons-right bx-flashing"></i> See
                       All Services
                     </Link>
@@ -685,7 +750,10 @@ const NewCardDesign2 = () => {
                             <p>{data.productTitle || "......."}</p>
 
                             <small>
-                              {stripHtmlTags1(data.productSummary).slice(0,60) ||
+                              {stripHtmlTags1(data.productSummary).slice(
+                                0,
+                                60
+                              ) ||
                                 `  Lorem ipsum dolor sit amet consectetur adipisicing elit.
                  `}
                             </small>
@@ -698,7 +766,7 @@ const NewCardDesign2 = () => {
                     </Slide>
                   </div>
                   <div className="all_products">
-                    <Link to="/New_products">
+                    <Link to={`/New_products/${id.id}`}>
                       <i className="bx bx-chevrons-right bx-flashing"></i> See
                       All Products
                     </Link>
@@ -830,7 +898,9 @@ const NewCardDesign2 = () => {
                               </div>
                               <div className="feedback_date">
                                 <i className="bx bx-like"></i>
-                                <small>{data.clientFeedbackDate || "__/_/____"}</small>
+                                <small>
+                                  {data.clientFeedbackDate || "__/_/____"}
+                                </small>
                               </div>
                             </div>
                           );
@@ -1008,7 +1078,7 @@ const NewCardDesign2 = () => {
                         Hide All Feedbacks
                       </button>
                     ) : (
-                      <button onClick={() => setCommentOpen(true)}>
+                      <button onClick={fetchAllMessage}>
                         <i className="uil uil-feedback"></i>See All Feedbacks
                       </button>
                     )}
@@ -1022,81 +1092,85 @@ const NewCardDesign2 = () => {
 
                   {commentOpen ? (
                     <div className="comment_box">
-                      <div className="message">
-                        <div className="user_detail">
-                          <div className="profile">
-                            <img src={avatar} alt="profile" />
-                          </div>
-                          <div className="details">
-                            <div className="userName">
-                              <p>
-                                kodiyarasu
-                                <i className="bx bxs-user-check"></i>
-                              </p>
-                            </div>
-                            <div className="stars">
-                              <div
-                                className="ratting_container1"
-                                // data-rating={data.currentRatting}
-                                name="currentRatting"
-                                // id="currentRatting"
-                                // id={
-                                //   data.currentRatting == 0
-                                //     ? "noRatting"
-                                //     : "" || data.currentRatting == 1
-                                //     ? "singleRatting"
-                                //     : "" || data.currentRatting == 2
-                                //     ? "doubleRatting"
-                                //     : "" || data.currentRatting == 3
-                                //     ? "ThreeRatting"
-                                //     : "" || data.currentRatting == 4
-                                //     ? "fourRatting"
-                                //     : "" || data.currentRatting == 5
-                                //     ? "fullRatting"
-                                //     : ""
-                                // }
-                                // value={data.currentRatting}
-                              >
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="1"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="2"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="3"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="4"
-                                  ></i>
-                                </span>
-                                <span className="ratting_star">
-                                  <i
-                                    className="bx bxs-star star1"
-                                    data-rating="5"
-                                  ></i>
-                                </span>
+                      {AllFeedBacks.map((data, index) => {
+                        return (
+                          <div className="message" key={index}>
+                            <div className="user_detail">
+                              <div className="profile">
+                                <img src={profile} alt="profile" />
+                              </div>
+                              <div className="details">
+                                <div className="userName">
+                                  <p>
+                                    {data.userName}
+                                    <i className="bx bxs-user-check"></i>
+                                  </p>
+                                </div>
+                                <div className="stars">
+                                  <div
+                                    className="ratting_container1"
+                                    data-rating={data.currentRatting}
+                                    name="currentRatting"
+                                    // id="currentRatting"
+                                    id={
+                                      data.currentRatting == 0
+                                        ? "noRatting"
+                                        : "" || data.currentRatting == 1
+                                        ? "singleRatting"
+                                        : "" || data.currentRatting == 2
+                                        ? "doubleRatting"
+                                        : "" || data.currentRatting == 3
+                                        ? "ThreeRatting"
+                                        : "" || data.currentRatting == 4
+                                        ? "fourRatting"
+                                        : "" || data.currentRatting == 5
+                                        ? "fullRatting"
+                                        : ""
+                                    }
+                                    value={data.currentRatting}
+                                  >
+                                    <span className="ratting_star">
+                                      <i
+                                        className="bx bxs-star star1"
+                                        data-rating="1"
+                                      ></i>
+                                    </span>
+                                    <span className="ratting_star">
+                                      <i
+                                        className="bx bxs-star star1"
+                                        data-rating="2"
+                                      ></i>
+                                    </span>
+                                    <span className="ratting_star">
+                                      <i
+                                        className="bx bxs-star star1"
+                                        data-rating="3"
+                                      ></i>
+                                    </span>
+                                    <span className="ratting_star">
+                                      <i
+                                        className="bx bxs-star star1"
+                                        data-rating="4"
+                                      ></i>
+                                    </span>
+                                    <span className="ratting_star">
+                                      <i
+                                        className="bx bxs-star star1"
+                                        data-rating="5"
+                                      ></i>
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
 
-                        <div className="comments">
-                          <i className="bx bx-chat"></i>
-                          <span>Hi Makkale</span>
-                        </div>
-                      </div>
+                            <div className="comments">
+                              <i className="bx bx-chat"></i>
+                              <span>{data.userFeedback}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   ) : (
                     ""
