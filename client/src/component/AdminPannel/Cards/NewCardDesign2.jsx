@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import "./NewCardDesign2.scss";
 import banner_img from "../../../assets/New_Design/programming-background-collage.jpg";
 import avatar from "../../../assets/User_Auth/profile.png";
-import shape from "../../../assets/New_Design/g.png";
+import shape from "../../../assets/New_Design/graph.png";
 import profile from "../../../assets/User_Auth/profile.png";
 import { Link, useParams } from "react-router-dom";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -530,6 +530,10 @@ const NewCardDesign2 = () => {
                           <div className="user_basic">
                             <div className="logo">
                               <img src={data.logo || avatar} alt="logo" />
+
+                             
+                                <img src={shape} alt="shape" />
+                         
                             </div>
                           </div>
 
@@ -658,9 +662,9 @@ const NewCardDesign2 = () => {
                       ) : (
                         ""
                       )}
-                          {AllData.SocialMediaDetails[0].GitHub !== "" ? (
+                          {AllData.SocialMediaDetails[0].Github !== "" ? (
                         <a
-                          href={AllData.SocialMediaDetails[0].GitHub}
+                          href={AllData.SocialMediaDetails[0].Github}
                           target="_blank"
                           title="github"
                         >
@@ -885,8 +889,8 @@ const NewCardDesign2 = () => {
                     return (
                       <div className="qrcode" key={index}>
                         <div className="qrcode_images">
-                          <img src={AllData.BasicDetail[0].logo} alt="logo" />
-                          <i className="bx bx-chevrons-right bx-fade-left"></i>
+                        
+                         <small>Contribute to Us <i className='bx bxs-bank'></i></small>
                           <img src={data.QRCodeImage || qrcode} alt="qrcode" />
                         </div>
 
