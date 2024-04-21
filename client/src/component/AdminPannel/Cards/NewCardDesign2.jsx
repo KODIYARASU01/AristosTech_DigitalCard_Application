@@ -190,7 +190,25 @@ const NewCardDesign2 = () => {
     // Open the WhatsApp link in a new tab
     window.open(whatsappLink, "_blank");
   };
+  useEffect(() => {
+    let getAllUserData = async () => {
+      setNewCardDesignLoader(true);
+      await axios
+        .get(
+          `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
+        )
+        .then((res) => {
+          setAllData(res.data.data);
 
+          setNewCardDesignLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setNewCardDesignLoader(false);
+        });
+    };
+    getAllUserData();
+  }, []);
   let [NewCardDesignLoader, setNewCardDesignLoader] = useState(false);
 
   //AllFeedbackFetching:
@@ -245,25 +263,7 @@ const NewCardDesign2 = () => {
   };
   let id = useParams();
 
-  useEffect(() => {
-    let getAllUserData = async () => {
-      setNewCardDesignLoader(true);
-      await axios
-        .get(
-          `https://aristostech-digitalcard-application.onrender.com/vcard/getuser?id=${id.id}`
-        )
-        .then((res) => {
-          setAllData(res.data.data);
 
-          setNewCardDesignLoader(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setNewCardDesignLoader(false);
-        });
-    };
-    getAllUserData();
-  }, []);
 
   let [formData, setFormData] = useState({
     clientFullName1: "",

@@ -532,7 +532,9 @@ cursor: pointer;
         img {
           object-fit: cover;
           object-position: center;
-          width: 80%;
+          width: 300px;
+          height: 150px;
+          place-items: center;
         }
       }
     }
@@ -617,8 +619,8 @@ cursor: pointer;
           width: 100px;
           height: 100px;
           max-height: 100px;
-          padding: 10px;
-          border: 2px solid white;
+          // padding: 10px;
+          border: 2px solid rgb(152, 222, 255);
           background-color: #807a79;
           object-fit: cover;
           object-position: center;
@@ -1088,7 +1090,7 @@ cursor: pointer;
             align-items: center;
             justify-content: space-around;
             gap: 10px;
-            background-color: #753422;
+            background-color: #FC92C4;
             width: 40%;
             height: 50px;
             outline: none;
@@ -1099,7 +1101,7 @@ cursor: pointer;
             font-size: 0.8rem;
             border-radius: 5rem;
             cursor: pointer;
-            color: #ffffff;
+            color: #181818;
             transition: all 0.4s ease-in;
 
             .form_loader,
@@ -1145,7 +1147,8 @@ cursor: pointer;
             }
 
             &:hover {
-              background-color: tomato;
+              background-color: royalblue;
+              color: #ffffff;
               transition: all 0.4s ease-in;
             }
           }
@@ -1673,18 +1676,18 @@ cursor: pointer;
               align-items: center;
               justify-content: space-around;
               gap: 10px;
-              background-color: #003253;
+              background-color: #FC92C4;
               width: 50%;
               height: 50px;
               outline: none;
               border: transparent;
               padding: 8px 1rem;
-              font-weight: 500;
+              font-weight: 600;
               letter-spacing: 1px;
               font-size: 0.7rem;
               border-radius: 5rem;
               cursor: pointer;
-              color: #ffffff;
+              color: #1a1a1a;
               transition: all 0.4s ease-in;
 
               .form_loader,
@@ -1730,7 +1733,8 @@ cursor: pointer;
               }
 
               &:hover {
-                background-color: tomato;
+                background-color: royalblue;
+                color: #ffffff;
                 transition: all 0.4s ease-in;
               }
             }
@@ -1808,7 +1812,7 @@ cursor: pointer;
       position: relative;
       bottom: 0%;
       width: 100%;
-      background-color: #464646;
+      background-color: royalblue;
       padding: 0.7rem 5px;
       display: flex;
       align-items: center;

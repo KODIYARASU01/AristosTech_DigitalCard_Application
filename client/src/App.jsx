@@ -27,6 +27,8 @@ let SuperAdminPanel = lazy(() =>
 let Super_Admin_Register = lazy(() =>
   import("./component/User_Auth/Super_Admin_Register")
 );
+
+let NewCardDesign3=lazy(()=>import('./component/AdminPannel/Cards/NewCardDesign3'))
 const App = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -427,8 +429,9 @@ const App = () => {
               path="/super_admin_register"
               element={<Super_Admin_Register />}
             />
-            <Route path="/new_card" element={<NewCardDesign1 />} />
+            <Route path="/new_card/:id" element={<NewCardDesign1 />} />
             <Route path="/new_card1/:id" element={<NewCardDesign2 />} />
+            <Route path="/new_card3" element={<NewCardDesign3/>}/>
             <Route path="/all_products" element={<AllProducts />} />
             <Route path="/all_services" element={<AllServices />} />
             <Route path="/New_products/:id" element={<AllProducts2 />} />
