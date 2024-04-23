@@ -11,6 +11,7 @@ import DemoCard from "./component/AdminPannel/VCards/DemoCard";
 import NewCardDesign2 from "./component/AdminPannel/Cards/NewCardDesign2";
 import AllServices2 from "./component/AdminPannel/Cards/AllService2";
 import AllProducts2 from "./component/AdminPannel/Cards/AllProduct2";
+import NewCardDesign5 from "./component/AdminPannel/Cards/NewCardDesign5";
 
 let SignIn = lazy(() => import("./component/User_Auth/SignIn"));
 let SignUp = lazy(() => import("./component/User_Auth/SignUp"));
@@ -433,7 +434,8 @@ const App = () => {
             <Route path="/new_card/:id" element={<NewCardDesign1 />} />
             <Route path="/new_card1/:id" element={<NewCardDesign2 />} />
             <Route path="/new_card3" element={<NewCardDesign3/>}/>
-            <Route path="/" element={<NewCardDesign4/>}/>
+            <Route path="/new_card4" element={<NewCardDesign4/>}/>
+            <Route path="/" element={<NewCardDesign5/>}/>
             <Route path="/all_products" element={<AllProducts />} />
             <Route path="/all_services" element={<AllServices />} />
             <Route path="/New_products/:id" element={<AllProducts2 />} />
